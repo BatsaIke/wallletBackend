@@ -1,35 +1,50 @@
-// Import React and other necessary libraries
 
-import Header from "../header/Header";
-import Modal from "../UI/Modal";
-import '../../App.css'
-import { useState } from "react";
-const LeftSideBar = () => {
-  const [isModalOpen, setModalOpen] = useState(false);
+import { useNavigate } from "react-router";
 
-  const openModal = () => setModalOpen(true);
-  const closeModal = () => setModalOpen(false);
+const LeftSideBar = ({ onSelectComponent }) => {
+  const navigate = useNavigate();
 
-    return (
-        <>  
-        
-       
-    
-      
-        {/* LeftSideBar */}
-        <div className="sidebar">
-          <div className="sidebar-logo">Wallet App</div>
-          <div className="sidebar-item">Username</div>
-          <div className="sidebar-item">History</div>
-          <div className="sidebar-item">Profile</div>
-          <div className="sidebar-item">Reset Password</div>
-          <div className="sidebar-item">Reset Password</div>
-          </div>
-        
-      
-      </>
-    );
+
+  const resetHandler = () => {
+    navigate("/reset");
   };
-  
-  export default LeftSideBar;
-  
+  return (
+    <>
+      <div className="sidebar">
+        <div className="sidebar-logo">Wallet App</div>
+        <div className="sidebar-item">
+          <button
+            className="button"
+            onClick={() => onSelectComponent("WalletPage")}
+          >
+            My Wallet
+          </button>
+        </div>
+        {/* Call onSelectComponent with the selected component name */}
+        <div className="sidebar-item">
+          <button
+            className="button"
+            onClick={() => onSelectComponent("Transactions")}
+          >
+            Transactions
+          </button>
+        </div>
+        <div className="sidebar-item">
+          <button
+            className="button"
+            onClick={() => onSelectComponent("Profile")}
+          >
+            Profile
+          </button>
+        </div>
+        <div className="sidebar-item">
+          <button className="button" onClick={resetHandler}>
+            Reset Password
+          </button>
+        </div>
+      </div>
+    </>
+  );
+};
+
+export default LeftSideBar;

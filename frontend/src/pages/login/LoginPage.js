@@ -12,7 +12,7 @@ const LoginPage = () => {
   const loginState = useSelector((state) => state.login);
 
   const handleSubmit = async () => {
-    dispatch(setLoading(true)); // Set loading to true before dispatching the login action
+    dispatch(setLoading(true));
 
     const userData = {
       text: loginState.emailPhone,
@@ -22,24 +22,15 @@ const LoginPage = () => {
     try {
       await dispatch(loginActions(userData));
 
-      // Check if login was successful, and navigate to '/' if true
       if (loginState.isAuthenticated) {
         navigate('/');
       }
     } catch (error) {
-      // Handle error if needed
       console.error('Login error:', error);
     } finally {
-      dispatch(setLoading(false)); // Set loading to false after login attempt
+      dispatch(setLoading(false));
     }
   };
-
-  // useEffect(() => {
-  //   // If you want to reset the login state when the component unmounts, you can do it here
-  //   return () => {
-  //     dispatch(resetLogin());
-  //   };
-  // }, [dispatch]);
 
   return (
     <>
@@ -64,7 +55,9 @@ const LoginPage = () => {
             Login
           </button>
 
-          {/* Add loading and error handling UI based on loginState.loading and loginState.error */}
+          <p>
+            <Link to="/reset">Forgot Password?</Link>
+          </p>
 
           <p>
             Don't have an account? <Link to="/signup">Signup here</Link>

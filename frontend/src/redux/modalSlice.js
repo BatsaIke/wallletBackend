@@ -5,24 +5,19 @@ const modalSlice = createSlice({
   name: 'modal',
   initialState: {
     isOpen: false,
-    title: '',
-    body: null,
+    title: 'some title',
+    body: "some body",
   },
   reducers: {
-    openModal: {
-      reducer(state, action) {
-        const { title, body } = action.payload;
-        state.isOpen = true;
-        state.title = title;
-        state.body = body;
-      },
-      prepare(title, body) {
-        return { payload: { title, body } };
-      },
+    openModal(state, action) {
+      const { title = 'some title', body = 'some body' } = action.payload || {};
+      state.isOpen = true;
+      state.title = title;
+      state.body = body;
     },
     closeModal(state) {
       state.isOpen = false;
-      state.title = '';
+      state.title = 'modal title'; // Reset to default title when closing modal
       state.body = null;
     },
   },

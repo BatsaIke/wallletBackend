@@ -13,7 +13,7 @@ const Modal = ({ onClose, title, body }) => {
             </button>
           </div>
           <div className="modal-body">
-            <h2>{title}</h2>
+            <h2 className='modal-title'>{title}</h2>
             {body}
           </div>
         </div>

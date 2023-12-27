@@ -10,6 +10,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import setAuthToken from "./utils/setAuthToken";
 import { loadUser } from "./api/apiActions";
 import LandingPage from "./pages/LandingPage";
+import ResetPasswordComponent from "./pages/resetPassword/ResetPasswordComponent";
+import ResetPassword from "./pages/resetPassword/RestPassword";
 
 
 function App() {
@@ -36,6 +38,10 @@ const navigate = useNavigate()
         />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
+        <Route path="/reset-password/:id" element={<ResetPasswordComponent />} />
+        <Route path="/reset" element={<ResetPassword />} />
+
+
       </Routes>
     </>
   );

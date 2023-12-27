@@ -6,6 +6,7 @@ const initialState = {
   user: null,
   loading: false,
   error: null,
+  paymentData: null,
 };
 
 const userSlice = createSlice({
@@ -24,15 +25,27 @@ const userSlice = createSlice({
     setError: (state, action) => {
       state.error = action.payload;
     },
+    setPaymentData: (state, action) => {
+      // Include the status from the payment response in the paymentData field
+      state.paymentData = { ...action.payload, status: action.payload?.status };
+    },
     resetUser: (state) => {
       state.user = null;
       state.loading = false;
       state.error = null;
       state.token = null;
+      state.paymentData = null;
     },
   },
 });
 
-export const { setUser, setToken, setLoading, setError, resetUser } = userSlice.actions;
+export const {
+  setUser,
+  setToken,
+  setLoading,
+  setError,
+  setPaymentData,
+  resetUser,
+} = userSlice.actions;
 
 export default userSlice.reducer;

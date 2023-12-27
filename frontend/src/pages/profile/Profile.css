@@ -1,0 +1,73 @@
+/* Profile.css */
+
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  max-width: 400px;
+  margin: 20px auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  margin-bottom: 10px;
+}
+
+.avatar-container {
+  margin-bottom: 20px;
+}
+
+.avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.info-container {
+  width: 100%;
+  text-align: center;
+}
+
+.balance-container {
+  margin-top: 10px;
+}
+
+.phone-number {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #555;
+}
+
+/* Responsive Styles */
+
+@media (max-width: 600px) {
+  .profile-container {
+    max-width: 100%; /* Adjust the width for smaller screens */
+  }
+
+  .avatar {
+    width: 80px; /* Adjust the avatar size for smaller screens */
+    height: 80px;
+  }
+
+  .phone-number {
+    font-size: 12px; /* Adjust the font size for smaller screens */
+  }
+}
+
+@media (max-width: 400px) {
+  .avatar {
+    width: 60px; /* Further reduce avatar size for even smaller screens */
+    height: 60px;
+  }
+
+  .phone-number {
+    font-size: 10px; /* Further reduce font size for even smaller screens */
+  }
+}
+
+/* Add more media queries and styles as needed */
