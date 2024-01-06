@@ -6,8 +6,10 @@ import api from '../../api/api';
 import { set_Alert } from '../../api/alertAction';
 import { useDispatch } from 'react-redux';
 import { setLoggedOutAction } from '../../api/apiActions';
+import { useNavigate } from 'react-router';
 
 const ResetPassword = () => {
+  const navigate = useNavigate()
   const dispatch =useDispatch()
   const [email, setEmail] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);

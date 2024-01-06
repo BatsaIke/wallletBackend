@@ -8,11 +8,15 @@ import LoginPage from "./pages/login/LoginPage";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import setAuthToken from "./utils/setAuthToken";
-import { loadUser } from "./api/apiActions";
+import { loadUser, verifyPayment } from "./api/apiActions";
 import LandingPage from "./pages/LandingPage";
 import ResetPasswordComponent from "./pages/resetPassword/ResetPasswordComponent";
 import ResetPassword from "./pages/resetPassword/RestPassword";
+import store from "./redux/index";
 
+if (localStorage.token) {
+  setAuthToken(localStorage.token);
+}
 
 function App() {
 const dispatch = useDispatch()
@@ -21,12 +25,10 @@ const navigate = useNavigate()
 
     useEffect(() => {
       // check for token in LS when app first runs
-      if (localStorage.token) {
-        // if there is a token set axios headers for all requests
-        setAuthToken(localStorage.token);
+      
         navigate('/')
-      }
-      dispatch(loadUser());
+      
+      store.dispatch(loadUser());
   }, [dispatch]);
   return (
     <>

@@ -24,47 +24,53 @@ const SignupPage = () => {
   };
 
   return (
-    <div className='container'>
-    <div className="signup-container">
-      <input
-        type="text"
-        placeholder="Username"
-        value={signupState.username}
-        onChange={(e) => dispatch(setUsername(e.target.value))}
-        className="input-field"
-      />
-      <input
-        type="email"
-        placeholder="Email"
-        value={signupState.email}
-        onChange={(e) => dispatch(setEmail(e.target.value))}
-        className="input-field"
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={signupState.password}
-        onChange={(e) => dispatch(setPassword(e.target.value))}
-        className="input-field"
-      />
+    <>
+    
+      <div className='container'>
+        <div className="signup-container">
+          <h2>Welcome!</h2>
+          <p>Create an account to get started.</p>
 
-      <input
-        type="text"
-        placeholder="Phone"
-        value={signupState.phone}
-        onChange={(e) => dispatch(setPhone(e.target.value))}
-        className="input-field"
-      />
-      <button onClick={handleSubmit} className="button">
-        Sign Up
-      </button>
-      <p>
-            Don't have an account? <Link to="/login">login here</Link>
+          <input
+            type="text"
+            placeholder="Username"
+            value={signupState.username}
+            onChange={(e) => dispatch(setUsername(e.target.value))}
+            className="input-field"
+          />
+          <input
+            type="email"
+            placeholder="Email"
+            value={signupState.email}
+            onChange={(e) => dispatch(setEmail(e.target.value))}
+            className="input-field"
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={signupState.password}
+            onChange={(e) => dispatch(setPassword(e.target.value))}
+            className="input-field"
+          />
+
+          <input
+            type="text"
+            placeholder="Phone"
+            value={signupState.phone}
+            onChange={(e) => dispatch(setPhone(e.target.value))}
+            className="input-field"
+          />
+          <button onClick={handleSubmit} className="button">
+            Sign Up
+          </button>
+          <p>
+            Already have an account? <Link to="/login">Login here</Link>
           </p>
           
-      {/* Add loading and error handling UI based on signupState.loading and signupState.error */}
-    </div>
-    </div>
+          {/* Add loading and error handling UI based on signupState.loading and signupState.error */}
+        </div>
+      </div>
+    </>
   );
 };
 

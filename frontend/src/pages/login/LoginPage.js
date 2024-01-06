@@ -34,8 +34,13 @@ const LoginPage = () => {
 
   return (
     <>
+      {/* Include the Header component */}
+     
       <div className='container'>
         <div className="login-container">
+          <h2>Welcome!</h2>
+          <p>Kindly login to continue.</p>
+
           <input
             type="text"
             placeholder="Email or Phone Number"

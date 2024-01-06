@@ -35,7 +35,6 @@ const ResetPasswordComponent = ({ match }) => {
       // Handle the response, you can customize this based on your API
       dispatch(set_Alert("Password reset successful","success"));
      
-      navigate("/login");
 
       // Reset the form and state
       setPassword("");

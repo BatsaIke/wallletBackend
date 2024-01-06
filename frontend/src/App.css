@@ -19,9 +19,8 @@ p{
 }
 
 .container {
-  
   display: flex;
-  align-items: stretch; /* Stretch children to full height */
+  align-items: stretch;
   height: 100vh;
 }
 
@@ -38,6 +37,24 @@ p{
   @media (min-width: 768px) {
     padding: 50px;
   }
+  /* Add this media query for screens with a maximum width of 767px (typical for mobile devices) */
+@media (max-width: 767px) {
+  .signup-container {
+    width: 100%; /* Make the container take full width */
+    padding: 20px; /* Adjust padding for smaller screens */
+  }
+
+  .input-field {
+    margin-bottom: 10px; /* Reduce margin for input fields */
+  }
+
+  .button {
+    margin-right: 0; /* Remove right margin on the button */
+  }
+
+  /* Add more responsive styles as needed */
+}
+
 }
 
 
@@ -85,39 +102,65 @@ p{
 
 
 .main-content {
-  flex: 1;
+  
   margin-top: 84px;
   padding: 20px;
   background: linear-gradient(to right, #e1e1e1, #848484);
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
-  margin-left: 2px;
+  flex: 1; /* Take remaining space */
+  padding: 20px; /* Add padding as needed */
+  margin-left: 280px; /* Adjust margin to accommodate the sidebar width */
+  
 }
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to bottom, #1a1a1a, #2c3e50, #1a1a1a);
+  color: #fff;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 200; /* Higher z-index for the header */
+  .menuIcon {
+    display: none;
+  
+  }
+}
+
 
 /* Adjust styles for smaller screens, e.g., phones */
 @media (max-width: 767px) {
   .main-content {
     padding: 50px; /* Adjust padding for larger screens */
+    margin-left: 0;
   }
   .header {
-    flex-direction: row; /* Set it back to row for smaller screens */
     justify-content: space-between;
-    padding: 20px; /* Adjust padding for the header */
+    padding: 20px;
+    height: 50px;
+    .menuIcon {
+      display: flex;
+    
+    }
   }
+  
 
   .logo {
-     /* Move logo back to its original order */
-    margin-bottom: 0; /* Remove the margin for spacing */
+    margin-bottom: 10px; /* Add margin to separate logo from other elements */
   }
-
-  .menu-icon {
-    display: block; /* Show the menu icon */
-    color: #ffffff;
-  }
-
+  
+  .user-info,
+  
   .logout-btn {
-    display: block; /* Show logout button */
+    display: none; /* Hide user information, token button, and logout button on smaller screens */
   }
+ 
+   
 
   .user-details {
     margin-right: 20px; /* Adjust margin on smaller screens */
@@ -125,9 +168,7 @@ p{
   }
 
   .balance {
-    margin-right: 20px; /* Adjust margin on smaller screens */
-    display: flex;
-    align-items: center;
+    display: none;
   }
 
   .wallet-icon {
@@ -140,29 +181,32 @@ p{
   }
 
   .username {
-    margin-right: 10px; /* Adjust margin on smaller screens */
+    display: none; /* Adjust margin on smaller screens */
   }
 
   .user-picture {
     display: block; /* Show user picture */
     display: none;
   }
+
+  .signup-container {
+    width: 100%; /* Make the container take full width */
+    padding: 20px; /* Adjust padding for smaller screens */
+  }
+
+  .input-field {
+    margin-bottom: 10px; /* Reduce margin for input fields */
+  }
+
+  .button {
+    margin-right: 0; /* Remove right margin on the button */
+  }
 }
 /* Header styles */
-.header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  background: linear-gradient(to bottom, #1a1a1a, #2c3e50, #1a1a1a);
-  color: #fff;
-  padding: 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  z-index: 200; /* Higher z-index for the header */
-}
+
+
+
+
 
 
 .logo img {
@@ -203,47 +247,6 @@ p{
   cursor: pointer;
 }
 
-.menu-icon {
-  cursor: pointer;
-  font-size: 1.5rem;
-}
-
-
-.sidebar {
-  position: sticky;
-  top: 84px;
-  left: 0;
-  bottom: 0;
-  width: 250px;
-  background: linear-gradient(to bottom, #1a1a1a, #2c3e50, #1a1a1a);
-  color: #fff;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
-  z-index: 100;
-}
-
-.sidebar-logo {
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 20px;
-}
-
-.sidebar-item {
-  margin-bottom: 10px;
-  cursor: pointer;
-  padding: 10px;
-  width: 100%;
-  text-align: left;
-  transition: background-color 0.3s ease;
-}
-
-.sidebar-item:hover {
-  background-color: #333; /* Darker background on hover */
-}
-
 
 
 /* token button */
@@ -268,4 +271,6 @@ p{
     font-size: 14px; /* Adjust font size for smaller screens */
     /* Add more responsive styles as needed */
   }
+  
 }
+
