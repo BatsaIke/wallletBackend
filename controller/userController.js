@@ -1,5 +1,5 @@
-const User = require("../model/UserModel");
 const { validationResult } = require("express-validator");
+const User = require("../model/UserModel");
 const gravatar = require("gravatar");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -8,6 +8,7 @@ const { payWithMomo, payWithCard } = require("../moddleware/payWithMomoorCard");
 const { findUserById, getMostRecentPayment, verifyPayment, calculateAccountBalance } = require("../moddleware/otherHelperFunctions");
 const { updatePaymentStatus } = require("../moddleware/updatePaymentStatus");
 dotenv.config();
+const mongoose = require("mongoose");
 
 const Paystack = require("paystack")(process.env.PAYSTACK_KEY); // Replace with your secret key
 
@@ -69,7 +70,7 @@ const createUserDetails = async (req, res) => {
     );
   } catch (error) {
     console.error(error.message);
-    res.status(500).send("Server error");
+    res.status(500).send("Server error1");
   }
 };
 
@@ -77,18 +78,16 @@ const createUserDetails = async (req, res) => {
 //@rout POST api/v1/payment/pay
 //@desc payment route
 //access private
-
 const payToken = async (req, res) => {
   const { paymentMethod, amount } = req.body;
-
-  let user = await User.findById(req.user.id);
-  if (!user) {
-    return res.status(404).send("User not found");
-  }
-
-  const { email } = user;
-
   try {
+    let user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+
+    const { email } = user;
+
     let paymentResult;
     if (paymentMethod === "momo") {
       paymentResult = await payWithMomo(email, amount);
@@ -101,7 +100,7 @@ const payToken = async (req, res) => {
     res.status(200).json(paymentResult);
   } catch (error) {
     console.error(error.message);
-    res.status(500).send(error.message);
+    res.status(500).send("Server error@PaymentMethod");
   }
 };
 
@@ -129,16 +128,16 @@ const verifyPament= async (req, res) => {
 
     //get the payment reference
     const reference = mostRecentPayment.reference;
-    //verify the payment using the reference
     const paymentDetails = await verifyPayment(reference);
 
-    //check if verification if successful and update the current balance
     if (paymentDetails.status === "success") {
-      const updatedUser = await updatePaymentStatus( 
+      const updatedUser = await updatePaymentStatus(
         user._id,
         mostRecentPayment._id,
         mostRecentPayment.amount
       );
+
+      // Wait for the balance update to complete before sending the response
       const totalAccountBalance = calculateAccountBalance(updatedUser.payments);
       console.log("Total Account Balance:", totalAccountBalance);
 
@@ -152,8 +151,48 @@ const verifyPament= async (req, res) => {
   }
 };
 
+
+//updated user profile
+
+
+const updateUserProfile = async (req, res) => {
+  const userId = req.params.id; // Use userId consistently
+  const updatedData = req.body;
+
+  try {
+    // Make sure to handle the case where the provided id is not a valid ObjectId
+    if (!mongoose.Types.ObjectId.isValid(userId)) {
+      return res.status(400).json({ error: 'Invalid user id' });
+    }
+
+    // Assuming you want to update the user with the provided id
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Handle the update logic based on the edited data
+    // Update the user properties as needed
+    user.name = updatedData.name || user.name;
+    user.email = updatedData.email || user.email;
+    user.phone = updatedData.phone || user.phone;
+
+    await user.save();
+
+    // Respond with the updated user data and a message
+    res.status(200).json({
+      message: 'User profile updated successfully',
+    });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send('Server error4');
+  }
+};
+
 module.exports = {
   verifyPament,
   createUserDetails,
   payToken,
+  updateUserProfile
 };

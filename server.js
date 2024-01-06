@@ -4,7 +4,7 @@ const dotenv = require('dotenv');
 const bodyParser = require('body-parser');
 const usersDetails = require("./routes/userRoute.js");
 // const userPosts = require("./routes/postRoute.js");
-// const userProfile = require("./routes/profilesRoute.js");
+const userProfile = require("./routes/profileRoute");
 const userAuth = require("./routes/authRoute.js");
 const payStack = require("./routes/paystackRoute.js");
 const cors = require("cors");
@@ -33,7 +33,7 @@ app.use(bodyParser.json());
 //define routes
 app.use("/api/v1/user", usersDetails);
 app.use("/api/v1/payment", payStack);
-// app.use("/api/v1/posts", userPosts);
+app.use("/api/v1/password", userProfile);
 // app.use("/api/v1/profile", userProfile);
 app.use("/api/v1/auth/user", userAuth);
 

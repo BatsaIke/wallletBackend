@@ -3,7 +3,7 @@ const { check } = require("express-validator");
 
 const router = express.Router();
 
-const { createUserDetails } = require("../controller/userController");
+const { createUserDetails, updateUserProfile } = require("../controller/userController");
 
 router
   .route("/create-user")
@@ -20,5 +20,16 @@ router
   );
 
  
+  // Update user route
+router.put(
+  "/update-user/:id", // Assuming you pass the user ID through the URL
+  [
+    check("name", "Name is required").notEmpty(),
+    check("email", "Enter a valid email").isEmail(),
+    check("phone", "Phone number is required").notEmpty(),
+  ],
+  updateUserProfile,
+);
+
 
 module.exports = router;

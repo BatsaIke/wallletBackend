@@ -72,9 +72,17 @@ const UserSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  resetPasswordToken: {
+    type: String,
+  },
+  resetPasswordExpire: {
+    type: Date,
+  },
   payments: [PaymentSchema],
-  balance: BalanceSchema, // Add the balance field using the BalanceSchema
+  balance: BalanceSchema,
 });
 
-module.exports = User = mongoose.model("user", UserSchema);
-module.exports = User = mongoose.model("user", UserSchema);
+const User = mongoose.model("user", UserSchema);
+
+module.exports = User;
+

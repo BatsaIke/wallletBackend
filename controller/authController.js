@@ -75,6 +75,36 @@ const authenticateUser = async (req, res) => {
   }; 
 
 
+const updateUserProfile = async (req, res) => {
+  const userId = req.params.id; // Assuming you are passing the user ID through the URL
+  const { name, email, phone } = req.body;
+
+  try {
+    // Find the user by ID
+    const user = await User.findById(userId);
+
+    // Check if the user exists
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // Update user information
+    user.name = name;
+    user.email = email;
+    user.phone = phone;
+
+    // Save the updated user
+    await user.save();
+
+    // Return the updated user
+    res.json({ message: "User updated successfully", user });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Server error");
+  }
+};
+
+
 
 module.exports={
      getAuthenticatedUser,
