@@ -8,6 +8,7 @@ const userProfile = require("./routes/profileRoute");
 const userAuth = require("./routes/authRoute.js");
 const payStack = require("./routes/paystackRoute.js");
 const cors = require("cors");
+const customCorsMiddleware = require("./utils/corsCustomMiddleware.js");
 
 const app = express();
 dotenv.config();
@@ -16,18 +17,18 @@ dotenv.config();
 
 
 
-app.use(cors({
-  origin: '*', // or use a function to dynamically set the origin
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'x-auth-token'],
-  credentials: true,
-}));
+// app.use(cors({
+//   origin: '*', // or use a function to dynamically set the origin
+//   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+//   allowedHeaders: ['Content-Type', 'Authorization', 'x-auth-token'],
+//   credentials: true,
+// }));
 
 //connect database
 connectDB();
 //init middleware
 app.use(express.json({ extended: false }));
-app.use(cors());
+app.use(cors(customCorsMiddleware));
 app.use(bodyParser.json());
 //define routes
 app.use("/api/v1/user", usersDetails);
