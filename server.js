@@ -8,7 +8,6 @@ const userProfile = require("./routes/profileRoute");
 const userAuth = require("./routes/authRoute.js");
 const payStack = require("./routes/paystackRoute.js");
 const cors = require("cors");
-const customCorsMiddleware = require("./utils/corsCustomMiddleware.js");
 
 const app = express();
 dotenv.config();
@@ -17,23 +16,23 @@ dotenv.config();
 
 
 
-// app.use((req, res, next) => {
-//   res.header('Access-Control-Allow-Origin', '*');
-//   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS'); 
-//   res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, x-auth-token'); // Include x-auth-token
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS'); 
+  res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, x-auth-token'); // Include x-auth-token
     
-//   if (req.method === 'OPTIONS') {
-//     return res.sendStatus(200);
-//   }
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200);
+  }
     
-//   next(); 
-// });
+  next(); 
+});
 
 //connect database
 connectDB();
 //init middleware
 app.use(express.json({ extended: false }));
-app.use(cors(customCorsMiddleware));
+app.use(cors());
 app.use(bodyParser.json());
 //define routes
 app.use("/api/v1/user", usersDetails);
