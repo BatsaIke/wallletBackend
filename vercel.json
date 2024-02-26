@@ -14,7 +14,7 @@
       "routes": [
         { "src": "/api/(.*)", "dest": "/server/$1" },
         { "src": "/(.*)", "dest": "/frontend/$1" }
-      ]
+      ],
     "env": {
       "NODE_ENV": "production",
       "mongoURI":"mongodb+srv://Batsa:12345@cluster0.2a1at.mongodb.net/walletDB?retryWrites=true&w=majority",
