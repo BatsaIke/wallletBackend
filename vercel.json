@@ -1,0 +1,33 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "/frontend/package.json",
+        "use": "@vercel/static-build",
+        "config": { "distDir": "front/build" }
+      },
+      {
+        "src": "/server/**",
+        "use": "@vercel/node"
+      }
+    ],
+    "routes": [
+      { "src": "/api/(.*)", "dest": "/server/$1" },
+      { "src": "/(.*)", "dest": "/frontend/$1" }
+    ],
+    "env": {
+      "NODE_ENV": "production",
+      "mongoURI":"mongodb+srv://Batsa:12345@cluster0.2a1at.mongodb.net/walletDB?retryWrites=true&w=majority",
+"JWT_SECRET_KEY":"dfhkahfal24098502458#w%%%898***(09082853)",
+"JWT_EXPIRES":"1d",
+"ACTIVATION_SECRE":"h@l4y6kjadulj&kf!js*ksljg.kjdfjkf",
+"SMPT_HOST":"smtp.gmail.com",
+"SMTP_PORT":"465",
+"SMPT_PASSWORD":"hskjbgbwqlkrztan",
+"EMAIL_PASSWORD":"jkhqvswojmgvsfr",
+"EMAIL_USERNAME":"batsa2010isaac@gmail.com",
+"SMPT_MAIL":"batsa2010isaac@gmail.com",
+"PAYSTACK_KEY":"sk_test_629a0e97a3f4f238b6184becf2a917fb9edd7c9f"
+    }
+  }
+  
