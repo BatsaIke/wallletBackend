@@ -4,8 +4,6 @@ import LeftSideBar from "../components/left-sidebare/LeftSideBar";
 import "../App.css";
 import { useDispatch, useSelector } from "react-redux";
 import { openModal } from "../redux/modalSlice";
-import { BuyTokenModal } from "../utils/buyTokenModal";
-import { useNavigate } from "react-router";
 import TransactionHistory from "./transactions/Transactions.js";
 import ResetPassword from "./resetPassword/RestPassword.js";
 import Profile from "./profile/Profile.js";
@@ -17,11 +15,10 @@ import Header from "../components/header/Header.js";
 // ... (import statements)
 
 const LandingPage = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const dispatch = useDispatch();
   const [sidebarVisible, setSidebarVisible] = useState(false);
 
-  const modalBody = BuyTokenModal();
   const { user, loading } = useSelector((state) => state.auth);
   const username = user?.name;
   const userID =user?.tokenDigit
@@ -46,7 +43,7 @@ const LandingPage = () => {
   useEffect(() => {
     openModalHandler();
     verifyPayment();
-  }, []);
+  });
 
   // Local state to track the selected component
   const [selectedComponent, setSelectedComponent] = useState("WalletPage");

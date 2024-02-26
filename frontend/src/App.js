@@ -4,7 +4,7 @@ import ProtectedRoute from "./components/protectedRoute/ProtectedRoute";
 import SignupPage from "./pages/Signup/SignupPage";
 import LoginPage from "./pages/login/LoginPage";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch} from 'react-redux';
 import setAuthToken from "./utils/setAuthToken";
 import { loadUser } from "./api/apiActions";
 import LandingPage from "./pages/LandingPage";

@@ -4,7 +4,6 @@ import { Link, useNavigate } from 'react-router-dom';
 import '../../App.css';
 import { loginActions } from '../../api/loginActions';
 import { set_Alert } from '../../api/alertAction';
-import { openModal } from '../../redux/modalSlice';
 
 const LoginPage = () => {
   const dispatch = useDispatch();

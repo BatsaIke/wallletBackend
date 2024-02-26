@@ -2,13 +2,13 @@ import React from 'react';
 import './WalletPage.css';
 import { Line } from 'react-chartjs-2';
 import { enUS } from 'date-fns/locale';
-import { Chart as ChartJS } from 'chart.js/auto';
+import { Chart, registerables } from 'chart.js';
 import 'chartjs-adapter-date-fns';
 
 const WalletPage = ({ user, loading }) => {
-  const totalBalance = user?.balance?.tokenValue||0;
+  const totalBalance = user?.balance?.tokenValue || 0;
   const payments = user.payments;
-
+  Chart.register(...registerables);
 
   const chartData = {
     labels: payments.map((payment) => payment.timestamp), // Use timestamps as labels

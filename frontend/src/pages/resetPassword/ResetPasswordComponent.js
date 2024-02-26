@@ -6,7 +6,6 @@ import "./ResetPassword.css";
 import { useNavigate, useParams } from "react-router";
 import { set_Alert } from "../../api/alertAction";
 import { useDispatch } from "react-redux";
-import { setLoggedOutAction } from "../../api/apiActions";
 
 const ResetPasswordComponent = ({ match }) => {
     const dispatch = useDispatch()
