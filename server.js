@@ -12,6 +12,9 @@ const cors = require("cors");
 const app = express();
 dotenv.config();
 
+const corsOptions = {
+  origin: 'https://walllet-backend-j58e9yhne-batsaike.vercel.app',
+};
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS'); 
@@ -28,7 +31,7 @@ app.use((req, res, next) => {
 connectDB();
 //init middleware
 app.use(express.json({ extended: false }));
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(bodyParser.json());
 //define routes
 app.use("/api/v1/user", usersDetails);
