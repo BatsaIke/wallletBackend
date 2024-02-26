@@ -21,4 +21,10 @@ const findUserById = async (userId) => {
     return payments.reduce((total, payment) => total + payment.walletBalance, 0);
   };
 
-  module.exports ={verifyPayment,getMostRecentPayment,findUserById,calculateAccountBalance}
+  const tokenValue = (calculatedBalance) => {
+    const tokenValue = (calculatedBalance * 10).toFixed(3);
+    return parseFloat(tokenValue);
+};
+
+  
+  module.exports ={verifyPayment,getMostRecentPayment,findUserById,calculateAccountBalance,tokenValue}

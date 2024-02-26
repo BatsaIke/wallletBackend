@@ -5,8 +5,8 @@ import './ResetPassword.css';
 import api from '../../api/api';
 import { set_Alert } from '../../api/alertAction';
 import { useDispatch } from 'react-redux';
-import { setLoggedOutAction } from '../../api/apiActions';
 import { useNavigate } from 'react-router';
+import { logout } from '../../redux/authSlice';
 
 const ResetPassword = () => {
   const navigate = useNavigate()
@@ -20,15 +20,12 @@ const ResetPassword = () => {
 
     try {
       setIsSubmitting(true);
-
       // Make the API call to send the password reset email
-      const response = await api.post('password/request-password-reset', { email });
-
+      await api.post('password/request-password-reset', { email });
       // Handle the response, you can customize this based on your API
-      dispatch(set_Alert("Password reset email sent: kindy check your email for confirmation","success"))
-      localStorage.removeItem('token');
+      dispatch(set_Alert("Password reset email sent: kindy check your email for confirmation","success",10000))
+      dispatch(logout)
      // Dispatch the setLoggedOut action
-     dispatch(setLoggedOutAction());
       // Reset the form and state
       setEmail('');
       setError(null);

@@ -13,37 +13,43 @@ const PaymentSchema = new mongoose.Schema({
     required: true,
   },
   paymentStatus: {
-    type: String, // Use String instead of Boolean
-    default: 'pending', // Default value is 'pending'
+    type: String,
+    default: 'pending',
     required: true,
   },
   walletBalance: {
     type: Number,
     default: 0,
   },
-  tokenValue: {
-    type: String,
-    validate: {
-      validator: function (v) {
-        // Validate that the tokenValue is a 5-digit alphanumeric string
-        return /^[0-9A-Za-z]{5}$/.test(v);
-      },
-      message: props => `${props.value} is not a valid 5-digit alphanumeric string!`,
-    },
-  },
   timestamp: {
     type: Date,
     default: Date.now,
   },
 });
+
+function generateUniqueToken() {
+  // Generate a unique token with the format 'TkXXXXX' (e.g., 'Tkabc12')
+  const prefix = 'Tk';
+  let randomString;
+
+  // Keep generating a random string until it meets the validation criteria
+  do {
+    randomString = Math.random().toString(36).substring(2, 7);
+  } while (!/^[0-9A-Za-z]{5}$/.test(prefix + randomString));
+
+  return prefix + randomString;
+}
+
+
+
 const BalanceSchema = new mongoose.Schema({
   totalBalance: {
     type: Number,
     default: 0,
   },
-  actualBalance: {
+  tokenValue: {
     type: Number,
-    default: 0,
+    default: 0.000,
   },
 });   
 
@@ -64,6 +70,12 @@ const UserSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true,
+  },
+  tokenDigit: {
+    type: String,
+    default: "",
+    unique: true,
+  
   },
   avatar: {
     type: String,

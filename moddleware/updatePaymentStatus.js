@@ -1,5 +1,5 @@
+const { calculateAccountBalance, tokenValue } = require("./otherHelperFunctions");
 const User = require("../model/UserModel");
-const { calculateAccountBalance } = require("./otherHelperFunctions");
 
 const updatePaymentStatus = async (userId, paymentId, amount) => {
   try {
@@ -19,11 +19,21 @@ const updatePaymentStatus = async (userId, paymentId, amount) => {
 
     // Calculate total account balance after the update
     const totalAccountBalance = calculateAccountBalance(updatedUser.payments);
+  
+    
+    // Calculate token value based on the total account balance
+    const tokenBalance = tokenValue(totalAccountBalance);
 
-    // Update the totalBalance field in the user's balance schema
     await User.findByIdAndUpdate(
       userId,
       { $set: { "balance.totalBalance": totalAccountBalance } },
+      { new: true, w: "majority" }
+    );
+
+    // Update the tokenValue field in the user's balance schema
+    await User.findByIdAndUpdate(
+      userId,
+      { $set: { "balance.tokenValue":  tokenBalance.toFixed(3)} },
       { new: true, w: "majority" }
     );
 

@@ -5,10 +5,11 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 const { payWithMomo, payWithCard } = require("../moddleware/payWithMomoorCard");
-const { findUserById, getMostRecentPayment, verifyPayment, calculateAccountBalance } = require("../moddleware/otherHelperFunctions");
+const { findUserById, getMostRecentPayment, verifyPayment, calculateAccountBalance, tokenValue } = require("../moddleware/otherHelperFunctions");
 const { updatePaymentStatus } = require("../moddleware/updatePaymentStatus");
 dotenv.config();
 const mongoose = require("mongoose");
+const generateUniqueToken = require("../utils/generateUniqueUsertoken");
 
 const Paystack = require("paystack")(process.env.PAYSTACK_KEY); // Replace with your secret key
 
@@ -17,40 +18,50 @@ const Paystack = require("paystack")(process.env.PAYSTACK_KEY); // Replace with 
 //access public
 const createUserDetails = async (req, res) => {
   const errors = validationResult(req);
-  //check if no errors
+  // Check if no errors
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
+
   const { name, email, phone, password } = req.body;
+
   try {
-    //check if user exist
+    // Check if the user already exists
     let user = await User.findOne({
       $or: [{ email }, { phone }],
     });
+
     if (user) {
-      return res.status(400).json({ errors: [{ msg: "User already exist" }] });
+      return res.status(401).json({ errors: [{ msg: "User already exists" }] });
     }
-    //get users gravatar
+
+    // Get user's gravatar
     const avatar = gravatar.url(email, {
       s: 200,
       r: "pg",
       d: "mm",
     });
-    //create instance of user
+
+    // Generate a unique tokenDigit
+    const tokenDigit = generateUniqueToken();
+
+    // Create an instance of user with tokenDigit
     user = new User({
       name,
       email,
       phone,
       password,
       avatar,
+      tokenDigit,
     });
 
-    //encrypt passeord using bcrypt
+    // Encrypt password using bcrypt
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(password, salt);
 
     await user.save();
-    //return jsonwebtoken
+
+    // Return JSON Web Token
     const payload = {
       user: {
         id: user._id,
@@ -70,9 +81,10 @@ const createUserDetails = async (req, res) => {
     );
   } catch (error) {
     console.error(error.message);
-    res.status(500).send("Server error1");
+    res.status(500).send("Server error");
   }
 };
+
 
 //pay for token
 //@rout POST api/v1/payment/pay
@@ -110,7 +122,7 @@ const payToken = async (req, res) => {
 //@route GET api/v1/payment/verify
 //@desc payment route
 //access private
-const verifyPament= async (req, res) => {
+const verifyPament = async (req, res) => {
   try {
     //find the current user
     const user = await findUserById(req.user.id);
@@ -139,7 +151,7 @@ const verifyPament= async (req, res) => {
 
       // Wait for the balance update to complete before sending the response
       const totalAccountBalance = calculateAccountBalance(updatedUser.payments);
-      console.log("Total Account Balance:", totalAccountBalance);
+      const tokenBalance = tokenValue(totalAccountBalance);
 
       res.send(updatedUser);
     } else {
@@ -150,7 +162,6 @@ const verifyPament= async (req, res) => {
     res.status(500).send("Internal Server Error");
   }
 };
-
 
 //updated user profile
 

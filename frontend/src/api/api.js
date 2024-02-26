@@ -1,30 +1,35 @@
+// api.js
 import axios from 'axios';
-import store from '../redux';
-import { setLoggedOut } from '../redux/logoutSlice';
 
-// Create an instance of axios
 const api = axios.create({
-  baseURL: 'http://localhost:8080/api/v1/', // Remove the extra '/' at the beginning
+  baseURL: 'http://localhost:8080/api/v1',
   headers: {
     'Content-Type': 'application/json'
   }
 });
 
-/*
-  NOTE: Intercept any error responses from the API
-  and check if the token is no longer valid.
-  ie. Token has expired or the user is no longer
-  authenticated.
-  Logout the user if the token has expired.
-*/
-
-api.interceptors.response.use(
-  (res) => res,
-  (err) => {
-    if (err.response.status === 401) {
-      store.dispatch(setLoggedOut()); // Fix the dispatch to use setLoggedOut action
+// Request interceptor to add authentication token to outgoing requests
+api.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      config.headers['x-auth-token'] = token;
     }
-    return Promise.reject(err);
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+// Response interceptor to handle errors globally
+api.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    // Handle errors here (e.g., show an error message)
+    return Promise.reject(error);
   }
 );
 

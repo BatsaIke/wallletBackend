@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import "./Profile.css"; // Import your CSS file for styling
-import { updateUserProfile } from "../../api/apiActions";
+// import { updateUserProfile } from "../../api/apiActions";
 import { useDispatch } from "react-redux";
+import { updateUserProfile } from "../../api/apiActions";
 
 const Profile = ({ user, loading }) => {
   const dispatch = useDispatch();
@@ -18,7 +19,7 @@ const Profile = ({ user, loading }) => {
     email,
     phone,
     avatar,
-    balance: { totalBalance = 0, actualBalance = 0 } = {},
+    balance: { tokenValue = 0, } = {},
   } = user || {};
 
   const handleEditClick = async () => {
@@ -81,8 +82,7 @@ const Profile = ({ user, loading }) => {
                 <p>Email: {email}</p>
                 <p className="phone-number">Phone: {phone}</p>
                 <div className="balance-container">
-                  <p>Total Balance: {totalBalance}</p>
-                  <p>Actual Balance: {actualBalance}</p>
+                  <p>Token Balance: {tokenValue}.000Tks</p>
                 </div>
               </>
             )}

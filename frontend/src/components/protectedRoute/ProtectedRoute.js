@@ -4,7 +4,7 @@ import { Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const ProtectedRoute = ({ component: Component }) => {
-  const isAuthenticated = useSelector((state) => state.login.isAuthenticated);
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   if (isAuthenticated) {
     return <Component />;

@@ -1,42 +1,58 @@
-// LoginPage.js
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setEmailPhone, setPassword, setLoading, setError, setToken, resetLogin } from '../../redux/loginSlice';
 import { Link, useNavigate } from 'react-router-dom';
 import '../../App.css';
 import { loginActions } from '../../api/loginActions';
+import { set_Alert } from '../../api/alertAction';
+import { openModal } from '../../redux/modalSlice';
 
 const LoginPage = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const loginState = useSelector((state) => state.login);
+  const navigate = useNavigate();
+  const loginState = useSelector((state) => state.auth);
+
+  const [formData, setFormData] = useState({
+    emailPhone: '',
+    password: '',
+  });
+
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (loginState.isAuthenticated) {
+      set_Alert('Login Successful', 'success', 2000);
+      navigate('/');
+    }
+  }, [loginState.isAuthenticated, navigate]);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  };
 
   const handleSubmit = async () => {
-    dispatch(setLoading(true));
-
+    setLoading(true);
     const userData = {
-      text: loginState.emailPhone,
-      password: loginState.password,
+      text: formData.emailPhone,
+      password: formData.password,
     };
 
     try {
+      // Dispatch the login action here
       await dispatch(loginActions(userData));
-
-      if (loginState.isAuthenticated) {
-        navigate('/');
-      }
     } catch (error) {
       console.error('Login error:', error);
     } finally {
-      dispatch(setLoading(false));
+      setLoading(false);
     }
   };
 
   return (
     <>
-      {/* Include the Header component */}
-     
-      <div className='container'>
+      <div className="container">
         <div className="login-container">
           <h2>Welcome!</h2>
           <p>Kindly login to continue.</p>
@@ -44,20 +60,22 @@ const LoginPage = () => {
           <input
             type="text"
             placeholder="Email or Phone Number"
-            value={loginState.emailPhone}
-            onChange={(e) => dispatch(setEmailPhone(e.target.value))}
+            name="emailPhone"
+            value={formData.emailPhone}
+            onChange={handleChange}
             className="input-field"
           />
           <input
             type="password"
             placeholder="Password"
-            value={loginState.password}
-            onChange={(e) => dispatch(setPassword(e.target.value))}
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
             className="input-field"
           />
 
-          <button onClick={handleSubmit} className="button">
-            Login
+          <button onClick={handleSubmit} className="button" disabled={loading}>
+            {loading ? 'Loading...' : 'Login'}
           </button>
 
           <p>

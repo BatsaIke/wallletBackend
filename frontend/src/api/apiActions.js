@@ -1,12 +1,9 @@
 // apiActions.js
-import { setLoggedOut, resetLogout } from '../redux/logoutSlice'; // Adjust the path based on your project structure
 import api from './api';
-import { set_Alert } from './alertAction';
  import handleApiError from '../utils/apiHandleError'
- import { useNavigate } from 'react-router-dom';
 
 
-import { setError, setLoading, setPaymentData, setUser } from '../redux/userSlice';
+import { setError, setLoading, setUser } from '../redux/authSlice';
 
 
 // Load user data function
@@ -16,11 +13,9 @@ export const loadUser = () => async (dispatch) => {
     // Make an API call to get user data
     const response = await api.get('/auth/user'); // Adjust the API endpoint as needed
     const userData = response.data; // Assuming the user data is available in the response
-
-    console.log(userData)
-    // Dispatch the action to set the user data
     dispatch(setUser(userData));
     dispatch(setLoading(false));
+    
 
   } catch (error) {
     // Handle API error
@@ -46,21 +41,12 @@ export const updateUserProfile = (userId, editedData) => async (dispatch) => {
 
 
 
-// Action creator for setting the logged-out state
-export const setLoggedOutAction = () => (dispatch) => {
-  dispatch(setLoggedOut());
-};
 
-// Action creator for resetting the logged-out state
-export const resetLogoutAction = () => (dispatch) => {
-  dispatch(resetLogout());
-};
 
 // Function to make a GET call to verify the payment
 export const verifyPayment = async () => {
   try {
     const response = await api.get('/payment/verify');
-
     // Handle the response as needed
     console.log('Payment verification response:', response.data);
   } catch (error) {
@@ -79,9 +65,7 @@ export const makePayment = (paymentData) => async (dispatch) => {
     if ( response.status === 200) {
       // Payment successful, open the authorization URL in a new window
       const authorizationUrl = response.data.response.data.authorization_url
-      console.log(response.data.response.data.authorization_url
-        );
-      const paymentWindow =  window.open(authorizationUrl, '_self');
+      console.log(authorizationUrl);
       dispatch(setError('Payment was not successful'));
     }
   } catch (error) {

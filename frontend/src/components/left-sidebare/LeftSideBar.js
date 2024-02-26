@@ -4,17 +4,17 @@ import { useNavigate } from "react-router";
 import { useState, useEffect } from "react";
 import "./LeftSideBar.css";
 import { set_Alert } from "../../api/alertAction";
-import { setLoggedOutAction } from "../../api/apiActions";
 import { useDispatch } from "react-redux";
+import { logout, resetAuthState } from "../../redux/authSlice";
 
-const LeftSideBar = ({ onSelectComponent, userName,onHideSidebar }) => {
+const LeftSideBar = ({ onSelectComponent, userName,userID, onHideSidebar }) => {
   const dispatch = useDispatch()
   const navigate = useNavigate();
   const [isSmallScreen, setIsSmallScreen] = useState(false);
 
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    dispatch(setLoggedOutAction());
+    dispatch(logout());
+    dispatch(resetAuthState())
     navigate('/login');
     dispatch(set_Alert('Logout successful', '', 2000));
   };
@@ -47,7 +47,8 @@ const LeftSideBar = ({ onSelectComponent, userName,onHideSidebar }) => {
   return (
     <>
       <div className="sidebar">
-        <div className="sidebar-logo">Wallet App</div>
+        {isSmallScreen? <section style={{fontSize:"1.3rem"}}>USER ID: {userID}</section>:
+        <div className="sidebar-logo">Wallet App</div>}
         <div className="sidebar-item">
           {isSmallScreen ? (
             <button  onClick={() => handleButtonClick("WalletPage")} className="button">{userName}'s wallet</button>

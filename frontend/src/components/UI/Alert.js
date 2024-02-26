@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import './Alert.css'
 
 const Alert = () => {
-  const alerts = useSelector((state) => state.alert);
+  const alerts = useSelector((state) => state.alerts);
 
   return (
     <div className="alert-wrapper">

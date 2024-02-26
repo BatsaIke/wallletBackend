@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Header from "../components/header/Header";
+
 import LeftSideBar from "../components/left-sidebare/LeftSideBar";
 import "../App.css";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,18 +13,19 @@ import ResetPasswordComponent from "./resetPassword/ResetPasswordComponent.js";
 import WalletPage from "./walletPage.js/WalletPage.js";
 import { verifyPayment } from "../api/apiActions.js";
 import Spinner from "../components/UI/Spinner.js";
+import Header from "../components/header/Header.js";
 // ... (import statements)
 
 const LandingPage = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const paymentStatus = useSelector((state) => state.paymentStatus);
-  const isModalOpen = useSelector((state) => state.modal);
   const [sidebarVisible, setSidebarVisible] = useState(false);
 
   const modalBody = BuyTokenModal();
-  const { user, loading } = useSelector((state) => state.user);
+  const { user, loading } = useSelector((state) => state.auth);
   const username = user?.name;
+  const userID =user?.tokenDigit
+  
 
   const toggleSidebar = () => {
     setSidebarVisible(!sidebarVisible);
@@ -45,7 +46,7 @@ const LandingPage = () => {
   useEffect(() => {
     openModalHandler();
     verifyPayment();
-  }, [openModal]);
+  }, []);
 
   // Local state to track the selected component
   const [selectedComponent, setSelectedComponent] = useState("WalletPage");
@@ -60,6 +61,7 @@ const LandingPage = () => {
             onSelectComponent={setSelectedComponent}
             onHideSidebar={toggleSidebar}
             userName={username}
+            userID={userID}
           />
         </div>
         <div className="main-content">
@@ -87,13 +89,14 @@ const LandingPage = () => {
           ) : (
             <div
               style={{
-                display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
+                display: "flex",
+                flexDirection: "column",
               }}
             >
               <Spinner />
-              <p>Loading...</p>
+              loading...
             </div>
           )}
         </div>

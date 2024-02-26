@@ -1,35 +1,48 @@
-import React, { useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CiMenuBurger } from "react-icons/ci";
-import { setLoggedOutAction } from '../../api/apiActions';
 import '../../App.css';
 import { useNavigate } from 'react-router';
 import { set_Alert } from '../../api/alertAction';
 import { BuyTokenModal } from '../../utils/buyTokenModal';
 import Modal from '../UI/Modal';
 import { closeModal, openModal } from '../../redux/modalSlice';
+import { logout, resetAuthState } from '../../redux/authSlice';
 
 const Header = ({ onToggleSidebar }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isModalOpen = useSelector((state) => state.modal);
-  const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.auth);
 
   const {
     name,
     avatar,
-    balance: { totalBalance = 0, actualBalance = 0 } = {},
+  tokenDigit,
+    balance: { tokenValue = 0} = {},
   } = user?.user || {};
 
-  const walletBalance = totalBalance || '0.0';
+  const walletBalance = tokenValue  || '0.0';
   const modalBody = BuyTokenModal();
 
+  // useEffect(() => {
+  //   // The effect will run after the component renders
+  //   if (!user.isAuthenticated) {
+  //     // Logout is completed, navigate to '/login'
+  //     navigate('/login');
+  //     dispatch(set_Alert('Logout successful', '', 2000));
+  //     dispatch(resetAuthState());
+      
+  //   }
+  // }, [user.isAuthenticated, dispatch, navigate]);
+
   const handleLogout = () => {
-    localStorage.removeItem('token');
-    dispatch(setLoggedOutAction());
+    dispatch(logout());
+    dispatch(resetAuthState())
     navigate('/login');
     dispatch(set_Alert('Logout successful', '', 2000));
   };
+  
 
   const openModalHandler = () => {
     dispatch(
@@ -68,10 +81,13 @@ const Header = ({ onToggleSidebar }) => {
           />
         )}
       </div>
+      <div>
+        <section>USER ID: {tokenDigit}</section>
+      </div>
       <div className="user-info">
         <div className="balance">
           <span className="wallet-icon">&#128176;</span>
-          <span className="wallet-balance-header">₵{walletBalance}</span>
+          <span className="wallet-balance-header">{walletBalance}.000Tks</span>
         </div>
         <div className="user-details">
           <span className="username">{name}</span>

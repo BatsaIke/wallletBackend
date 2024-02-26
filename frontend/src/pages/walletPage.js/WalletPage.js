@@ -6,8 +6,9 @@ import { Chart as ChartJS } from 'chart.js/auto';
 import 'chartjs-adapter-date-fns';
 
 const WalletPage = ({ user, loading }) => {
-  const totalBalance = user.balance.totalBalance;
+  const totalBalance = user?.balance?.tokenValue||0;
   const payments = user.payments;
+
 
   const chartData = {
     labels: payments.map((payment) => payment.timestamp), // Use timestamps as labels
@@ -81,7 +82,7 @@ const WalletPage = ({ user, loading }) => {
         <>
           <h1>Your Wallet Balance</h1>
           <span className="wallet-icon">&#128176;</span>
-          <span className="wallet-balance">₵{totalBalance}</span>
+          <span className="wallet-balance">{totalBalance}.000Tks</span>
           <div style={{ width: '80%', marginTop: '20px', alignItems: 'center', marginBottom: '100px' }}>
           <Line data={chartData} options={options} plugins={[{ tooltip: tooltipOptions }]} />
           </div>

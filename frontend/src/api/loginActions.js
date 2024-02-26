@@ -1,7 +1,5 @@
-// loginActions.js
-import { setLoading } from '../redux/loginSlice';
+import { setLoading, setToken } from '../redux/authSlice';
 import setAuthToken from '../utils/setAuthToken';
-import { set_Alert } from './alertAction';
 import api from './api';
 import apiErrorHandler from '../utils/apiHandleError';
 
@@ -9,20 +7,13 @@ import apiErrorHandler from '../utils/apiHandleError';
 export const loginActions = (userData) => async (dispatch) => {
   dispatch(setLoading(true));
   try {
-    const response = await api.post('auth/user/', userData);
-    console.log('API Response:', response.data);
-
+    const response = await api.post('/auth/user', userData);
     // Handle success response
     const token = response.data.token;
-    dispatch(set_Alert('Login Successful', 'success'));
 
     // Dispatch the action to set the token and update isAuthenticated
-    dispatch(setAuthToken(token));
-
-    // Show success alert and navigate to '/'
-    dispatch(set_Alert('Login success', 'success',2000));
-
-    // You can add additional logic or dispatch other actions based on success if needed
+    dispatch(setToken(token));
+    setAuthToken(token);
 
   } catch (error) {
     // Handle API error using the shared errorHandler
@@ -31,3 +22,5 @@ export const loginActions = (userData) => async (dispatch) => {
     dispatch(setLoading(false));
   }
 };
+
+// Note: Do not use useNavigate here; it should be used in functional components.
