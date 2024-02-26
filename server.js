@@ -13,8 +13,9 @@ const app = express();
 dotenv.config();
 
 const corsOptions = {
-  origin: 'https://walllet-backend.vercel.app',
+  origin: 'https://walllet-backend-cxn8u1inh-batsaike.vercel.app',
 };
+
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS'); 
