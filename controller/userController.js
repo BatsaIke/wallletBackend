@@ -164,10 +164,8 @@ const verifyPament = async (req, res) => {
 };
 
 //updated user profile
-
-
 const updateUserProfile = async (req, res) => {
-  const userId = req.params.id; // Use userId consistently
+  const userId = req.params.id; 
   const updatedData = req.body;
 
   try {
@@ -201,9 +199,60 @@ const updateUserProfile = async (req, res) => {
   }
 };
 
+// buyProduct - handles product purchase by subtracting amount from user's balance
+//@route POST api/v1/payment/buy-product
+//@desc Buy a product
+//access private
+const buyProduct = async (req, res) => {
+  const { amount } = req.body; // This is the amount to deduct from totalBalance
+  const numericAmount = parseFloat(amount); // Ensure amount is a number
+  
+  try {
+    let user = await User.findById(req.user.id);
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // Log to debug
+    console.log(`User totalBalance before purchase: ${user.balance.totalBalance}, Purchase amount: ${numericAmount}`);
+
+    // Validate user's totalBalance and the numericAmount
+    if (isNaN(user.balance.totalBalance) || isNaN(numericAmount)) {
+      return res.status(400).json({ error: "Invalid totalBalance or amount" });
+    }
+
+    // Check if the user's totalBalance is sufficient for the purchase
+    if (user.balance.totalBalance < numericAmount) {
+      return res.status(400).json({ error: "Total balance is too low for this purchase" });
+    }
+
+    // Deduct the amount from the user's totalBalance
+    user.balance.totalBalance -= numericAmount;
+
+    // Update tokenBalance based on the new totalBalance
+    // Assuming 1 totalBalance = 10 tokenBalance
+    user.balance.tokenValue = user.balance.totalBalance * 10;
+
+    await user.save();
+
+    res.status(200).json({
+      message: "Purchase successful",
+      newTotalBalance: user.balance.totalBalance,
+      newTokenBalance: user.balance.tokenValue
+    });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).send("Server error during purchase");
+  }
+};
+
+
+
+
 module.exports = {
   verifyPament,
   createUserDetails,
   payToken,
-  updateUserProfile
+  updateUserProfile,
+  buyProduct 
 };

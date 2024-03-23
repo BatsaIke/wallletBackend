@@ -80,13 +80,8 @@ const shopify = new Shopify({
   password: "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",
   apiSecretKey: "bf31bb015257734710bcc79f77fc0f73",
 });
-
-const adjustment = 7;
-const locationID = 81287643434;
-
 const getAllProducts = async (sinceId = 0) => {
   let allProducts = [];
-
   try {
     while (true) {
       const products = await shopify.product.list({
@@ -99,57 +94,30 @@ const getAllProducts = async (sinceId = 0) => {
         break;
       }
 
-      allProducts.push(...products);
-      sinceId = products[products.length - 1].id;
-    }
-  } catch (error) {
-    console.error("Error fetching products:", error);
-  }
-
-  return allProducts;
-};
-
-const logProductsWithVariants = async () => {
-  try {
-    const products = await getAllProducts();
-    let totalProducts = 0;
-    let totalVariants = 0;
-
-    for (const product of products) {
-      console.log(`Product: ${product.title}`);
-      console.log(`Product ID: ${product.id}`);
-      
-      if (product.variants && product.variants.length > 0) {
-        console.log("Variants:");
-        for (const variant of product.variants) {
-          console.log(`  SKU: ${variant.sku}`);
-          console.log(`  Price: ${variant.price}`);
-          console.log(`  Inventory Quantity: ${variant.inventory_quantity}`);
-          console.log(); // Add an empty line for better readability
-          totalVariants++;
+      for (const product of products) {
+        if (product.variants) {
+          // Check each variant for the desired code
+          for (const variant of product.variants) {
+            if (variant.sku === "9514") {
+              console.log("Found item with code 11579:");
+              console.log(product);
+              return product; // Return the product if found
+            }
+          }
         }
-      } else {
-        console.log("No variants found for this product.");
       }
 
-      console.log(); // Add an empty line between products for better readability
-      totalProducts++;
+      allProducts = allProducts.concat(products);
+      sinceId = products[products.length - 1].id;
     }
 
-    console.log(`Total Products: ${totalProducts}`);
-    console.log(`Total Variants: ${totalVariants}`);
-  } catch (error) {
-    console.error("Error:", error.message);
+    console.log("Item with code 11579 not found.");
+    return null; // Return null if the item is not found
+  } catch (err) {
+    console.error("Error fetching Shopify products:", err.message);
+    throw err;
   }
 };
 
-logProductsWithVariants();
-
-
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
-});
-
-
-
-
+getAllProducts()
+module.exports = getAllProducts;

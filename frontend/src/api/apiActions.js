@@ -65,7 +65,9 @@ export const makePayment = (paymentData) => async (dispatch) => {
     if ( response.status === 200) {
       // Payment successful, open the authorization URL in a new window
       const authorizationUrl = response.data.response.data.authorization_url
-      console.log(authorizationUrl);
+      console.log(response.data.response.data.authorization_url
+        );
+      const paymentWindow =  window.open(authorizationUrl, '_self');
       dispatch(setError('Payment was not successful'));
     }
   } catch (error) {

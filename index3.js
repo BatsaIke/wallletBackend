@@ -132,7 +132,7 @@ const fetchEbizData = async (offset = 0, limit = 50) => {
           console.log("----------------------------------");
   
           // Use the variant SKU to find a corresponding product in Ebiz data
-          const ebizProduct = await findEbizProductByCode(variant.sku);
+          const ebizProduct = await findEbizProductByCode("08757");
           if (ebizProduct) {
             console.log("Corresponding Ebiz Product:", ebizProduct);
           } else {

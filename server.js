@@ -21,9 +21,10 @@ app.use(bodyParser.json());
 
 // Define routes
 app.use("/api/v1/user", usersDetails);
-app.use("/api/v1/payment", payStack);
+app.use("/api/v1/payment", payStack); 
 app.use("/api/v1/password", userProfile);
 app.use("/api/v1/auth/user", userAuth);
+app.use("/api/v1/profile", userProfile);
 
 const PORT = process.env.PORT || 5100;
 app.get("/api/v1", (req, res) => res.send("API is running"));
