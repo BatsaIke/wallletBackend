@@ -43,7 +43,7 @@ const LandingPage = () => {
   useEffect(() => {
     openModalHandler();
     verifyPayment();
-  }, []);
+  }, [openModalHandler]);
 
   // Local state to track the selected component
   const [selectedComponent, setSelectedComponent] = useState("WalletPage");

@@ -67,7 +67,7 @@ export const makePayment = (paymentData) => async (dispatch) => {
       const authorizationUrl = response.data.response.data.authorization_url
       console.log(response.data.response.data.authorization_url
         );
-      const paymentWindow =  window.open(authorizationUrl, '_self');
+        window.open(authorizationUrl, '_self');
       dispatch(setError('Payment was not successful'));
     }
   } catch (error) {
