@@ -28,22 +28,24 @@ const LandingPage = () => {
     setSidebarVisible(!sidebarVisible);
   };
 
-  const openModalHandler = () => {
-    dispatch(
-      openModal({
-        title: "Buy Token",
-        body: {
-          inputPlaceholder: "Enter amount",
-          buttonText: "Buy Now",
-        },
-      })
-    );
-  };
-
   useEffect(() => {
+    const openModalHandler = () => {
+      dispatch(
+        openModal({
+          title: "Buy Token",
+          body: {
+            inputPlaceholder: "Enter amount",
+            buttonText: "Buy Now",
+          },
+        })
+      );
+    };
+  
     openModalHandler();
     verifyPayment();
-  }, [openModalHandler]);
+    // Empty dependency array means this effect runs only once after the initial render
+  }, [dispatch]); // Don't forget to include dispatch here if it's used within the effect
+  
 
   // Local state to track the selected component
   const [selectedComponent, setSelectedComponent] = useState("WalletPage");
