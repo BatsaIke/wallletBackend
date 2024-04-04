@@ -63,3 +63,23 @@ export const fetchOrderById = (id) => async (dispatch) => {
       dispatch(setLoading(false));
     }
   };
+
+  // Delete an order
+export const deleteOrder = (id) => async (dispatch) => {
+    dispatch(setLoading(true));
+    try {
+      const response = await api.delete(`/orders/${id}`);
+      if (response.status === 200) {
+        dispatch(fetchOrders()); // Refresh the orders list after deletion
+        return { success: true };
+      } else {
+        dispatch(setError("Failed to delete order."));
+        return { success: false, message: "Failed to delete order." };
+      }
+    } catch (error) {
+      apiErrorHandler(error, dispatch);
+      return { success: false, message: error.message };
+    } finally {
+      dispatch(setLoading(false));
+    }
+  };
