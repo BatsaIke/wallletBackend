@@ -22,6 +22,13 @@ app.use(express.json({ extended: false }));
 app.use(cors()); // Enable CORS for all origins
 app.use(bodyParser.json());
 
+//cathing errors
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Something broke!');
+  });
+
+  
 // Define routes
 app.use("/api/v1/user", usersDetails);
 app.use("/api/v1/payment", payStack); 
