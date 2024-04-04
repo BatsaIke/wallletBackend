@@ -20,7 +20,7 @@ connectDB();
 // Init middleware
 app.use(express.json({ extended: false }));
 app.use(cors({
-    origin: 'https://walllet-backend.vercel.app/api/v1/auth/user',"https://www.highsandbites.com/", // Allow only specific origin
+    origin: ['https://walllet-backend.vercel.app', 'https://www.highsandbites.com'],
     optionsSuccessStatus: 200, // For legacy browsers
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE", // Allowed HTTP methods
     preflightContinue: false, // Pass the CORS preflight response to the next handler
