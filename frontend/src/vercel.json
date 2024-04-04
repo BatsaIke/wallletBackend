@@ -19,7 +19,7 @@
       }
     ],
     "env": {
-      "REACT_APP_API_URL": "https://walllet-backend.vercel.app/api/v1"
+      "REACT_APP_API_BASE_URL": "https://walllet-backend.vercel.app/api/v1"
     },
     "build": {
       "env": {
