@@ -20,9 +20,9 @@ connectDB();
 // Init middleware
 app.use(express.json({ extended: false }));
 app.use(cors({
-    origin: ['https://www.highsandbites.com', 'https://walllet-backend.vercel.app'],
+    origin: '*', // Allows all origins
+    optionsSuccessStatus: 200, // For legacy browsers
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    credentials: true, 
 }));
   
   app.use(bodyParser.json());
