@@ -5,7 +5,9 @@ const bodyParser = require('body-parser');
 const usersDetails = require("./routes/userRoute.js");
 const userProfile = require("./routes/profileRoute");
 const userAuth = require("./routes/authRoute.js");
-const payStack = require("./routes/paystackRoute.js");
+const payStack = require("./routes/paymentRoute.js");
+const orderRoute = require("./routes/orderRoutes.js");
+const productRoute = require("./routes/productRoute.js");
 const cors = require("cors");
 const handlePaystackWebhook = require("./moddleware/payStackWebhook.js");
 
@@ -27,6 +29,8 @@ app.use("/api/v1/password", userProfile);
 app.use("/api/v1/auth/user", userAuth);
 app.use("/api/v1/profile", userProfile);
 app.post("/api/v1/webhook/paystack", handlePaystackWebhook);
+app.use('/api/v1/orders', orderRoute);
+app.use('/api/v1/products', productRoute);
 
 const PORT = process.env.PORT || 5100;
 

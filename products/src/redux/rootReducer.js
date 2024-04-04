@@ -6,6 +6,7 @@ import groupSlice from './slices/groupSlice';
 import messageSlice from './slices/messageSlice';
 import cartSlice from './slices/cartSlice';
 import paymentSlice from './slices/paymentSlice';
+import orderSlice from './slices/orderSlice';
 
 const rootReducer = combineReducers({
   auth: authReducer,
@@ -14,7 +15,8 @@ const rootReducer = combineReducers({
   groups:groupSlice,
   message:messageSlice,
   cart:cartSlice,
-  payment:paymentSlice
+  payment:paymentSlice,
+  order:orderSlice,
 });
 
 export default rootReducer;
