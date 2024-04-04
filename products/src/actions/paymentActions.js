@@ -2,7 +2,6 @@ import api from "../api";
 import { setLoading } from "../redux/slices/authSlice";
 import { setError } from "../redux/slices/paymentSlice";
 import apiErrorHandler from "../utils/apiHandleError";
-import { payWithCard, payWithMomo } from "../utils/payWithMomoorCard";
 
 
 export const verifyPayment = async (paymentReference) => {
