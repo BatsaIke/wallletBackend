@@ -19,13 +19,8 @@ connectDB();
 
 // Init middleware
 app.use(express.json({ extended: false }));
-app.use(cors({
-    origin: '*', // Allows all origins
-    optionsSuccessStatus: 200, // For legacy browsers
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-}));
-  
-  app.use(bodyParser.json());
+app.use(cors()); // Enable CORS for all origins
+app.use(bodyParser.json());
 
 // Define routes
 app.use("/api/v1/user", usersDetails);
