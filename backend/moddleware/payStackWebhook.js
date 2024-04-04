@@ -10,7 +10,7 @@ const handlePaystackWebhook = (req, res) => {
         return res.status(401).send('Invalid signature');
     }
 
-    // Process the successful payment event
+    // Process the successful payment event 
     if (event.event === 'charge.success') {
         const reference = event.data.reference;
         console.log('Payment success for reference:', reference);
@@ -36,4 +36,4 @@ async function updatePaymentStatus(reference, status) {
     // await db.collection('payments').updateOne({ reference }, { $set: { status } });
 }
 
-module.exports = {handlePaystackWebhook}
+module.exports = handlePaystackWebhook
