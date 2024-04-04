@@ -1,0 +1,50 @@
+/* Slider.module.css */
+.slider {
+    position: relative;
+    margin: auto;
+    overflow: hidden;
+    width: 100%;
+    max-width: 800px;
+    height: 50vh;
+  }
+  
+  .slide,
+  .slideActive {
+    position: absolute; /* Absolute positioning to overlay slides */
+    width: 100%;
+    height: 100%;
+    opacity: 0; /* Start with slides invisible */
+    transition: left 0.3s ease;
+  }
+  
+  .slideActive {
+    opacity: 1; /* Make the active slide fully visible */
+  }
+  
+  .image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensure images cover the area without distortion */
+  }
+  
+  .prev,
+  .next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: #fff;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    z-index: 2;
+  }
+  
+  .prev { left: 10px; }
+  .next { right: 10px; }
+  
+  @media (max-width: 768px) {
+    .prev, .next {
+      padding: 5px;
+    }
+  }
+  

@@ -1,0 +1,70 @@
+.loginContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 60vh; /* Use the full height of the viewport */
+    text-align: center;
+  }
+  .loginError {
+    color: #dc3545; /* Bootstrap danger color for errors */
+    margin-top: 20px; /* Space from the login form */
+    text-align: center;
+  }
+  .loginForm {
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 400px; /* Maximum width of the form */
+  }
+  .loginForm h2{
+    margin-bottom: 20px;
+  }
+  .inputGroup {
+    margin-bottom: 20px;
+  }
+  
+  .inputGroup label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .inputGroup input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px; /* Space for inputs */
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .loginButton {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .loginButton:hover {
+    background-color: #0056b3;
+  }
+  
+  .forgotPasswordLink, .signupPrompt {
+    display: block;
+    margin-top: 20px;
+  }
+  
+  .signupPrompt {
+    font-size: 0.9rem;
+  }
+  
+  /* Adjust the link color if needed */
+  a {
+    color: #007bff;
+    text-decoration: none; /* Optional: Removes underline from links */
+  }
+  

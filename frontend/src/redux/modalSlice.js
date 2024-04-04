@@ -17,7 +17,7 @@ const modalSlice = createSlice({
     },
     closeModal(state) {
       state.isOpen = false;
-      state.title = 'modal title'; // Reset to default title when closing modal
+      state.title = ''; 
       state.body = null;
     },
   },

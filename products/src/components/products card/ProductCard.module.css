@@ -1,0 +1,106 @@
+
+.card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    margin: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center children horizontally */
+    width: calc(100% / 4 - 20px); /* Adjust width for 4 cards per row */
+  }
+  
+  .image {
+    width: 100%;
+    height: 200px; /* Adjust height as needed */
+    object-fit: cover; /* Ensure the image covers the area */
+  }
+  
+  .details {
+    text-align: center;
+    padding: 15px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Distribute space evenly */
+    flex: 1; /* Ensure details section fills the available space */
+  }
+  
+  
+  h3 {
+    margin: 0.5em 0; /* Reduce margin around the product name for compactness */
+  }
+  
+  p {
+    margin: 0.25em 0; /* Smaller margin for a more compact look */
+  }
+  
+  .addToCartButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px; /* Space between icon and text */
+    background-color: #4CAF50; /* Example: Green background */
+    color: white;
+    padding: 8px 11px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: auto;
+    width: 80%; /* Make button wider to fill more of card */
+    margin:  0 auto;
+    font-size: 12px;
+  }
+  
+  .addToCartButton:hover {
+    background-color: #45a049; /* Darker shade on hover */
+  }
+ /* Assuming these styles are part of or added to ProductCard.module.css */
+
+@media (max-width: 768px) {
+    .card {
+      width: calc(50% - 20px); /* 2 products per line on tablets and large phones */
+      margin: 10px; /* Adjust margin for better spacing */
+    }
+  
+    .image {
+      height: 150px; /* Adjust image height for smaller screens */
+    }
+  
+    .details {
+      padding: 10px; /* Slightly reduce padding */
+    }
+  
+    .addToCartButton {
+      padding: 8px 12px; /* Adjust button padding for smaller screens */
+      font-size: 0.9rem;
+      font-size: 12px;/* Adjust font size for better readability */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .card {
+      width: 100% - 20px; /* Full width cards with some margin for very small screens */
+      margin: 10px;
+    }
+  
+    .image {
+      height: 200px; /* Keeping the image prominent even on small screens */
+    }
+  
+    .details h3 {
+      font-size: 1rem; /* Slightly reduce the font size of product name */
+    }
+  
+    .details p {
+      font-size: 0.8rem; /* Reduce font size for other details to save space */
+    }
+  
+    .addToCartButton {
+      width: 100%; /* Make the button full width to emphasize call to action */
+      margin-top: 8px; /* Adjust spacing above the button */
+      font-size: 12px;
+    }
+  }
+  

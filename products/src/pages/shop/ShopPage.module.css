@@ -1,0 +1,44 @@
+/* ShopPage.module.css */
+.productsGrid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+  
+  /* Ensure the ShopPage container is wide enough */
+  .container {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0 20px; /* Adjust as necessary */
+  }
+  .shopageContainer{
+    display: flex;
+    flex-direction: row; /* Align children side by side */
+    min-height: 100vh;
+  }
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px; /* Adjust spacing above pagination */
+}
+
+.pageNumber {
+    padding: 10px;
+    margin: 0 5px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+.pageNumber:hover {
+    background-color: #0056b3;
+}
+
+/* Responsive design for mobile devices */
+@media (max-width: 768px) {
+    .productsGrid {
+        grid-template-columns: repeat(2, 1fr); /* 2 products per row on mobile */
+    }
+}
