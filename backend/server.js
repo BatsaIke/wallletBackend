@@ -26,7 +26,7 @@ app.use("/api/v1/payment", payStack);
 app.use("/api/v1/password", userProfile);
 app.use("/api/v1/auth/user", userAuth);
 app.use("/api/v1/profile", userProfile);
-app.post("/webhook/paystack", handlePaystackWebhook);
+app.post("/api/v1/webhook/paystack", handlePaystackWebhook);
 
 const PORT = process.env.PORT || 5100;
 

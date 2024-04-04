@@ -1,4 +1,3 @@
-// middlewares/paystackWebhook.js
 const crypto = require('crypto');
 
 const handlePaystackWebhook = (req, res) => {
@@ -11,11 +10,30 @@ const handlePaystackWebhook = (req, res) => {
         return res.status(401).send('Invalid signature');
     }
 
-    // Log or process the event here
-    console.log('Event received:', event);
+    // Process the successful payment event
+    if (event.event === 'charge.success') {
+        const reference = event.data.reference;
+        console.log('Payment success for reference:', reference);
 
-    // Acknowledge the event immediately
-    res.send(200);
+        // Update the payment status in your database
+        updatePaymentStatus(reference, 'successful')
+          .then(() => res.send(200))
+          .catch(err => {
+            console.error('Failed to update payment status:', err);
+            res.status(500).send('Failed to process event');
+          });
+    } else {
+        // Acknowledge other events without processing
+        res.send(200);
+    }
 };
 
-module.exports = handlePaystackWebhook;
+// A mock function to illustrate updating payment status in the database
+async function updatePaymentStatus(reference, status) {
+    // Your database update logic here
+    console.log(`Payment for ${reference} marked as ${status}`);
+    // For example:
+    // await db.collection('payments').updateOne({ reference }, { $set: { status } });
+}
+
+module.exports = {handlePaystackWebhook}
