@@ -16,8 +16,7 @@ const LoginPage = () => {
   const { isAuthenticated, error } = useSelector((state) => ({
     error: state.auth.error,
   }));
-  console.log(error?.response?.data?.errors[0].msg);
-  let loginError = error?.response?.data?.errors[0].msg;
+  let loginError = error?.response?.data?.errors?.[0]?.msg ?? '';
 
   const handleLogin = async (e) => {
     e.preventDefault();

@@ -4,22 +4,7 @@ import { setError } from "../redux/slices/paymentSlice";
 import apiErrorHandler from "../utils/apiHandleError";
 
 
-export const verifyPayment = async (paymentReference) => {
-  try {
-    const response = await api.get(`/payment/verify/${paymentReference}`);
-    console.log('Payment verification response:', response.data);
-    if (response.status === 200 && response.data.success) {
-      // Assuming payment verification was successful
-      return { success: true, data: response.data };
-    } else {
-      // Verification failed or was not conclusive
-      return { success: false, message: 'Payment verification failed.' };
-    }
-  } catch (error) {
-    console.error('Error verifying payment:', error);
-    return { success: false, message: error.message };
-  }
-};
+
 
 export const payToken = (paymentData) => async (dispatch) => {
   dispatch(setLoading(true));
@@ -28,15 +13,6 @@ export const payToken = (paymentData) => async (dispatch) => {
     if (response.status === 200) {
       const authorizationUrl = response.data.response.data.authorization_url;
       window.open(authorizationUrl, '_self');
-      // Optionally, after opening the authorization URL,
-      // you could verify the payment by calling verifyPayment function with the payment reference.
-      // const verificationResult = await verifyPayment(paymentReference);
-      // if (verificationResult.success) {
-      //   // Handle successful verification
-      // } else {
-      //   // Handle failed verification
-      //   dispatch(setError(verificationResult.message));
-      // }
       return { success: true };
     } else {
       dispatch(setError('Payment was not successful'));
