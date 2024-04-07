@@ -17,8 +17,8 @@ const CheckoutPage = () => {
  setReferece(ref)
   }, [dispatch]);
 
-  console.log(referece)
-  
+  console.log(referece, "referece")
+
   return (
     <div className={styles.checkoutPageContainer}>
       <div className={styles.billingSection}>
