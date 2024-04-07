@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './CheckoutPage.module.css'
 import BillingDetails from './BillingDetails';
@@ -8,17 +8,17 @@ import { makePayment } from "../../actions/paymentActions";
 
 const CheckoutPage = () => {
   const dispatch = useDispatch();
-  const paymentStatus = useSelector((state) => state.payment.paymentStatus);
-  console.log(paymentStatus, "payment statu")
+  const [referece, setReferece] = useState();
+  // const paymentStatus = useSelector((state) => state.payment.paymentStatus);
+  // console.log(paymentStatus, "payment statu")
 
-  // useEffect(() => {
-  //   // Assuming you have a way to retrieve the payment reference, for example:
-  //   const paymentReference = ""
-  //   if (paymentReference) {
-  //     dispatch(paymentStatus(paymentReference));
-  //   }
-  // }, [dispatch]);
+  useEffect(() => {
+ const ref =   localStorage.getItem('pref')
+ setReferece(ref)
+  }, [dispatch]);
 
+  console.log(referece)
+  
   return (
     <div className={styles.checkoutPageContainer}>
       <div className={styles.billingSection}>

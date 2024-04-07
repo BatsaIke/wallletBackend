@@ -52,8 +52,8 @@ export const makePayment = (paymentData) => async (dispatch) => {
     const response = await api.post('/payment/guest-payment', paymentData);
     if (response.status === 200) {
       const reference = response.data.response.data.reference;
-      dispatch(setPaymentStatus(reference));
       const authorizationUrl = response.data.response.data.authorization_url;
+      localStorage.setItem("pref",reference)
       window.open(authorizationUrl, '_self');
     }
   } catch (error) {
