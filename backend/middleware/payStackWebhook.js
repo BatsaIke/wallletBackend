@@ -12,11 +12,12 @@ const handlePaystackWebhook = (req, res) => {
 
     // Process the successful payment event 
     if (event.event === 'charge.success') {
-        const reference = event.data.reference;
+        const reference = event.data
+        const even =event        
         console.log('Payment success for reference:', reference);
 
         // Update the payment status in your database
-        updatePaymentStatus(reference, 'successful')
+        updatePaystackStatus(reference, 'successful',even)
           .then(() => res.send(200))
           .catch(err => {
             console.error('Failed to update payment status:', err);
@@ -29,8 +30,9 @@ const handlePaystackWebhook = (req, res) => {
 };
 
 // A mock function to illustrate updating payment status in the database
-async function updatePaymentStatus(reference, status) {
+async function updatePaystackStatus(reference, status,even) {
     // Your database update logic here
+    console.log(`${even},"event data"`)
     console.log(`Payment for ${reference} marked as ${status}`);
     // For example:
     // await db.collection('payments').updateOne({ reference }, { $set: { status } });
@@ -38,5 +40,5 @@ async function updatePaymentStatus(reference, status) {
 
 module.exports = {
     handlePaystackWebhook,
-    updatePaymentStatus,
+    updatePaystackStatus,
 };

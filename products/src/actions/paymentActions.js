@@ -1,6 +1,6 @@
 import api from "../api";
 import { setLoading } from "../redux/slices/authSlice";
-import { setError } from "../redux/slices/paymentSlice";
+import { setError, setPaymentStatus } from "../redux/slices/paymentSlice";
 import apiErrorHandler from "../utils/apiHandleError";
 
 
@@ -51,28 +51,19 @@ export const makePayment = (paymentData) => async (dispatch) => {
   try {
     const response = await api.post('/payment/guest-payment', paymentData);
     if (response.status === 200) {
-      const reference= response.data.response.data.reference
-      console.log(reference,"in PAYMENT ACTIONS");
-
+      const reference = response.data.response.data.reference;
+      dispatch(setPaymentStatus(reference));
       const authorizationUrl = response.data.response.data.authorization_url;
-       window.open(authorizationUrl, '_self');
-
-    let res = await paymentStatus(reference)
-      console.log(res)
-    } else {
-      dispatch(setError('Payment was not successful'));
-      return { success: false, message: 'Payment was not successful' };
+      window.open(authorizationUrl, '_self');
     }
   } catch (error) {
     console.error('Error making payment:', error);
     dispatch(setError('Error making payment'));
-    apiErrorHandler(error, dispatch);
-    return { success: false, message: error.message };
+    // Handle the error, potentially with apiErrorHandler
   } finally {
     dispatch(setLoading(false));
   }
 };
-
 
 
 

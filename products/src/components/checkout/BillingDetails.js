@@ -6,7 +6,7 @@ import Modal from "../../UI/modal/Modal";
 import LoginPage from "../../pages/Login/Loginpage";
 import { BuyTokenModal } from "../buy-token-modal/BuyTokenModal";
 
-const BillingDetails = () => {
+const BillingDetails = ({makePayment}) => {
   const dispatch = useDispatch();
   const { isAuthenticated, error } = useSelector((state) => ({
     isAuthenticated: state.auth.isAuthenticated,
@@ -146,7 +146,7 @@ const BillingDetails = () => {
           header="Make payment as Guest"
           className={styles.billModal}
         >
-          <BuyTokenModal email={email} />
+          <BuyTokenModal email={email} makePayment= {makePayment} />
         </Modal>
       </form>
     </div>

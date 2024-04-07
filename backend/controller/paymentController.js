@@ -1,8 +1,5 @@
-const { validationResult } = require("express-validator");
 const User = require("../model/UserModel");
-const gravatar = require("gravatar");
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
+
 const dotenv = require("dotenv");
 const { payWithMomo, payWithCard } = require("../middleware/payWithMomoorCard");
 const {
@@ -12,10 +9,9 @@ const {
   calculateAccountBalance,
   tokenValue,
 } = require("../middleware/otherHelperFunctions");
-const { updatePaymentStatus } = require("../middleware/updatePaymentStatus");
 dotenv.config();
-const mongoose = require("mongoose");
-const generateUniqueToken = require("../utils/generateUniqueUsertoken");
+
+const { updatePaystackStatus } = require("../middleware/payStackWebhook");
 
 //pay for token
 //@rout POST api/v1/payment/pay
@@ -70,12 +66,14 @@ const payAsGuest = async (req, res) => {
 
 const paymentStatus = async (req, res) => {
   const { reference } = req.body;
+  console.log("payment statu displatch backend")
+
   try {
     // Verify payment with Paystack using the payment reference
-    const verificationResult = await updatePaymentStatus(reference);
+    const verificationResult = await updatePaystackStatus(reference);
     // If verification is successful, update payment status in your database
     if (verificationResult && verificationResult.status === 'success') {
-      await updatePaymentStatus(reference, 'successful');
+      await updatePaystackStatus(reference, 'successful');
       res.json({ success: true, message: 'Payment status updated successfully.' });
     } else {
       res.status(400).json({ success: false, message: 'Payment verification failed.' });

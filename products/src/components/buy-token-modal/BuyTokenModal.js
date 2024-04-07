@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./BuyTokenModal.module.css"; // Ensure this path is correct
-import { makePayment } from "../../actions/paymentActions";
 
-export const BuyTokenModal = ({email}) => {
+export const BuyTokenModal = ({email,makePayment}) => {
   const dispatch = useDispatch();
   const [paymentMethod, setPaymentMethod] = useState("");
   const totalAmount = useSelector((state) => state.cart.totalPrice);
