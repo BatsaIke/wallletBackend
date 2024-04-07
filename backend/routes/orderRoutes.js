@@ -2,8 +2,8 @@ const express = require('express');
 const { check } = require('express-validator');
 const { createOrder, getOrders, getOrderById, updateOrder, deleteOrder } = require('../controller/orderController');
 const router = express.Router();
-const softAuth = require('../moddleware/softAuth');
-const auth = require('../moddleware/auth');
+const softAuth = require('../middleware/softAuth');
+const auth = require('../middleware/auth');
 
 // Add validation checks for creating and updating orders
 router.post(

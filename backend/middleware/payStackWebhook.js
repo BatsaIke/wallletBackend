@@ -36,4 +36,7 @@ async function updatePaymentStatus(reference, status) {
     // await db.collection('payments').updateOne({ reference }, { $set: { status } });
 }
 
-module.exports = handlePaystackWebhook
+module.exports = {
+    handlePaystackWebhook,
+    updatePaymentStatus,
+};

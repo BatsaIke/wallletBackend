@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const auth = require("../moddleware/auth.js");
+const auth = require("../middleware/auth.js");
 const { check } = require("express-validator");
 
 const {
@@ -8,12 +8,16 @@ const {
   payAsGuest,
   verifyPament,
   buyProduct,
+  paymentStatus,
 } = require("../controller/paymentController.js");
 //make payment
 router.route("/pay").post(auth, payToken);
 
 //pay as guest
 router.route("/guest-payment").post(payAsGuest);
+
+router.route("/status").post(paymentStatus);
+
 
 //verify payment
 router.route("/verify").get(auth, verifyPament);

@@ -28,18 +28,37 @@ export const payToken = (paymentData) => async (dispatch) => {
   }
 };
 
-
+export const paymentStatus = (paymentData) => async (dispatch) => {
+  dispatch(setLoading(true));
+  try {
+    const response = await api.post('/payment/status', paymentData);
+   
+    console.log(response)
+     return response
+    
+  } catch (error) {
+    console.error('Error verifying:', error);
+    dispatch(setError('Error making payment'));
+    apiErrorHandler(error, dispatch);
+    return { success: false, message: error.message };
+  } finally {
+    dispatch(setLoading(false));
+  }
+};
 
 export const makePayment = (paymentData) => async (dispatch) => {
   dispatch(setLoading(true));
   try {
     const response = await api.post('/payment/guest-payment', paymentData);
     if (response.status === 200) {
-      console.log(response,"in PAYMENT ACTIONS");
+      const reference= response.data.response.data.reference
+      console.log(reference,"in PAYMENT ACTIONS");
+
       const authorizationUrl = response.data.response.data.authorization_url;
-      window.open(authorizationUrl, '_self');
-    
-      return { success: true };
+       window.open(authorizationUrl, '_self');
+
+    let res = await paymentStatus(reference)
+      console.log(res)
     } else {
       dispatch(setError('Payment was not successful'));
       return { success: false, message: 'Payment was not successful' };

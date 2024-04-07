@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const auth =require('../moddleware/auth.js')
+const auth =require('../middleware/auth.js')
 const { check } = require("express-validator");
 
 const {

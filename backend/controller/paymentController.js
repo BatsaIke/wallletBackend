@@ -4,15 +4,15 @@ const gravatar = require("gravatar");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
-const { payWithMomo, payWithCard } = require("../moddleware/payWithMomoorCard");
+const { payWithMomo, payWithCard } = require("../middleware/payWithMomoorCard");
 const {
   findUserById,
   getMostRecentPayment,
   verifyPayment,
   calculateAccountBalance,
   tokenValue,
-} = require("../moddleware/otherHelperFunctions");
-const { updatePaymentStatus } = require("../moddleware/updatePaymentStatus");
+} = require("../middleware/otherHelperFunctions");
+const { updatePaymentStatus } = require("../middleware/updatePaymentStatus");
 dotenv.config();
 const mongoose = require("mongoose");
 const generateUniqueToken = require("../utils/generateUniqueUsertoken");
@@ -64,6 +64,25 @@ const payAsGuest = async (req, res) => {
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Server error@PaymentMethod");
+  }
+};
+
+
+const paymentStatus = async (req, res) => {
+  const { reference } = req.body;
+  try {
+    // Verify payment with Paystack using the payment reference
+    const verificationResult = await updatePaymentStatus(reference);
+    // If verification is successful, update payment status in your database
+    if (verificationResult && verificationResult.status === 'success') {
+      await updatePaymentStatus(reference, 'successful');
+      res.json({ success: true, message: 'Payment status updated successfully.' });
+    } else {
+      res.status(400).json({ success: false, message: 'Payment verification failed.' });
+    }
+  } catch (error) {
+    console.error('Error updating payment status:', error);
+    res.status(500).json({ success: false, message: 'Server error during payment status update.' });
   }
 };
 
@@ -168,4 +187,5 @@ module.exports = {
   payToken,
   buyProduct,
   payAsGuest,
+  paymentStatus
 };

@@ -9,7 +9,7 @@ const payStack = require("./routes/paymentRoute.js");
 const orderRoute = require("./routes/orderRoutes.js");
 const productRoute = require("./routes/productRoute.js");
 const cors = require("cors");
-const handlePaystackWebhook = require("./moddleware/payStackWebhook.js");
+const {handlePaystackWebhook} = require("./middleware/payStackWebhook.js");
 
 const app = express();
 dotenv.config();
