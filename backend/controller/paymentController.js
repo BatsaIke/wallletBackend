@@ -1,4 +1,5 @@
 const User = require("../model/UserModel");
+const PaymentSession = require('../model/PaymentSessionModel');
 
 const dotenv = require("dotenv");
 const { payWithMomo, payWithCard } = require("../middleware/payWithMomoorCard");
@@ -47,7 +48,19 @@ const payToken = async (req, res) => {
 //access private
 const payAsGuest = async (req, res) => {
   const { paymentMethod, amount, email } = req.body;
+  const sessionID = uuidv4();
   try {
+
+    // Initialize payment session document
+    let paymentSession = new PaymentSession({
+      sessionID,
+      email,
+      amount,
+      paymentMethod,
+      status: 'initialized',
+    });
+
+
     let paymentResult;
     if (paymentMethod === "momo") {
       paymentResult = await payWithMomo(email, amount);
@@ -56,7 +69,16 @@ const payAsGuest = async (req, res) => {
     } else {
       return res.status(400).json({ error: "Invalid payment method" });
     }
+
+    // Update paymentDetails with the reference from paymentResult
+    paymentDetails = { ...paymentDetails, reference: paymentResult.reference };
+
+    // Store the session information and payment reference in your database
+    await PaymentSession.create(paymentDetails);
+
     res.status(200).json(paymentResult);
+    res.status(200).json(paymentResult);
+    console.log(paymentResult)
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Server error@PaymentMethod");
