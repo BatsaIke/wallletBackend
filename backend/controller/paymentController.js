@@ -61,26 +61,25 @@ const payAsGuest = async (req, res) => {
       return res.status(400).json({ error: "Invalid payment method" });
     }
 
-    console.log(paymentResult,"PAYMENR RESULT");
-    
-    if (!paymentResult.data.reference) {
+ 
       return res.status(500).json(paymentResult);
-    }
+ 
 
-    // Initialize and save the payment session document with the reference
-    let paymentSession = await PaymentSession.create({
-      sessionID,
-      email,
-      amount,
-      paymentMethod,
-      status: 'initialized',
-      reference: paymentResult.data.reference, 
-    });
+    // // Initialize and save the payment session document with the reference
+    // let paymentSession = await PaymentSession.create({
+    //   sessionID,
+    //   email,
+    //   amount,
+    //   paymentMethod,
+    //   status: 'initialized',
+    //   reference: paymentResult.reference, 
+    // });
 
-    res.status(200).json({
-      ...paymentResult,
-      sessionID: paymentSession.sessionID, 
-    });
+   
+    // res.status(200).json({
+    //   ...paymentResult,
+    //   sessionID: paymentSession.sessionID, 
+    // });
   } catch (error) {
     console.error("Server error@PaymentMethod:", error.message);
     res.status(500).send("Server error during payment initialization");
