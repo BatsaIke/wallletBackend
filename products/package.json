@@ -1,7 +1,7 @@
 {
   "name": "products",
-  "version": "0.1.0",
-  "home":"https://www.highsandbites.com/",
+  "version": "0.1.1",
+  "home": "https://www.highsandbites.com/",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
