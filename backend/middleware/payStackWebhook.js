@@ -15,48 +15,31 @@ const handlePaystackWebhook =async (req, res) => {
     }
 
     // Process the successful payment event 
-    if (event.event === 'charge.success') {
-        const reference = event.data
-        console.log(reference,"REFERENXOIWYOIRYWIOYR")
-        const even =event        
-        console.log('Payment success for reference:', reference);
+    if (event === 'charge.success') {
+        const { reference } = data;
+        try {
+            const paymentSession = await PaymentSession.findOneAndUpdate(
+                { reference },
+                { $set: { status: 'successful' }},
+                { new: true }
+            );
 
-        // Update the payment status in your database
-        updatePaystackStatus(reference, 'successful',even)
-          .then(() => res.send(200))
-          .catch(err => {
-            console.error('Failed to update payment status:', err);
-            res.status(500).send('Failed to process event');
-          });
+            if (paymentSession) {
+                console.log(`Payment status updated successfully for reference: ${reference}`);
+                res.status(200).send('Webhook processed successfully');
+            } else {
+                console.error(`No payment session found for reference: ${reference}`);
+                res.status(404).send('Payment session not found');
+            }
+        } catch (error) {
+            console.error(`Error processing webhook for reference ${reference}: `, error);
+            res.status(500).send('Internal Server Error');
+        }
     } else {
-        // Acknowledge other events without processing
-        res.send(200);
+        // Handle other events or ignore them
+        res.status(200).send('Event ignored');
     }
 };
-
-
-
-async function updatePaystackStatus(reference, status) {
-    try {
-        // Find the document by reference and update its status
-        const result = await PaymentSession.findOneAndUpdate(
-            { reference }, // Filter by reference
-            { $set: { status } }, // Update the status field
-            { new: true } // Return the updated document
-        );
-
-        if (!result) {
-            console.log(`No payment session found with reference ${reference}.`);
-            return false;
-        } else {
-            console.log(`Payment session with reference ${reference} updated to status ${status}.`);
-            return true;
-        }
-    } catch (error) {
-        console.error(`Error updating payment status for reference ${reference}: `, error);
-        throw error;
-    }
-}
 
 module.exports = {
     handlePaystackWebhook,
