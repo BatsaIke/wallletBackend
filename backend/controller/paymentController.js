@@ -72,13 +72,13 @@ const payAsGuest = async (req, res) => {
       amount,
       paymentMethod,
       status: 'initialized',
-      reference: paymentResult.reference, // Save the payment reference
+      reference: paymentResult.reference, 
     });
 
-    console.log(paymentResult,"PAYMENT RESULTRSSSS")
+    console.log(object)
     res.status(200).json({
       ...paymentResult,
-      sessionID: paymentSession.sessionID, // Include sessionID in the response
+      sessionID: paymentSession.sessionID, 
     });
   } catch (error) {
     console.error("Server error@PaymentMethod:", error.message);
