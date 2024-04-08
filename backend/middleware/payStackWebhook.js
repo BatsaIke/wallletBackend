@@ -37,11 +37,23 @@ const handlePaystackWebhook =async (req, res) => {
 
 async function updatePaystackStatus(reference, status) {
     try {
-        // Update the payment session with the new status
-        await PaymentSession.findOneAndUpdate({ reference }, { $set: { status } });
-        console.log(`Payment for reference ${reference} marked as ${status}`);
+        // Find the document by reference and update its status
+        const result = await PaymentSession.findOneAndUpdate(
+            { reference }, // Filter by reference
+            { $set: { status } }, // Update the status field
+            { new: true } // Return the updated document
+        );
+
+        if (!result) {
+            console.log(`No payment session found with reference ${reference}.`);
+            return false;
+        } else {
+            console.log(`Payment session with reference ${reference} updated to status ${status}.`);
+            return true;
+        }
     } catch (error) {
-        console.error(`Failed to update payment status for reference ${reference}:`, error);
+        console.error(`Error updating payment status for reference ${reference}: `, error);
+        throw error;
     }
 }
 
