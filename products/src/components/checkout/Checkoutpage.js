@@ -13,7 +13,7 @@ const CheckoutPage = () => {
   useEffect(() => {
    dispatch(checkPaymentStatus)
   }, [dispatch]);
-
+console.log("HElloo checko")
   return (
     <div className={styles.checkoutPageContainer}>
       <div className={styles.billingSection}>
