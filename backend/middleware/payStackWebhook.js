@@ -43,5 +43,4 @@ const handlePaystackWebhook =async (req, res) => {
 
 module.exports = {
     handlePaystackWebhook,
-    updatePaystackStatus,
 };
