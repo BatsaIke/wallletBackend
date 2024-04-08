@@ -6,6 +6,7 @@ dotenv.config()
 const handlePaystackWebhook =async (req, res) => {
     console.log("webhook received event")
     const event = req.body;
+    console.log(req.body,"BODY")
     const signature = req.headers['x-paystack-signature'];
     const secret = process.env.PAYSTACK_KEY;
 
