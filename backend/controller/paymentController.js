@@ -1,5 +1,6 @@
 const User = require("../model/UserModel");
 const PaymentSession = require('../model/PaymentSessionModel');
+const { v4: uuidv4 } = require('uuid');
 
 const dotenv = require("dotenv");
 const { payWithMomo, payWithCard } = require("../middleware/payWithMomoorCard");
@@ -70,13 +71,9 @@ const payAsGuest = async (req, res) => {
       return res.status(400).json({ error: "Invalid payment method" });
     }
 
-    // Update paymentDetails with the reference from paymentResult
-    paymentDetails = { ...paymentDetails, reference: paymentResult.reference };
+    await paymentSession.save();
 
-    // Store the session information and payment reference in your database
-    await PaymentSession.create(paymentDetails);
 
-    res.status(200).json(paymentResult);
     res.status(200).json(paymentResult);
     console.log(paymentResult)
   } catch (error) {

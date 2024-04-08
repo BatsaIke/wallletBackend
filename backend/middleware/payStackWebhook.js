@@ -1,4 +1,4 @@
-const crypto = require('crypto');
+const crypto = require('crypto');const PaymentSession = require('../model/PaymentSessionModel'); 
 
 const handlePaystackWebhook = (req, res) => {
     const event = req.body;
@@ -29,13 +29,16 @@ const handlePaystackWebhook = (req, res) => {
     }
 };
 
-// A mock function to illustrate updating payment status in the database
-async function updatePaystackStatus(reference, status,even) {
-    // Your database update logic here
-    console.log(`${even},"event data"`)
-    console.log(`Payment for ${reference} marked as ${status}`);
-    // For example:
-    // await db.collection('payments').updateOne({ reference }, { $set: { status } });
+
+
+async function updatePaystackStatus(reference, status) {
+    try {
+        // Update the payment session with the new status
+        await PaymentSession.findOneAndUpdate({ reference }, { $set: { status } });
+        console.log(`Payment for reference ${reference} marked as ${status}`);
+    } catch (error) {
+        console.error(`Failed to update payment status for reference ${reference}:`, error);
+    }
 }
 
 module.exports = {
