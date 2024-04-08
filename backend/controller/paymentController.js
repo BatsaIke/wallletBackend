@@ -64,7 +64,7 @@ const payAsGuest = async (req, res) => {
     console.log(paymentResult,"PAYMENR RESULT");
     
     if (!paymentResult.data.reference) {
-      return res.status(500).json({ error: "Failed to obtain payment reference" });
+      return res.status(500).json(paymentResult);
     }
 
     // Initialize and save the payment session document with the reference
