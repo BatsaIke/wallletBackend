@@ -1,6 +1,7 @@
 const crypto = require('crypto');const PaymentSession = require('../model/PaymentSessionModel'); 
 
 const handlePaystackWebhook = (req, res) => {
+    console.log("webhook received event")
     const event = req.body;
     const signature = req.headers['x-paystack-signature'];
     const secret = process.env.PAYSTACK_SECRET_KEY;
