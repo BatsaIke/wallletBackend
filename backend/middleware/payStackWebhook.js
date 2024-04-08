@@ -1,5 +1,7 @@
 const crypto = require('crypto');
-const PaymentSession = require('../model/PaymentSessionModel'); 
+const PaymentSession = require('../model/PaymentSessionModel');
+const dotenv = require("dotenv");
+dotenv.config() 
 
 const handlePaystackWebhook = (req, res) => {
     console.log("webhook received event")
