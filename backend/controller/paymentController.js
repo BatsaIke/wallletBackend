@@ -75,6 +75,7 @@ const payAsGuest = async (req, res) => {
       reference: paymentResult.reference, // Save the payment reference
     });
 
+    console.log(paymentResult,"PAYMENT RESULTRSSSS")
     res.status(200).json({
       ...paymentResult,
       sessionID: paymentSession.sessionID, // Include sessionID in the response
