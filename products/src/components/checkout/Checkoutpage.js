@@ -1,32 +1,29 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import styles from './CheckoutPage.module.css'
+import styles from './CheckoutPage.module.css';
 import BillingDetails from './BillingDetails';
 import OrderSummary from './OrderSummary';
-import { makePayment } from "../../actions/paymentActions";
-
+import { checkPaymentStatus } from '../../actions/paymentActions';
 
 const CheckoutPage = () => {
   const dispatch = useDispatch();
-  const [referece, setReferece] = useState();
-  // const paymentStatus = useSelector((state) => state.payment.paymentStatus);
-  // console.log(paymentStatus, "payment statu")
+  const paymentState = useSelector((state) => state.payment);
+  console.log(paymentState, "payment status");
 
   useEffect(() => {
- const ref =   localStorage.getItem('pref')
- setReferece(ref)
+   dispatch(checkPaymentStatus)
   }, [dispatch]);
-
-  console.log(referece, "referece")
 
   return (
     <div className={styles.checkoutPageContainer}>
       <div className={styles.billingSection}>
-        <BillingDetails makePayment= {makePayment}/>
+        <BillingDetails />
       </div>
       <div className={styles.orderSummarySection}>
         <OrderSummary />
       </div>
+      {/* Display payment status or other related information */}
+      {paymentState.status && <div>Payment Status: {paymentState.status}</div>}
     </div>
   );
 };

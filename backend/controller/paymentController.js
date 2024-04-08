@@ -89,23 +89,22 @@ const payAsGuest = async (req, res) => {
 
 
 const paymentStatus = async (req, res) => {
-  const { reference } = req.body;
   console.log("payment statu displatch backend")
 
   try {
-    // Verify payment with Paystack using the payment reference
-    const verificationResult = await updatePaystackStatus(reference);
-    // If verification is successful, update payment status in your database
-    if (verificationResult && verificationResult.status === 'success') {
-      await updatePaystackStatus(reference, 'successful');
-      res.json({ success: true, message: 'Payment status updated successfully.' });
-    } else {
-      res.status(400).json({ success: false, message: 'Payment verification failed.' });
+    const { sessionID } = req.params;
+    const paymentSession = await PaymentSession.findOne({ sessionID });
+
+    if (!paymentSession) {
+        return res.status(404).json({ message: "Payment session not found." });
     }
-  } catch (error) {
-    console.error('Error updating payment status:', error);
-    res.status(500).json({ success: false, message: 'Server error during payment status update.' });
-  }
+
+    // Respond with the status of the payment session
+    res.json({ status: paymentSession.status, reference: paymentSession.reference });
+} catch (error) {
+    console.error(`Error fetching payment status: `, error);
+    res.status(500).send('Internal Server Error');
+}
 };
 
 //get payment status

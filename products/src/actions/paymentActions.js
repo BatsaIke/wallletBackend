@@ -28,23 +28,23 @@ export const payToken = (paymentData) => async (dispatch) => {
   }
 };
 
-export const paymentStatus = (paymentData) => async (dispatch) => {
+export const checkPaymentStatus = (sessionID) => async (dispatch) => {
   dispatch(setLoading(true));
   try {
-    const response = await api.post('/payment/status', paymentData);
-   
-    console.log(response)
-     return response
-    
+    // Assuming your API expects a POST request. For a GET request, the approach will differ.
+    const response = await api.post(`/payment/status/${sessionID}`);
+    console.log(response.data);
+    dispatch(setPaymentStatus(response.data)); // Assuming you have a reducer action for this
+    return { success: true, data: response.data };
   } catch (error) {
     console.error('Error verifying:', error);
-    dispatch(setError('Error making payment'));
-    apiErrorHandler(error, dispatch);
+    dispatch(setError('Error verifying payment'));
     return { success: false, message: error.message };
   } finally {
     dispatch(setLoading(false));
   }
 };
+
 
 export const makePayment = (paymentData) => async (dispatch) => {
   dispatch(setLoading(true));
