@@ -17,33 +17,30 @@ const handlePaystackWebhook =async (req, res) => {
     // Process the successful payment event 
     
       
-        if (event.event === 'charge.success') {
-            const reference = event.data
-
-
+    if (event === 'charge.success' && data && data.reference) {
+        const filter = { reference: data.reference };
+        const update = { status: 'successful' };
+    
         try {
-            const paymentSession = await PaymentSession.findOneAndUpdate(
-                { reference },
-                { $set: { status: 'successful' }},
-                { new: true }
-            );
-
-            if (paymentSession) {
-                console.log(`Payment status updated successfully for reference: ${reference}`);
+            let doc = await PaymentSession.findOneAndUpdate(filter, update, { new: true });
+    
+            if (doc) {
+                console.log(`Payment status updated successfully for reference: ${data.reference}`);
+                // Optionally, you can send a response back to acknowledge the successful processing of the webhook
                 res.status(200).send('Webhook processed successfully');
             } else {
-                console.error(`No payment session found for reference: ${reference}`);
+                console.error(`No payment session found for reference: ${data.reference}`);
                 res.status(404).send('Payment session not found');
             }
         } catch (error) {
-            console.error(`Error processing webhook for reference ${reference}: `, error);
+            console.error(`Error processing webhook for reference ${data.reference}: `, error);
             res.status(500).send('Internal Server Error');
         }
     } else {
         // Handle other events or ignore them
         res.status(200).send('Event ignored');
     }
-};
+}
 
 module.exports = {
     handlePaystackWebhook,
