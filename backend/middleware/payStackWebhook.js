@@ -15,9 +15,12 @@ const handlePaystackWebhook =async (req, res) => {
     }
 
     // Process the successful payment event 
-    if (event === 'charge.success') {
-        const { reference } = data;
-        console.log(reference,"REFERENCES")
+    
+      
+        if (event.event === 'charge.success') {
+            const reference = event.data
+
+
         try {
             const paymentSession = await PaymentSession.findOneAndUpdate(
                 { reference },
