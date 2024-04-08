@@ -62,8 +62,8 @@ const payAsGuest = async (req, res) => {
     }
 
     
-    console.log(paymentResult,"PAYMENRRESULT");
-    if (!paymentResult.reference) {
+    
+    if (!paymentResult.data.reference) {
       return res.status(500).json({ error: "Failed to obtain payment reference" });
     }
 
@@ -74,7 +74,7 @@ const payAsGuest = async (req, res) => {
       amount,
       paymentMethod,
       status: 'initialized',
-      reference: paymentResult.reference, 
+      reference: paymentResult.data.reference, 
     });
 
     res.status(200).json({
