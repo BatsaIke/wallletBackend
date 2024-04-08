@@ -23,7 +23,7 @@ const paymentSessionSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  reference: String, // Optional initially, will be updated once payment is initiated
+  reference: String, 
 }, { timestamps: true });
 
 module.exports = mongoose.model('PaymentSession', paymentSessionSchema);

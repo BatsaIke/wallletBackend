@@ -49,19 +49,9 @@ const payToken = async (req, res) => {
 //access private
 const payAsGuest = async (req, res) => {
   const { paymentMethod, amount, email } = req.body;
-  const sessionID = uuidv4();
+  const sessionID = uuidv4(); // Generate a unique session ID
+
   try {
-
-    // Initialize payment session document
-    let paymentSession = new PaymentSession({
-      sessionID,
-      email,
-      amount,
-      paymentMethod,
-      status: 'initialized',
-    });
-
-
     let paymentResult;
     if (paymentMethod === "momo") {
       paymentResult = await payWithMomo(email, amount);
@@ -71,16 +61,30 @@ const payAsGuest = async (req, res) => {
       return res.status(400).json({ error: "Invalid payment method" });
     }
 
-    await paymentSession.save();
+    if (!paymentResult.reference) {
+      return res.status(500).json({ error: "Failed to obtain payment reference" });
+    }
 
+    // Initialize and save the payment session document with the reference
+    let paymentSession = await PaymentSession.create({
+      sessionID,
+      email,
+      amount,
+      paymentMethod,
+      status: 'initialized',
+      reference: paymentResult.reference, // Save the payment reference
+    });
 
-    res.status(200).json(paymentResult);
-    console.log(paymentResult)
+    res.status(200).json({
+      ...paymentResult,
+      sessionID: paymentSession.sessionID, // Include sessionID in the response
+    });
   } catch (error) {
-    console.error(error.message);
-    res.status(500).send("Server error@PaymentMethod");
+    console.error("Server error@PaymentMethod:", error.message);
+    res.status(500).send("Server error during payment initialization");
   }
 };
+
 
 
 const paymentStatus = async (req, res) => {
