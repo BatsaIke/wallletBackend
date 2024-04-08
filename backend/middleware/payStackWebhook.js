@@ -7,7 +7,7 @@ const handlePaystackWebhook = async (req, res) => {
     console.log("Webhook received event");
     const { event, data } = req.body;
     const signature = req.headers['x-paystack-signature'];
-    const secret = process.env.PAYSTACK_SECRET_KEY;
+    const secret = process.env.PAYSTACK_KEY;
 
     // Verify Paystack signature
     const hash = crypto.createHmac('sha512', secret).update(JSON.stringify(req.body)).digest('hex');
