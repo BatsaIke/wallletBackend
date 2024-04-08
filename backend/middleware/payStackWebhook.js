@@ -17,6 +17,7 @@ const handlePaystackWebhook =async (req, res) => {
     // Process the successful payment event 
     if (event.event === 'charge.success') {
         const reference = event.data
+        console.log(reference,"REFERENXOIWYOIRYWIOYR")
         const even =event        
         console.log('Payment success for reference:', reference);
 
