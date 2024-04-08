@@ -61,7 +61,7 @@ const payAsGuest = async (req, res) => {
       return res.status(400).json({ error: "Invalid payment method" });
     }
 
-    
+    console.log(paymentResult,"PAYMENR RESULT");
     
     if (!paymentResult.data.reference) {
       return res.status(500).json({ error: "Failed to obtain payment reference" });
