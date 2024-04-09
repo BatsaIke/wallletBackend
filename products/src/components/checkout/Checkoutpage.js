@@ -51,6 +51,8 @@ import PaymentSuccessModal from "./PaymentSuccessModal";
 const CheckoutPage = () => {
   const dispatch = useDispatch();
   const paymentState = useSelector((state) => state.payment.paymentStatus);
+  const isCallback = window.location.search.includes("callback=true"); 
+
   console.log(paymentState)
 
   useEffect(() => {

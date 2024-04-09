@@ -1,11 +1,10 @@
-// src/features/cart/cartSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   items: [], // The cart items
   totalQuantity: 0, // Total quantity of items in the cart
   totalPrice: 0,
-  totalIncludingShipping: 0, // Total price of items in the cart
+  totalIncludingShipping: 0, // Total price of items in the cart including shipping
 };
 
 export const cartSlice = createSlice({
@@ -39,20 +38,30 @@ export const cartSlice = createSlice({
         existingItem.quantity--;
       }
     },
+    // Loads the cart from local storage or another source
+    loadCart: (state, action) => {
+      const loadedCart = action.payload;
+      state.items = loadedCart.items;
+      state.totalQuantity = loadedCart.totalQuantity;
+      state.totalPrice = loadedCart.totalPrice;
+      // Ensure to load or reset the totalIncludingShipping if needed
+    },
     // Clears the cart
     clearCart: (state) => {
       state.items = [];
       state.totalQuantity = 0;
       state.totalPrice = 0;
+      state.totalIncludingShipping = 0; // Reset this as well if you're using it
     },
-  },
-  setTotalIncludingShipping: (state, action) => {
-    state.totalIncludingShipping = action.payload;
+    // Sets total price including shipping
+    setTotalIncludingShipping: (state, action) => {
+      state.totalIncludingShipping = action.payload;
+    },
   },
 });
 
 // Export actions
-export const { addItemToCart, removeItemFromCart, clearCart, setTotalIncludingShipping } = cartSlice.actions;
+export const { addItemToCart, removeItemFromCart, loadCart, clearCart, setTotalIncludingShipping } = cartSlice.actions;
 
 // Export reducer
 export default cartSlice.reducer;
