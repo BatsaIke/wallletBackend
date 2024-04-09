@@ -29,8 +29,10 @@ export const payToken = (paymentData) => async (dispatch) => {
   }
 };
 
-export const checkPaymentStatus = (sessionID) => async (dispatch) => {
+export const checkPaymentStatus = () => async (dispatch) => {
   dispatch(setLoading(true));
+  const sessionID = localStorage.getItem('payment');
+  console.log(sessionID, 'payment');
   try {
     // Assuming your API expects a POST request. For a GET request, the approach will differ.
     const response = await api.post(`/payment/status/${sessionID}`);
