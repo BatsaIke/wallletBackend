@@ -49,7 +49,7 @@ const payToken = async (req, res) => {
 //access private
 const payAsGuest = async (req, res) => {
   const { paymentMethod, amount, email } = req.body;
-  const sessionID = uuidv4(); // Generate a unique session ID
+  const sessionID = uuidv4(); 
 
   try {
     let paymentResult;
@@ -74,8 +74,6 @@ const payAsGuest = async (req, res) => {
       status: 'initialized',
       reference: paymentResult.response.data?.reference, 
     });
-
-   
     res.status(200).json({
       ...paymentResult,
       sessionID: paymentSession.sessionID, 

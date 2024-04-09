@@ -146,7 +146,7 @@ const BillingDetails = ({makePayment}) => {
           header="Make payment as Guest"
           className={styles.billModal}
         >
-          <BuyTokenModal email={email} makePayment= {makePayment} />
+          <BuyTokenModal email={email}  />
         </Modal>
       </form>
     </div>

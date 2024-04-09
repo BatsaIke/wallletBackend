@@ -11,8 +11,9 @@ export const payToken = (paymentData) => async (dispatch) => {
   try {
     const response = await api.post('/payment/pay', paymentData);
     if (response.status === 200) {
+      console.log(response)
       const authorizationUrl = response.data.response.data.authorization_url;
-      window.open(authorizationUrl, '_self');
+      // window.open(authorizationUrl, '_self');
       return { success: true };
     } else {
       dispatch(setError('Payment was not successful'));
@@ -52,8 +53,9 @@ export const makePayment = (paymentData) => async (dispatch) => {
     const response = await api.post('/payment/guest-payment', paymentData);
     if (response.status === 200) {
       const { authorization_url: authorizationUrl } = response.data.response.data;
-      
-      window.open(authorizationUrl, '_self');
+      const sessionID = response.data.sessionID
+      localStorage.setItem('payment', sessionID)
+       window.open(authorizationUrl, '_self');
     }
   } catch (error) {
     console.error('Error making payment:', error);
