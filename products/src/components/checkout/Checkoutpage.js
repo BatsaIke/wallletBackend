@@ -53,7 +53,7 @@ const CheckoutPage = () => {
   const paymentState = useSelector((state) => state.payment.paymentStatus);
   const isCallback = window.location.search.includes("callback=true"); 
 
-  console.log(paymentState)
+  console.log(isCallback,"isCallback")
 
   useEffect(() => {
     // Only check payment status if we're in a callback scenario
