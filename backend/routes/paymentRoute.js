@@ -16,7 +16,7 @@ router.route("/pay").post(auth, payToken);
 //pay as guest
 router.route("/guest-payment").post(payAsGuest);
 
-router.route("/status:sessionID").post(paymentStatus);
+router.route("/status/:sessionID").post(paymentStatus);
 
 
 //verify payment
