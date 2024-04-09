@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./BuyTokenModal.module.css"; // Ensure this path is correct
+import { makePayment } from "../../actions/paymentActions";
 
-export const BuyTokenModal = ({email,makePayment}) => {
+export const BuyTokenModal = ({email}) => {
   const dispatch = useDispatch();
   const [paymentMethod, setPaymentMethod] = useState("");
   const totalAmount = useSelector((state) => state.cart.totalPrice);
+
 
   // Token equivalent calculation
   const doubledAmount = totalAmount ? (parseFloat(totalAmount) * 10.0).toFixed(3) : null;

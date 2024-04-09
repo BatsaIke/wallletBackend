@@ -6,13 +6,12 @@ const cloudinary = require("../utils/claudinary");
 
 exports.createProduct = async (req, res) => {
   const { name, category, price, image, sku,quantity } = req.body;
-  
+   
   try {
       // Assuming `image` is a Base64-encoded string of your file
       const uploadResponse = await cloudinary.uploader.upload(image, {
           folder: "products"
-      });
-
+      }); 
       const newProduct = await Product.create({
           name,
           category,

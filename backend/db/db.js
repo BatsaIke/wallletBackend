@@ -1,13 +1,20 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
 const connectDB = async () => {
   try {
-    mongoose.connect(process.env.mongoURI);
-    console.log(`connected to database succesfully:...`);
+    await mongoose.connect(process.env.mongoURI, {
+    });
+    console.log('Connected to database successfully');
   } catch (error) {
-    console.error(error.message);
-    process.exit(1)
+    console.error(`Database connection failed: ${error.message}`);
+    process.exit(1); // Exit process with failure
   }
 };
 
-module.exports=connectDB
+process.on('unhandledRejection', (error) => {
+  console.error(`Unhandled promise rejection: ${error.message}`); 
+  // Additional cleanup or logging before exit can go here
+  process.exit(1);
+}); 
+  
+module.exports = connectDB; 
