@@ -51,13 +51,15 @@ import PaymentSuccessModal from "./PaymentSuccessModal";
 const CheckoutPage = () => {
   const dispatch = useDispatch();
   const paymentState = useSelector((state) => state.payment.paymentStatus);
-  const isCallback = window.location.search.includes("callback=true"); 
+  const urlSearchParams = new URLSearchParams(window.location.search);
+  const trxref = urlSearchParams.get("trxref");
+  const isCallback = Boolean(trxref);
 
   console.log(isCallback,"isCallback")
 
   useEffect(() => {
     // Only check payment status if we're in a callback scenario
-    if (isCallback) {
+    if (isCallback && trxref) {
       dispatch(checkPaymentStatus());
     }
   }, [dispatch, isCallback]);
