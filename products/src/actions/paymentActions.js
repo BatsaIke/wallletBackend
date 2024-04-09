@@ -32,11 +32,9 @@ export const payToken = (paymentData) => async (dispatch) => {
 export const checkPaymentStatus = () => async (dispatch) => {
   dispatch(setLoading(true));
   const sessionID = localStorage.getItem('payment');
-  console.log(sessionID, 'payment');
   try {
     // Assuming your API expects a POST request. For a GET request, the approach will differ.
     const response = await api.post(`/payment/status/${sessionID}`);
-    console.log(response.data);
     dispatch(setPaymentStatus(response.data)); // Assuming you have a reducer action for this
     return { success: true, data: response.data };
   } catch (error) {

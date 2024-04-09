@@ -1,15 +1,15 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 // Initial state for payment
 const paymentInitialState = {
   loading: false,
   error: null,
-  paymentStatus: null, 
-  paymentDetails: null, 
+  paymentStatus: { status: "pending" },
+  paymentDetails: null,
 };
 
 const paymentSlice = createSlice({
-  name: 'payment',
+  name: "payment",
   initialState: paymentInitialState,
   reducers: {
     // Action to set loading state
@@ -31,12 +31,8 @@ const paymentSlice = createSlice({
 });
 
 // Export actions
-export const {
-  setLoading,
-  setError,
-  setPaymentStatus,
-  resetPaymentState,
-} = paymentSlice.actions;
+export const { setLoading, setError, setPaymentStatus, resetPaymentState } =
+  paymentSlice.actions;
 
 // Export reducer
 export default paymentSlice.reducer;

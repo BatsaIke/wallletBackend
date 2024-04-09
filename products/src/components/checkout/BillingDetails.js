@@ -51,12 +51,11 @@ const BillingDetails = () => {
   };
 
   const handleContinueAsGuest = () => {
-    // Logic for continuing as a guest, possibly involving an API call
     console.log("Continue as guest");
-    setShowBuyToken(true); // Show the BuyTokenModal
-    setModalOpen(false); // Close the current modal
-    // Proceed with the necessary guest checkout process
+    setShowBuyToken(true);
+    setModalOpen(false);
   };
+
   return (
     <div className={styles.billingContainer}>
       <h2 className={styles.orderHeader}>Billing Details</h2>
@@ -80,7 +79,7 @@ const BillingDetails = () => {
           value={location}
           onChange={handleChange}
         />
-         <label htmlFor="Email">Email</label>
+        <label htmlFor="Email">Email</label>
         <input
           type="text"
           id="email"
@@ -89,7 +88,7 @@ const BillingDetails = () => {
           value={email}
           onChange={handleChange}
         />
- 
+
         <label htmlFor="additionalInfo">Additional Information</label>
         <textarea
           id="additionalInfo"
@@ -97,7 +96,6 @@ const BillingDetails = () => {
           value={additionalInfo}
           onChange={handleChange}
         />
-       
 
         <div className={styles.checkboxContainer}>
           <input type="checkbox" id="saveInfo" name="saveInfo" />
@@ -146,7 +144,7 @@ const BillingDetails = () => {
           header="Make payment as Guest"
           className={styles.billModal}
         >
-          <BuyTokenModal email={email}  />
+          <BuyTokenModal email={email} />
         </Modal>
       </form>
     </div>
