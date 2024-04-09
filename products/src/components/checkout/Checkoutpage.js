@@ -8,13 +8,12 @@ import { checkPaymentStatus } from '../../actions/paymentActions';
 const CheckoutPage = () => {
   const dispatch = useDispatch();
   const paymentState = useSelector((state) => state.payment);
-  console.log(paymentState, "payment status");
 
   useEffect(() => {
-   dispatch(checkPaymentStatus)
+   dispatch(checkPaymentStatus())
   }, [dispatch]);
 
-console.log("HElloo checko")
+
 
   return (
     <div className={styles.checkoutPageContainer}>

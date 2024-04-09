@@ -6,7 +6,7 @@ import Modal from "../../UI/modal/Modal";
 import LoginPage from "../../pages/Login/Loginpage";
 import { BuyTokenModal } from "../buy-token-modal/BuyTokenModal";
 
-const BillingDetails = ({makePayment}) => {
+const BillingDetails = () => {
   const dispatch = useDispatch();
   const { isAuthenticated, error } = useSelector((state) => ({
     isAuthenticated: state.auth.isAuthenticated,
