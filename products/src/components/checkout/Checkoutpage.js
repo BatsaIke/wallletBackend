@@ -51,6 +51,7 @@ import PaymentSuccessModal from "./PaymentSuccessModal";
 const CheckoutPage = () => {
   const dispatch = useDispatch();
   const paymentState = useSelector((state) => state.payment.paymentStatus);
+  console.log(paymentState)
   const urlSearchParams = new URLSearchParams(window.location.search);
   const trxref = urlSearchParams.get("trxref");
   const isCallback = Boolean(trxref);
@@ -59,7 +60,7 @@ const CheckoutPage = () => {
 
   useEffect(() => {
     // Only check payment status if we're in a callback scenario
-    if (isCallback && trxref) {
+    if (isCallback) {
       dispatch(checkPaymentStatus());
     }
   }, [dispatch, isCallback]);
@@ -83,7 +84,7 @@ const CheckoutPage = () => {
         <OrderSummary />
       </div>
       {/* Conditional rendering based on paymentState.status */}
-      {isCallback && paymentState.status === 'successful' && (
+      {isCallback && paymentState === 'successful' && (
                 <PaymentSuccessModal 
         isOpen={isPaymentSuccessModalOpen} 
         onClose={() => setPaymentSuccessModalOpen(false)}
