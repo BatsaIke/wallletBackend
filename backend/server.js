@@ -18,6 +18,7 @@ dotenv.config();
 connectDB();
 
 // Init middleware
+app.use(bodyParser.json({ limit: '50mb' }));
 app.use(express.json({ extended: false }));
 app.use(cors()); // Enable CORS for all origins
 app.use(bodyParser.json());

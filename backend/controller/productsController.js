@@ -1,34 +1,38 @@
 const Product = require('../model/ProductModel');
 
+// Import the necessary utilities
+const cloudinary = require("../utils/claudinary"); 
+
+
 exports.createProduct = async (req, res) => {
-    const { name, category, image, price, quantity, sku } = req.body;
+  const { name, category, price, image, sku,quantity } = req.body;
   
-    try {
-      // Check if a product with the same SKU already exists
-      const existingProduct = await Product.findOne({ sku });
-      if (existingProduct) {
-        return res.status(400).json({ msg: 'A product with this SKU already exists' });
-      }
-  
-      const newProduct = new Product({
-        name,
-        category,
-        image,
-        price,
-        quantity,
-        sku
+  try {
+      // Assuming `image` is a Base64-encoded string of your file
+      const uploadResponse = await cloudinary.uploader.upload(image, {
+          folder: "products"
       });
-      const product = await newProduct.save();
-      res.status(201).json(product);
-    } catch (error) {
+
+      const newProduct = await Product.create({
+          name,
+          category,
+          price,
+          quantity,
+          sku,
+          image: {
+            public_id: uploadResponse.public_id,
+            url: uploadResponse.secure_url
+        },
+      });
+
+      res.status(201).json({ success: true, product: newProduct });
+  } catch (error) {
       console.error(error);
-      // Handle the case where the SKU uniqueness constraint is violated
-      if (error.code === 11000) {
-        return res.status(400).send('SKU must be unique.');
-      }
-      res.status(500).send('Server error');
-    }
-  };
+      res.status(500).json({ success: false, message: 'Server error' });
+  }
+};
+
+
   
 
 exports.getProducts = async (req, res) => {

@@ -12,7 +12,9 @@ import { getLoginUser } from './actions/authAction';
 import CheckoutPage from './components/checkout/Checkoutpage';
 import ShopPage from './pages/shop/ShopPage';
 import AffiliatePage from './pages/affiliate/Affiliate';
+import AddProductForm from './admin/AddProduct/AddProducts';
 import ContactPage from './pages/contact us/Contact';
+import Products from './admin/products-table/ProductsComponent';
 
 
 function App() {
@@ -41,6 +43,10 @@ function App() {
         <Route path="/shop" element={<ShopPage />} />
         <Route path="/affiliate" element={<AffiliatePage />} />
         <Route path="/contact" element={<ContactPage />} />
+        <Route path="/admin/addproducts" element={<AddProductForm/>} />
+        <Route path="/admin/products" element={<Products/>} />
+
+
 
 
 
