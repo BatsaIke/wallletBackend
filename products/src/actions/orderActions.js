@@ -8,7 +8,7 @@ import apiErrorHandler from "../utils/apiHandleError";
 export const createOrder = (orderData) => async (dispatch) => {
   dispatch(setLoading(true));
   try {
-    const response = await api.post("/", orderData);
+    const response = await api.post("/orders", orderData);
     if (response.status === 201) {
       dispatch(addOrder(response.data));
       return { success: true, order: response.data };

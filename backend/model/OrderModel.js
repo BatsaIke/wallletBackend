@@ -30,12 +30,16 @@ const orderSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  additionalInfo: String,
+ 
   status: {
     type: String,
     default: 'pending', 
     required: true
   },
+  additionalInfo: {
+type: Boolean,
+default: false
+},
   createdAt: {
     type: Date,
     default: Date.now
