@@ -6,7 +6,7 @@ import Modal from "../../UI/modal/Modal";
 import LoginPage from "../../pages/Login/Loginpage";
 import { BuyTokenModal } from "../buy-token-modal/BuyTokenModal";
 
-const BillingDetails = ({ onOrderDataCreated }) => {
+const BillingDetails = () => {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.items);
   const subtotal = useSelector((state) => state.cart.totalPrice); 
@@ -71,8 +71,9 @@ const BillingDetails = ({ onOrderDataCreated }) => {
     quantity:cartItems.length
     // Include any other fields required by your order model
   };
-  onOrderDataCreated(orderData);
-    if (!isAuthenticated) {
+   // Store the orderData in local storage
+   localStorage.setItem('orderData', JSON.stringify(orderData));
+      if (!isAuthenticated) {
       setModalOpen(true);
     } else {
       console.log("Proceed with payment");
@@ -178,7 +179,7 @@ const BillingDetails = ({ onOrderDataCreated }) => {
           header="Make payment as Guest"
           className={styles.billModal}
         >
-          <BuyTokenModal email={email} orderData={newOrderData} />
+          <BuyTokenModal email={email} />
         </Modal>
       </form>
     </div>

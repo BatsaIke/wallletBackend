@@ -53,22 +53,33 @@ const CheckoutPage = () => {
   
   const [orderData, setOrderData] = useState(null);
 
+  const handleOrderDataCreated = (data) => {
+    setOrderData(data); // Set the order data state
+    console.log(data); // Log the order data for debugging
+  };
+
   const paymentState = useSelector((state) => state.payment.paymentStatus);
   console.log(paymentState)
   const urlSearchParams = new URLSearchParams(window.location.search);
   const trxref = urlSearchParams.get("trxref");
   const isCallback = Boolean(trxref);
 
-  console.log(orderData,"isCallback")
+  
 
   useEffect(() => {
-    // Only check payment status if we're in a callback scenario
     if (isCallback) {
-      console.log(orderData,"orderdata")
+      // Retrieve the orderData from local storage
+      const storedOrderData = localStorage.getItem('orderData');
+      if (storedOrderData) {
+        const parsedOrderData = JSON.parse(storedOrderData);
+        setOrderData(parsedOrderData); // Update state with the retrieved order data
+        console.log(parsedOrderData, "Retrieved order data");
+      }
+  
       dispatch(checkPaymentStatus());
     }
   }, [dispatch, isCallback]);
-
+  
 
   const [isPaymentSuccessModalOpen, setPaymentSuccessModalOpen] = useState(false);
 
@@ -82,7 +93,7 @@ const CheckoutPage = () => {
   return (
     <div className={styles.checkoutPageContainer}>
       <div className={styles.billingSection}>
-        <BillingDetails onOrderDataCreated={setOrderData}/>
+        <BillingDetails onOrderDataCreated={handleOrderDataCreated}/>
       </div>
       <div className={styles.orderSummarySection}>
         <OrderSummary />
