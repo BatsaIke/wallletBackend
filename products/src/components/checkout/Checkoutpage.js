@@ -47,6 +47,7 @@ import BillingDetails from "./BillingDetails";
 import OrderSummary from "./OrderSummary";
 import { checkPaymentStatus } from "../../actions/paymentActions";
 import PaymentSuccessModal from "./PaymentSuccessModal";
+import { createOrder } from "../../actions/orderActions";
 
 const CheckoutPage = () => {
   const dispatch = useDispatch();
@@ -67,6 +68,7 @@ const CheckoutPage = () => {
       if (storedOrderData) {
         const parsedOrderData = JSON.parse(storedOrderData);
         console.log(parsedOrderData, "Retrieved order data");
+        dispatch(createOrder(parsedOrderData))
       }
   
       dispatch(checkPaymentStatus());
