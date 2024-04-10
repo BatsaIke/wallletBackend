@@ -3,18 +3,25 @@ const Product = require('../model/ProductModel');
 
 
 exports.createOrder = async (req, res) => {
-  const { items, deliveryContact, deliveryLocation, additionalInfo, totalAmount } = req.body;
+  const { items, deliveryContact, deliveryLocation, additionalInfo, totalAmount,quatity } = req.body;
+
+  // Create the base order object
+  const orderData = {
+    items,
+    deliveryContact,
+    deliveryLocation,
+    additionalInfo,
+    totalAmount,
+    quatity
+  };
+
+  // If the request comes from a registered user, add their ID to the order
+  if (req.user) {
+    orderData.user = req.user.id;
+  }
 
   try {
-    const newOrder = new Order({
-      user: req.user.id, // Assuming you have middleware to inject user ID
-      items,
-      deliveryContact,
-      deliveryLocation,
-      additionalInfo,
-      totalAmount
-    });
-
+    const newOrder = new Order(orderData);
     const order = await newOrder.save();
     res.status(201).json(order);
   } catch (error) {
@@ -47,6 +54,25 @@ exports.getOrderById = async (req, res) => {
     res.status(500).send('Server error');
   }
 };
+
+// // Example function to get a single order by ID and populate product details
+// async function getOrderById(req, res) {
+//   try {
+//     const orderId = req.params.id; // Get order ID from request parameters
+//     const order = await Order.findById(orderId)
+//       .populate('items.product') // Populate the 'product' field within each item in the 'items' array
+//       .exec(); // Execute the query
+
+//     if (!order) {
+//       return res.status(404).json({ message: "Order not found." });
+//     }
+
+//     res.json(order); // Send back the populated order
+//   } catch (error) {
+//     console.error(`Error fetching order by ID: `, error);
+//     res.status(500).send('Internal Server Error');
+//   }
+// }
 
 exports.updateOrder = async (req, res) => {
   // Update logic here

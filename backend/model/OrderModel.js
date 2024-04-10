@@ -4,7 +4,7 @@ const orderSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-    required: false 
+   
   },
   items: [{
     product: {
@@ -33,7 +33,7 @@ const orderSchema = new mongoose.Schema({
   additionalInfo: String,
   status: {
     type: String,
-    default: 'pending', // pending, processing, delivered
+    default: 'pending', 
     required: true
   },
   createdAt: {

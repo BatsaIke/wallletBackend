@@ -6,8 +6,11 @@ import Modal from "../../UI/modal/Modal";
 import LoginPage from "../../pages/Login/Loginpage";
 import { BuyTokenModal } from "../buy-token-modal/BuyTokenModal";
 
-const BillingDetails = () => {
+const BillingDetails = ({ onOrderDataCreated }) => {
   const dispatch = useDispatch();
+  const cartItems = useSelector((state) => state.cart.items);
+  const subtotal = useSelector((state) => state.cart.totalPrice); 
+
   const { isAuthenticated, error } = useSelector((state) => ({
     isAuthenticated: state.auth.isAuthenticated,
     error: state.auth.error,
@@ -18,21 +21,31 @@ const BillingDetails = () => {
     location: "",
     additionalInfo: "",
     email: "",
+    saveInfo: false,
   });
 
   const [isModalOpen, setModalOpen] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   const [showBuyToken, setShowBuyToken] = useState(false);
+  const [newOrderData, setOrderData] = useState(null)
   // Destructure formData for easy access
   const { deliveryContact, location, additionalInfo, email } = formData;
 
   // Function to handle form input changes
+  // Function to handle form input changes
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+    const { name, value, type, checked } = e.target;
+    if (type === "checkbox") {
+      setFormData((prevState) => ({
+        ...prevState,
+        [name]: checked,
+      }));
+    } else {
+      setFormData((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+    }
   };
 
   useEffect(() => {
@@ -43,6 +56,22 @@ const BillingDetails = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    const orderItems = cartItems.map(item => ({
+      product: item.id,
+      quantity: item.quantity
+    }));
+
+   const orderData = {
+    ...formData,
+    items: orderItems,
+    totalAmount:subtotal,  
+    deliveryContact: formData.deliveryContact,
+    deliveryLocation: formData.location,
+    additionalInfo: formData.additionalInfo,
+    quantity:cartItems.length
+    // Include any other fields required by your order model
+  };
+  onOrderDataCreated(orderData);
     if (!isAuthenticated) {
       setModalOpen(true);
     } else {
@@ -96,9 +125,14 @@ const BillingDetails = () => {
           value={additionalInfo}
           onChange={handleChange}
         />
-
         <div className={styles.checkboxContainer}>
-          <input type="checkbox" id="saveInfo" name="saveInfo" />
+          <input
+            type="checkbox"
+            id="saveInfo"
+            name="saveInfo"
+            checked={formData.saveInfo}
+            onChange={handleChange}
+          />
           <label htmlFor="saveInfo">Save this information for next time</label>
         </div>
 
@@ -144,7 +178,7 @@ const BillingDetails = () => {
           header="Make payment as Guest"
           className={styles.billModal}
         >
-          <BuyTokenModal email={email} />
+          <BuyTokenModal email={email} orderData={newOrderData} />
         </Modal>
       </form>
     </div>

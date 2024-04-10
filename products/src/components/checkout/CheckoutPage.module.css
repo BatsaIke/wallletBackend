@@ -12,7 +12,7 @@
   
   .paymentModal{
     width: 30%;
-    height: 30%;
+    
   }
   /* Responsive Design */
   @media (max-width: 768px) {

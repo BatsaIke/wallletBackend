@@ -6,8 +6,8 @@ import CartItems from './CartItems'; // Adjust the import path as necessary
 import CartSummary from './CartSummary'; // Adjust the import path as necessary
 
 const CartPage = () => {
-  const cartItems = useSelector((state) => state.cart.items); // Assuming cart items are stored in Redux
-  const subtotal = useSelector((state) => state.cart.totalPrice); // Assuming subtotal is calculated in Redux
+  const cartItems = useSelector((state) => state.cart.items); 
+  const subtotal = useSelector((state) => state.cart.totalPrice); 
 
   return (
     <div className={styles.container}>
