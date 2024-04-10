@@ -5,6 +5,7 @@ import styles from "./BillingDetails.module.css"; // CSS module for styling
 import Modal from "../../UI/modal/Modal";
 import LoginPage from "../../pages/Login/Loginpage";
 import { BuyTokenModal } from "../buy-token-modal/BuyTokenModal";
+import BillingForm from "./BillingForm";
 
 const BillingDetails = () => {
   const dispatch = useDispatch();
@@ -18,7 +19,6 @@ const BillingDetails = () => {
 
   const [formData, setFormData] = useState({
     deliveryContact: "",
-    location: "",
     additionalInfo: "",
     email: "",
     saveInfo: false,
@@ -27,7 +27,6 @@ const BillingDetails = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   const [showBuyToken, setShowBuyToken] = useState(false);
-  const [newOrderData, setOrderData] = useState(null)
   // Destructure formData for easy access
   const { deliveryContact, location, additionalInfo, email } = formData;
 
@@ -69,7 +68,6 @@ const BillingDetails = () => {
     deliveryLocation: formData.location,
     additionalInfo: formData.additionalInfo,
     quantity:cartItems.length
-    // Include any other fields required by your order model
   };
    // Store the orderData in local storage
    localStorage.setItem('orderData', JSON.stringify(orderData));
@@ -88,59 +86,14 @@ const BillingDetails = () => {
 
   return (
     <div className={styles.billingContainer}>
-      <h2 className={styles.orderHeader}>Billing Details</h2>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="deliveryContact">Delivery Contact</label>
-        <input
-          type="text"
-          id="deliveryContact"
-          name="deliveryContact"
-          required
-          value={deliveryContact}
-          onChange={handleChange}
-        />
-
-        <label htmlFor="location">Location</label>
-        <input
-          type="text"
-          id="location"
-          name="location"
-          required
-          value={location}
-          onChange={handleChange}
-        />
-        <label htmlFor="Email">Email</label>
-        <input
-          type="text"
-          id="email"
-          name="email"
-          required
-          value={email}
-          onChange={handleChange}
-        />
-
-        <label htmlFor="additionalInfo">Additional Information</label>
-        <textarea
-          id="additionalInfo"
-          name="additionalInfo"
-          value={additionalInfo}
-          onChange={handleChange}
-        />
-        <div className={styles.checkboxContainer}>
-          <input
-            type="checkbox"
-            id="saveInfo"
-            name="saveInfo"
-            checked={formData.saveInfo}
-            onChange={handleChange}
-          />
-          <label htmlFor="saveInfo">Save this information for next time</label>
-        </div>
-
-        <button type="submit" className={styles.payNowButton}>
-          Pay Now
-        </button>
-
+       <BillingForm
+                formData={formData}
+                handleChange={handleChange}
+                handleSubmit={handleSubmit}
+                showLoginModal={showLogin}
+                email={formData.email}
+            />
+      
         <Modal
           isOpen={isModalOpen}
           onClose={() => setModalOpen(false)}
@@ -181,7 +134,7 @@ const BillingDetails = () => {
         >
           <BuyTokenModal email={email} />
         </Modal>
-      </form>
+      
     </div>
   );
 };

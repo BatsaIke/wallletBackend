@@ -98,8 +98,8 @@ const getAllProducts = async (sinceId = 0) => {
         if (product.variants) {
           // Check each variant for the desired code
           for (const variant of product.variants) {
-            if (variant.sku === "9514") {
-              console.log("Found item with code 11579:");
+            if (variant.sku === "11582") {
+              console.log("Found item with code 11582:");
               console.log(product);
               return product; // Return the product if found
             }
@@ -111,7 +111,7 @@ const getAllProducts = async (sinceId = 0) => {
       sinceId = products[products.length - 1].id;
     }
 
-    console.log("Item with code 11579 not found.");
+    console.log("Item with code 11582 not found.");
     return null; // Return null if the item is not found
   } catch (err) {
     console.error("Error fetching Shopify products:", err.message);
