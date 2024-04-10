@@ -51,12 +51,6 @@ import PaymentSuccessModal from "./PaymentSuccessModal";
 const CheckoutPage = () => {
   const dispatch = useDispatch();
   
-  const [orderData, setOrderData] = useState(null);
-
-  const handleOrderDataCreated = (data) => {
-    setOrderData(data); // Set the order data state
-    console.log(data); // Log the order data for debugging
-  };
 
   const paymentState = useSelector((state) => state.payment.paymentStatus);
   console.log(paymentState)
@@ -72,7 +66,6 @@ const CheckoutPage = () => {
       const storedOrderData = localStorage.getItem('orderData');
       if (storedOrderData) {
         const parsedOrderData = JSON.parse(storedOrderData);
-        setOrderData(parsedOrderData); // Update state with the retrieved order data
         console.log(parsedOrderData, "Retrieved order data");
       }
   
@@ -93,7 +86,7 @@ const CheckoutPage = () => {
   return (
     <div className={styles.checkoutPageContainer}>
       <div className={styles.billingSection}>
-        <BillingDetails onOrderDataCreated={handleOrderDataCreated}/>
+        <BillingDetails />
       </div>
       <div className={styles.orderSummarySection}>
         <OrderSummary />
