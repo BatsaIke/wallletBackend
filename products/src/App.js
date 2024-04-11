@@ -15,6 +15,8 @@ import AffiliatePage from './pages/affiliate/Affiliate';
 import AddProductForm from './admin/AddProduct/AddProducts';
 import ContactPage from './pages/contact us/Contact';
 import Products from './admin/products-table/ProductsComponent';
+import OrderDetailsComponent from './admin/orders/order-details/OrderDetailsComponent';
+import OrdersComponent from './admin/orders/orders-table/OrdersComponent';
 
 
 function App() {
@@ -45,6 +47,10 @@ function App() {
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/admin/addproducts" element={<AddProductForm/>} />
         <Route path="/admin/products" element={<Products/>} />
+        <Route path="/admin/orders" element={<OrdersComponent/>} />
+        <Route path="/admin/orderdetails/:orderId" element={<OrderDetailsComponent/>} />
+
+
 
 
 

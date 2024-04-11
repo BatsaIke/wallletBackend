@@ -14,28 +14,40 @@ export const cartSlice = createSlice({
     // Adds an item to the cart
     addItemToCart: (state, action) => {
       const newItem = action.payload;
-      const existingItem = state.items.find(item => item.id === newItem.id);
-      state.totalQuantity++;
-      state.totalPrice += newItem.price;
-      if (!existingItem) {
+      // Look for an existing item in the cart by comparing IDs
+      const existingItem = state.items.find(item => item._id === newItem._id);
+
+      if (existingItem) {
+        // If found, increase the quantity of the existing item
+        existingItem.quantity++;
+      } else {
+        // If not found, add the new item to the cart with a quantity of 1
+        // Ensure to structure the new item as expected in the cart's state
         state.items.push({
           ...newItem,
           quantity: 1,
         });
-      } else {
-        existingItem.quantity++;
       }
+      // Optionally update totalQuantity and totalPrice as needed
+      state.totalQuantity++;
+      state.totalPrice += newItem.price;
     },
+
     // Removes an item from the cart
     removeItemFromCart: (state, action) => {
-      const id = action.payload;
-      const existingItem = state.items.find(item => item.id === id);
-      state.totalQuantity--;
-      state.totalPrice -= existingItem.price;
-      if (existingItem.quantity === 1) {
-        state.items = state.items.filter(item => item.id !== id);
-      } else {
-        existingItem.quantity--;
+      const idToRemove = action.payload;
+      const existingItemIndex = state.items.findIndex(item => item._id === idToRemove);
+
+      if (existingItemIndex >= 0) {
+        const existingItem = state.items[existingItemIndex];
+        state.totalQuantity -= 1;
+        state.totalPrice -= existingItem.price * existingItem.quantity;
+        
+        if (existingItem.quantity > 1) {
+          state.items[existingItemIndex].quantity -= 1;
+        } else {
+          state.items.splice(existingItemIndex, 1);
+        }
       }
     },
     // Loads the cart from local storage or another source

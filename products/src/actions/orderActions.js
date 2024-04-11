@@ -28,7 +28,7 @@ export const createOrder = (orderData) => async (dispatch) => {
 export const fetchOrders = () => async (dispatch) => {
   dispatch(setLoading(true));
   try {
-    const response = await api.get("/");
+    const response = await api.get("/orders");
     if (response.status === 200) {
       dispatch(setOrders(response.data));
       return { success: true };
@@ -46,9 +46,12 @@ export const fetchOrders = () => async (dispatch) => {
 
 // Fetch a single order by ID
 export const fetchOrderById = (id) => async (dispatch) => {
+  console.log("feth order")
+
     dispatch(setLoading(true));
+    
     try {
-      const response = await api.get(`/${id}`);
+      const response = await api.get(`orders/${id}`);
       if (response.status === 200) {
         dispatch(setCurrentOrder(response.data));
         return { success: true, order: response.data };

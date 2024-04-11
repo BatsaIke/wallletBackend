@@ -1,0 +1,48 @@
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .header {
+    margin-bottom: 20px;
+  }
+  
+  .orderInfo, .productInfo {
+    margin-bottom: 15px;
+  }
+  
+  .statusSelect {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  
+  .productItem {
+    padding: 10px;
+    margin-bottom: 10px;
+    background: #f9f9f9;
+    border-radius: 5px;
+  }
+  
+  .productHeader {
+    font-size: 18px;
+    margin-bottom: 5px;
+  }
+  
+  /* Responsive design */
+  @media (max-width: 600px) {
+    .container {
+      margin: 10px;
+      padding: 10px;
+    }
+  
+    .productHeader {
+      font-size: 16px;
+    }
+  }
+  

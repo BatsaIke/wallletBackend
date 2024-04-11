@@ -18,8 +18,8 @@ router.post(
 );
 
 // Assuming no validation is needed for fetching orders
-router.get('/',auth, getOrders);
-router.get('/:id',auth, getOrderById);
+router.get('/',softAuth, getOrders);
+router.get('/:id', getOrderById); 
 
 // Assuming validation for updating orders might be similar to creating them, adjust as needed
 router.put('/:id',auth, [

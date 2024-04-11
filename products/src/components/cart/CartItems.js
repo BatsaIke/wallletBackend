@@ -20,11 +20,11 @@ const CartItems = () => {
     <div className={styles.cartItems}>
       <h2>Product</h2>
       {cartItems.map((item) => (
-        <div key={item.id} className={styles.cartItem}>
+        <div key={item._id} className={styles.cartItem}>
           <img src={item.image?.url} alt={item.name} className={styles.itemImage} />
           <span>{item.name}</span>
           <div className={styles.quantityControls}>
-            <button onClick={() => handleRemoveItem(item.id)}>-</button>
+            <button onClick={() => handleRemoveItem(item._id)}>-</button>
             <span>{item.quantity}</span>
             <button onClick={() => handleAddItem(item)}>+</button>
           </div>

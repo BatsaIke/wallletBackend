@@ -1,9 +1,18 @@
-const Order = require('../model/OrderModel')
-const Product = require('../model/ProductModel'); 
-
+const Order = require("../model/OrderModel");
+const Product = require("../model/ProductModel");
 
 exports.createOrder = async (req, res) => {
-  const { items, deliveryContact, deliveryLocation, additionalInfo, totalAmount,quatity } = req.body;
+  console.log(req.body.items,"creating orders")
+  const {
+    items,
+    deliveryContact,
+    deliveryLocation,
+    additionalInfo,
+    totalAmount,
+    quatity,
+  } = req.body;
+
+
 
   // Create the base order object
   const orderData = {
@@ -12,12 +21,12 @@ exports.createOrder = async (req, res) => {
     deliveryLocation,
     additionalInfo,
     totalAmount,
-    quatity
+    quatity,
   };
 
   // If the request comes from a registered user, add their ID to the order
   if (req.user) {
-    orderData.user = req.user.id; 
+    orderData.user = req.user.id;
   }
   try {
     const newOrder = new Order(orderData);
@@ -25,34 +34,39 @@ exports.createOrder = async (req, res) => {
     res.status(201).json(order);
   } catch (error) {
     console.error(error);
-    res.status(500).send('Server error'); 
+    res.status(500).send("Server error");
   }
 };
 
 exports.getOrders = async (req, res) => {
   try {
-    const orders = await Order.find().sort({ createdAt: -1 });
+    // Use `.populate()` to fill in the product details from the 'Product' collection
+    const orders = await Order.find()
+      .sort({ createdAt: -1 })
+      .populate("items.product");
     res.json(orders);
   } catch (error) {
     console.error(error);
-    res.status(500).send('Server error');
+    res.status(500).send("Server error");
   }
 };
 
 exports.getOrderById = async (req, res) => {
   try {
-    const order = await Order.findById(req.params.id);
+    // Include .populate() to fill in the product details
+    const order = await Order.findById(req.params.id).populate("items.product");
 
     if (!order) {
-      return res.status(404).json({ msg: 'Order not found' });
+      return res.status(404).json({ msg: "Order not found" });
     }
 
     res.json(order);
   } catch (error) {
     console.error(error);
-    res.status(500).send('Server error');
+    res.status(500).send("Server error");
   }
 };
+
 
 // // Example function to get a single order by ID and populate product details
 // async function getOrderById(req, res) {
