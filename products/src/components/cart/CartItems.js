@@ -6,6 +6,7 @@ import { addItemToCart, removeItemFromCart } from '../../redux/slices/cartSlice'
 const CartItems = () => {
   const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.items);
+  console.log(cartItems,"cartitems")
 
   const handleAddItem = (item) => {
     dispatch(addItemToCart(item));
@@ -20,7 +21,7 @@ const CartItems = () => {
       <h2>Product</h2>
       {cartItems.map((item) => (
         <div key={item.id} className={styles.cartItem}>
-          <img src={item.image} alt={item.name} className={styles.itemImage} />
+          <img src={item.image?.url} alt={item.name} className={styles.itemImage} />
           <span>{item.name}</span>
           <div className={styles.quantityControls}>
             <button onClick={() => handleRemoveItem(item.id)}>-</button>

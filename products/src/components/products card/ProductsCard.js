@@ -14,8 +14,8 @@ const ProductCard = ({ product }) => {
 
     return (
         <div className={styles.card}>
-            <img src={product.image} alt={product.name} className={styles.image} />
-            <div className={styles.details}>
+            <img src={product.image?.url} alt={product.name} className={styles.image} />
+            <div className={styles.details} id={product._id}>
                 <h3>{product.name}</h3> {/* Display product name */}
                 <p>Category: {product.category}</p>
                 <p>Price: TKS {product.price.toFixed(2)}</p>

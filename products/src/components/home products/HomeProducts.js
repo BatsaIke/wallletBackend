@@ -8,7 +8,7 @@ const HomeProducts = ({ products }) => {
     <div className={styles.homepage}>
       <div className={styles.productsGrid}>
         {products.map(product => (
-          <ProductCard key={product.id} product={product} />
+          <ProductCard key={product._id} product={product} /> 
         ))}
       </div>
       <button className={styles.seeMore}>See More</button>

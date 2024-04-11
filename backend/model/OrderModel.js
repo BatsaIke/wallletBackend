@@ -4,7 +4,6 @@ const orderSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-   
   },
   items: [{
     product: {
@@ -30,16 +29,15 @@ const orderSchema = new mongoose.Schema({
     type: String,
     required: true
   },
- 
   status: {
     type: String,
-    default: 'pending', 
+    default: 'pending',
     required: true
   },
   additionalInfo: {
-type: Boolean,
-default: false
-},
+    type: String, 
+    default: "" 
+  },
   createdAt: {
     type: Date,
     default: Date.now

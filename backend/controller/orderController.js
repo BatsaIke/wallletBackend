@@ -17,16 +17,15 @@ exports.createOrder = async (req, res) => {
 
   // If the request comes from a registered user, add their ID to the order
   if (req.user) {
-    orderData.user = req.user.id;
+    orderData.user = req.user.id; 
   }
-
   try {
     const newOrder = new Order(orderData);
     const order = await newOrder.save();
     res.status(201).json(order);
   } catch (error) {
     console.error(error);
-    res.status(500).send('Server error');
+    res.status(500).send('Server error'); 
   }
 };
 

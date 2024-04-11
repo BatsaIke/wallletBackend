@@ -6,6 +6,7 @@ import Modal from "../../UI/modal/Modal";
 import LoginPage from "../../pages/Login/Loginpage";
 import { BuyTokenModal } from "../buy-token-modal/BuyTokenModal";
 import BillingForm from "./BillingForm";
+import { createOrder } from "../../actions/orderActions";
 
 const BillingDetails = () => {
   const dispatch = useDispatch();
@@ -22,13 +23,14 @@ const BillingDetails = () => {
     additionalInfo: "",
     email: "",
     saveInfo: false,
+    deliveryLocation: "",
   });
 
   const [isModalOpen, setModalOpen] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   const [showBuyToken, setShowBuyToken] = useState(false);
   // Destructure formData for easy access
-  const { deliveryContact, location, additionalInfo, email } = formData;
+  const { deliveryContact, location, additionalInfo,deliveryLocation, email } = formData;
 
   // Function to handle form input changes
   // Function to handle form input changes
@@ -53,10 +55,10 @@ const BillingDetails = () => {
     }
   }, [isAuthenticated]);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async(event) => {
     event.preventDefault();
     const orderItems = cartItems.map(item => ({
-      product: item.id,
+      product: item._id,
       quantity: item.quantity
     }));
 
@@ -65,7 +67,7 @@ const BillingDetails = () => {
     items: orderItems,
     totalAmount:subtotal,  
     deliveryContact: formData.deliveryContact,
-    deliveryLocation: formData.location,
+    deliveryLocation: formData.deliveryLocation,
     additionalInfo: formData.additionalInfo,
     quantity:cartItems.length
   };

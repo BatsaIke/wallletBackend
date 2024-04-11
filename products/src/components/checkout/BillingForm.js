@@ -25,6 +25,18 @@ const BillingForm = ({ formData, handleChange, handleSubmit, email }) => {
           value={email}
           onChange={handleChange}
         />
+        <label
+          htmlFor="deliveryLocation"
+        >
+          Delivery Location
+        </label>
+        <textarea
+          id="deliveryLocation"
+          name="deliveryLocation"
+          value={formData.deliveryLocation}
+          onChange={handleChange}
+        />
+
         <label htmlFor="additionalInfo">Additional Information</label>
         <textarea
           id="additionalInfo"

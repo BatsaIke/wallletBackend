@@ -30,10 +30,15 @@
     background-color: #007bff;
     color: white;
     cursor: pointer;
+    width: 100px;
 }
 
 .pageNumber:hover {
     background-color: #0056b3;
+}
+.pageDiv{
+  display: flex;
+  flex-direction: column;
 }
 
 /* Responsive design for mobile devices */
