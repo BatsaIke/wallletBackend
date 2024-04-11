@@ -72,7 +72,7 @@ const BillingDetails = () => {
     quantity:cartItems.length
   };
    // Store the orderData in local storage
-   localStorage.setItem('orderData', JSON.stringify(orderData));
+   localStorage.setItem('orderData', orderData);
       if (!isAuthenticated) {
       setModalOpen(true);
     } else {
