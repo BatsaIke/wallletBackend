@@ -6,7 +6,6 @@ import Modal from "../../UI/modal/Modal";
 import LoginPage from "../../pages/Login/Loginpage";
 import { BuyTokenModal } from "../buy-token-modal/BuyTokenModal";
 import BillingForm from "./BillingForm";
-import { createOrder } from "../../actions/orderActions";
 
 const BillingDetails = () => {
   const dispatch = useDispatch();
@@ -73,7 +72,6 @@ const BillingDetails = () => {
   };
    // Store the orderData in local storage
    localStorage.setItem('orderData', JSON.stringify(orderData));
-   console.log("before sending order ",JSON.stringify(orderData))
       if (!isAuthenticated) {
       setModalOpen(true);
     } else {

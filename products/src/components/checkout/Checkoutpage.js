@@ -67,7 +67,6 @@ const CheckoutPage = () => {
       const storedOrderData = JSON.parse(localStorage.getItem('orderData'));
 
       if (storedOrderData) {
-        console.log(storedOrderData, "Retrieved order data");
         dispatch(createOrder(storedOrderData))
       }
   
