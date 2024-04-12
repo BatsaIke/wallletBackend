@@ -32,6 +32,7 @@ export const updateOrderStatus = (orderId, newStatus) => async (dispatch) => {
     if (response.status === 200) {
       // Dispatch the Redux Toolkit reducer action to update the order status in the state
       dispatch(updateOrderStatusReducer({ orderId, status: newStatus }));
+      
       return { success: true };
     } else {
       dispatch(setError("Failed to update order status."));

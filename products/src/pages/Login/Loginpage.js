@@ -5,7 +5,6 @@ import { Link, useNavigate } from "react-router-dom";
 import styles from "./LoginPage.module.css"; // Path to your CSS module for the login page
 import { loginUser } from "../../actions/authAction";
 import { set_Alert } from "../../actions/alertAction";
-import apiErrorHandler from "../../utils/apiHandleError";
 
 const LoginPage = () => {
   const [text, setEmail] = useState("");

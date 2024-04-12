@@ -105,7 +105,7 @@ const updateUserProfile = async (req, res) => {
     // Update the user properties as needed
     user.name = updatedData.name || user.name;
     user.email = updatedData.email || user.email;
-    user.phone = updatedData.phone || user.phone;
+    user.phone = updatedData?.phone || user.phone;
 
     await user.save();
 

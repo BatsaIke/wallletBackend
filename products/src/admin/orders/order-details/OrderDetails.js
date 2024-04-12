@@ -1,25 +1,26 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
-import Spinner from '../../../UI/Spinner';
-import styles from './OrderDetails.module.css';
-import { updateOrderStatus } from '../../../actions/orderActions';
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Spinner from "../../../UI/Spinner";
+import styles from "./OrderDetails.module.css";
+import { updateOrderStatus } from "../../../actions/orderActions";
+import { set_Alert } from "../../../actions/alertAction";
 
 const OrderDetails = ({ order, loading }) => {
-  const dispatch = useDispatch(); // Hook to dispatch actions
+  const dispatch = useDispatch();
+  
+  // It's unclear why orderStatus is fetched separately if you already have the order prop
+  // Ensure this useSelector does not contradict or duplicate the order prop
+  const orderStatus = useSelector(state => state.order.currentOrder?.status);
 
-  const handleUpdateStatus = (newStatus) => {
-    if (order._id && newStatus !== order.status) {
+  const handleUpdateStatus = async (newStatus) => {
+    if (order._id && newStatus !== orderStatus) {
       try {
-        let status =  dispatch(updateOrderStatus(order._id, newStatus))
-        if(status.staus==="success") {
-          dispatch(setAlert("Order status updated successfully.", "success"));
-
-        }
-
+        await dispatch(updateOrderStatus(order._id, newStatus));
+        dispatch(set_Alert("Order status updated successfully.", "success"));
       } catch (error) {
-        
+        console.error("Failed to update status:", error);
+        dispatch(set_Alert("Failed to update order status.", "error"));
       }
-    ;
     }
   };
 
@@ -37,15 +38,15 @@ const OrderDetails = ({ order, loading }) => {
             <p><strong>Additional Information:</strong> {order.additionalInfo}</p>
 
             <div className={styles.statusControl}>
-              <strong>Status:</strong> {order.status}
+              <strong>Status:</strong> {orderStatus}
               <button className={`${styles.statusButton} ${styles.fulfillButton}`}
-                      onClick={() => handleUpdateStatus('Fulfilled')}
-                      disabled={order.status === 'Fulfilled'}>
+                      onClick={() => handleUpdateStatus("Fulfilled")}
+                      disabled={orderStatus === "Fulfilled"}>
                 Fulfill
               </button>
               <button className={`${styles.statusButton} ${styles.cancelButton}`}
-                      onClick={() => handleUpdateStatus('Cancelled')}
-                      disabled={order.status === 'Cancelled'}>
+                      onClick={() => handleUpdateStatus("Cancelled")}
+                      disabled={orderStatus === "Cancelled"}>
                 Cancel
               </button>
             </div>
@@ -66,4 +67,4 @@ const OrderDetails = ({ order, loading }) => {
   );
 };
 
-export default OrderDetails;
+export default OrderDetails
