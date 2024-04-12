@@ -64,7 +64,8 @@ const CheckoutPage = () => {
   useEffect(() => {
     if (isCallback) {
       // Retrieve the orderData from local storage
-      const storedOrderData = localStorage.getItem('orderData');
+      const storedOrderData = JSON.parse(localStorage.getItem('orderData'));
+
       if (storedOrderData) {
         console.log(storedOrderData, "Retrieved order data");
         dispatch(createOrder(storedOrderData))
