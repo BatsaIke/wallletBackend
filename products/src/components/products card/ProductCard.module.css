@@ -20,6 +20,8 @@
     border-radius: 8px;
     overflow: hidden;
     height: auto; /* Or set a specific height if you want all cards to have the same height */
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); /* Add shadow: horizontal offset, vertical offset, blur radius, spread radius, color */
+    transition: box-shadow 0.3s ease-in-out; 
   }
   
   
