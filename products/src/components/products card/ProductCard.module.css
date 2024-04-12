@@ -27,9 +27,9 @@
   
   .image {
     max-width:  100%;
-    max-height: 200px;
-    height: 100vh; 
-    object-fit: contain;
+    max-height: 280px;
+    min-height: 280px;
+    object-fit: fill;
         background-position: center;
   background-repeat: no-repeat;
   }
@@ -57,7 +57,7 @@
     justify-content: center;
     align-items: center;
     gap: 8px; /* Space between icon and text */
-    background-color: #4CAF50; /* Example: Green background */
+    background-color: #0f5324; 
     color: white;
     padding: 8px 11px;
     border: none;
@@ -81,9 +81,10 @@
      max-width: calc(50% - 20px); /* 2 products per line on tablets and large phones */
       margin: 10px; /* Adjust margin for better spacing */
     }
+
   
     .image {
-      height: 150px; /* Adjust image height for smaller screens */
+      max-height: 100px; /* Adjust image height for smaller screens */
     }
   
     .details {
@@ -100,11 +101,11 @@
   @media (max-width: 480px) {
     .card {
       width: calc(50% - 20px);
-      margin: 10px;
+      
     }
   
     .image {
-      height: 200px; /* Keeping the image prominent even on small screens */
+      min-height: 200px; /* Keeping the image prominent even on small screens */
     }
   
     .details h3 {
