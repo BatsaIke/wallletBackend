@@ -17,6 +17,7 @@ import ContactPage from './pages/contact us/Contact';
 import Products from './admin/products-table/ProductsComponent';
 import OrderDetailsComponent from './admin/orders/order-details/OrderDetailsComponent';
 import OrdersComponent from './admin/orders/orders-table/OrdersComponent';
+import Sidebar from './admin/side-bar/Sidebar';
 
 
 function App() {
@@ -50,11 +51,7 @@ function App() {
         <Route path="/admin/orders" element={<OrdersComponent/>} />
         <Route path="/admin/orderdetails/:orderId" element={<OrderDetailsComponent/>} />
 
-
-
-
-
-
+        <Route path="/admin/" element={<Sidebar/>} />
 
 
 

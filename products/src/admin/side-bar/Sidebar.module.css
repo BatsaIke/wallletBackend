@@ -1,0 +1,33 @@
+/* Base styles for the sidebar */
+.sidebar {
+  margin-top: 200px;
+  width: 250px;
+  height: 100vh; /* Full viewport height */
+  position: fixed;
+  top: 0;
+  left: 0; /* Align sidebar to the left edge */
+  background-color: rgba(75,192,192,0.2);
+  z-index: 1000; /* Ensures sidebar is above other content */
+  overflow-y: auto; /* Enables vertical scrolling if content overflows */
+  overflow-x: hidden; /* Prevents horizontal scrolling */
+}
+
+.specialSidebar {
+  width: 250px;
+  height: 100vh; /* Full viewport height */
+  position: fixed;
+  top: 0;
+  left: 0; /* Align sidebar to the left edge */
+  background-color: rgba(225, 187, 24, 0.2);
+  z-index: 1000; /* Ensures sidebar is above other content */
+  overflow-y: auto; /* Enables vertical scrolling if content overflows */
+  overflow-x: hidden; /* Prevents horizontal scrolling */
+}
+
+/* Responsive adjustments for mobile devices */
+@media (max-width: 768px) { /* Adjust this breakpoint as needed */
+  .sidebar {
+    width: 50%; 
+    overflow-x: hidden; 
+  }
+}

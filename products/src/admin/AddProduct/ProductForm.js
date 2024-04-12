@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import styles from './AddProductForm.module.css';
 import {useSelector}from 'react-redux'
 
-const ProductForm = ({ onSubmit }) => {
-    const { register, handleSubmit, formState: { errors }, watch } = useForm();
+const ProductForm = ({onSubmit, product }) => {
+    const { register, handleSubmit, setValue,formState: { errors }, watch } = useForm();
     const imageFile = watch("image"); 
     const isLoading = useSelector((state) => state.product.loading);
-    console.log(isLoading,"loading")
+
+
+    const isEditing = !!product;
 
     const submitHandler = async (data) => {
         let productData = {
@@ -16,22 +18,16 @@ const ProductForm = ({ onSubmit }) => {
             price: data.price,
             quantity: data.quantity,
             sku: data.sku,
-            // Initialize image with an empty string; it will be replaced if an image is provided
-            image: '',
+            image:  product?.image?.url || '',
         };
-    
-        // Convert image to Base64 and update productData if present
+
         if (imageFile && imageFile.length > 0) {
             const file = imageFile[0];
-            try {
-                const base64 = await convertFileToBase64(file);
-                productData.image = base64;
-            } catch (error) {
-                console.error("Error converting file to Base64:", error);
-            }
+            const base64 = await convertFileToBase64(file);
+            productData.image = base64; // Update the image property with the Base64 string
         }
-    
-        // At this point, productData is fully prepared with all necessary fields, including the Base64 encoded image
+
+        // Call the onSubmit function passed as a prop, with the enriched productData
         onSubmit(productData);
     };
     
@@ -43,6 +39,18 @@ const ProductForm = ({ onSubmit }) => {
         reader.onerror = error => reject(error);
     });
 
+    console.log(product,"the product")
+    useEffect(() => {
+        if (product) {
+            setValue("name", product.name);
+            setValue("category", product.category);
+            setValue("price", product.price);
+            setValue("quantity", product.quantity);
+            setValue("sku", product.sku)
+        }
+    }, [product, setValue])
+
+    
     return (
         <form className={styles.form} onSubmit={handleSubmit(submitHandler)}>
             <h3>Add New Product</h3>
@@ -76,21 +84,29 @@ const ProductForm = ({ onSubmit }) => {
                 <input type="number" id="quantity" {...register("quantity", { required: "Quantity is required" })} />
                 {errors.quantity && <span className={styles.error}>{errors.quantity.message}</span>}
             </div>
-
+ {/* Conditionally disable SKU field for editing */}
             <div className={styles.inputGroup}>
                 <label htmlFor="sku">SKU (4 digits):</label>
-                <input type="text" id="sku" {...register("sku", { required: "SKU is required", pattern: /^\d{4}$/, message: "SKU must be 4 digits" })} />
+                <input type="text" id="sku" {...register("sku", isEditing ? {} : { required: "SKU is required", pattern: /^\d{4}$/, message: "SKU must be 4 digits" })} disabled={isEditing} />
                 {errors.sku && <span className={styles.error}>{errors.sku.message}</span>}
             </div>
 
             <div className={styles.inputGroup}>
                 <label htmlFor="image">Product Image:</label>
-                <input type="file" id="image" {...register("image", { required: "Product image is required" })} accept="image/png, image/jpeg" />
+                <input
+                    type="file"
+                    id="image"
+                    {...register("image", {
+                        required: !isEditing || !product?.image?.url ? "Product image is required" : false
+                    })}
+                    accept="image/png, image/jpeg"
+                />
                 {errors.image && <span className={styles.error}>{errors.image.message}</span>}
             </div>
 
-            <button type="submit" className={styles.submitButton}>Add Product</button>
-        </form>
+            <button type="submit" className={styles.submitButton}>
+                {isEditing ? "Update Product" : "Add Product"}
+            </button>        </form>
     );
 };
 

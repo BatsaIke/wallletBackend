@@ -19,6 +19,40 @@
     width: 50px;
     height: auto;
   }
+
+  .actionButtons {
+    display: flex;
+    justify-content: center;
+    gap: 10px; /* Space between buttons */
+  }
+  
+  .editButton {
+    background-color: #007bff; /* Blue color */
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .editButton:hover {
+    background-color: #0056b3; /* Darker shade of blue on hover */
+  }
+  
+  .deleteButton {
+    background-color: #dc3545; /* Red color */
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .deleteButton:hover {
+    background-color: #c82333; /* Darker shade of red on hover */
+  }
   
   @media screen and (max-width: 768px) {
     .productsTable,

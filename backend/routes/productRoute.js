@@ -29,9 +29,6 @@ router.get("/:id", getProductById);
 // Assuming validation for updating products might be similar to creating them, adjust as needed
 router.put(
   "/:id",
-  [
-    // Similar validation as creating a product or specific to update requirements
-  ],
   updateProduct
 );
 
