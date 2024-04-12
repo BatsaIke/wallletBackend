@@ -32,6 +32,14 @@ const orderSlice = createSlice({
     addOrder: (state, action) => {
       state.orders.push(action.payload);
     },
+    // Action to update an order's status within the orders array
+    updateOrderStatus: (state, action) => {
+      const { orderId, status } = action.payload;
+      const existingOrder = state.orders.find(order => order._id === orderId);
+      if (existingOrder) {
+        existingOrder.status = status;
+      }
+    },
     // Action to reset order state to initial state
     resetOrderState: () => orderInitialState,
   },
@@ -44,6 +52,7 @@ export const {
   setOrders,
   setCurrentOrder,
   addOrder,
+  updateOrderStatus,
   resetOrderState,
 } = orderSlice.actions;
 

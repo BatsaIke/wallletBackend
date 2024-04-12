@@ -1,14 +1,29 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import Spinner from '../../../UI/Spinner';
-import styles from './OrderDetails.module.css'; // Ensure this path is correct
+import styles from './OrderDetails.module.css';
+import { updateOrderStatus } from '../../../actions/orderActions';
 
-const OrderDetails = ({ order, loading, status, handleStatusChange }) => {
-  if (loading) return <Spinner />;
+const OrderDetails = ({ order, loading }) => {
+  const dispatch = useDispatch(); // Hook to dispatch actions
 
-  const updateStatus = (newStatus) => {
-    handleStatusChange(newStatus);
-    window.location.reload(); // Consider this for real-time updates, or use state management
+  const handleUpdateStatus = (newStatus) => {
+    if (order._id && newStatus !== order.status) {
+      try {
+        let status =  dispatch(updateOrderStatus(order._id, newStatus))
+        if(status.staus==="success") {
+          dispatch(setAlert("Order status updated successfully.", "success"));
+
+        }
+
+      } catch (error) {
+        
+      }
+    ;
+    }
   };
+
+  if (loading) return <Spinner />;
 
   return (
     <div className={styles.container}>
@@ -24,12 +39,12 @@ const OrderDetails = ({ order, loading, status, handleStatusChange }) => {
             <div className={styles.statusControl}>
               <strong>Status:</strong> {order.status}
               <button className={`${styles.statusButton} ${styles.fulfillButton}`}
-                      onClick={() => updateStatus('Fulfilled')}
+                      onClick={() => handleUpdateStatus('Fulfilled')}
                       disabled={order.status === 'Fulfilled'}>
                 Fulfill
               </button>
               <button className={`${styles.statusButton} ${styles.cancelButton}`}
-                      onClick={() => updateStatus('Cancelled')}
+                      onClick={() => handleUpdateStatus('Cancelled')}
                       disabled={order.status === 'Cancelled'}>
                 Cancel
               </button>

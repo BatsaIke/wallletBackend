@@ -1,6 +1,6 @@
 const express = require('express');
 const { check } = require('express-validator');
-const { createOrder, getOrders, getOrderById, updateOrder, deleteOrder } = require('../controller/orderController');
+const { createOrder, getOrders, getOrderById, updateOrder, deleteOrder, updateOrderStatus } = require('../controller/orderController');
 const router = express.Router();
 const softAuth = require('../middleware/softAuth');
 const auth = require('../middleware/auth');
@@ -17,6 +17,11 @@ router.post(
   createOrder
 );
 
+
+router.put(
+  '/update-status',
+  updateOrderStatus
+);
 // Assuming no validation is needed for fetching orders
 router.get('/',softAuth, getOrders);
 router.get('/:id', getOrderById); 

@@ -38,6 +38,30 @@ exports.createOrder = async (req, res) => {
   }
 };
 
+
+exports.updateOrderStatus = async (req, res) => {
+  const { orderId, status } = req.body;
+
+  if (!orderId || !status) {
+    return res.status(400).json({ message: 'Order ID and status are required.' });
+  }
+
+  try {
+    // Find the order and update its status
+    const order = await Order.findById(orderId);
+    if (!order) {
+      return res.status(404).json({ message: 'Order not found' });
+    }
+
+    order.status = status;
+    await order.save();
+    res.status(200).json({ message: 'Order status updated', order });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send('Server error');
+  }
+};
+
 exports.getOrders = async (req, res) => {
   try {
     // Use `.populate()` to fill in the product details from the 'Product' collection
