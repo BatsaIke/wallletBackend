@@ -15,9 +15,9 @@ const CartSummary = () => {
   return (
     <div className={styles.cartSummary}>
       <h2>Subtotal</h2>
-      <p>${subtotal.toFixed(2)}</p>
+      <p>Tks{subtotal.toFixed(2)}</p>
       <h2>Total</h2>
-      <p>${subtotal.toFixed(2)}</p>
+      <p>Tks{subtotal.toFixed(2)}</p>
       <button className={styles.checkoutButton} onClick={handleCheckout}>Checkout</button>
     </div>
   );
