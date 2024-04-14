@@ -3,7 +3,7 @@ const User = require("../model/UserModel");
 const gravatar = require("gravatar");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const dotenv = require("dotenv");
+const dotenv = require("dotenv"); 
 
 dotenv.config();
 const mongoose = require("mongoose");
