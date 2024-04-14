@@ -28,7 +28,7 @@ const CartItems = () => {
             <span>{item.quantity}</span>
             <button onClick={() => handleAddItem(item)}>+</button>
           </div>
-          <span className={styles.total}>{`$${(item.price * item.quantity).toFixed(2)}`}</span>
+          <span className={styles.total}>{`Tks ${(item.price * item.quantity).toFixed(2)}`}</span>
         </div>
       ))}
     </div>
