@@ -51,6 +51,7 @@ import { createOrder } from "../../actions/orderActions";
 
 const CheckoutPage = () => {
   const dispatch = useDispatch();
+  const [orderSucces, setOrderSucces]=useState(false)
   
 
   const paymentState = useSelector((state) => state.payment.paymentStatus);
@@ -62,12 +63,20 @@ const CheckoutPage = () => {
   
 
   useEffect(() => {
-    if (isCallback) {
+    if (isCallback&&paymentState==="successful") {
       // Retrieve the orderData from local storage
       const storedOrderData = JSON.parse(localStorage.getItem('orderData'));
-
       if (storedOrderData) {
-        dispatch(createOrder(storedOrderData))
+        try {
+      let res=   dispatch(createOrder(storedOrderData))
+      if (res.success===true){
+        setOrderSucces(true)
+      }
+
+        } catch (error) {
+          
+        }
+        
       }
   
       dispatch(checkPaymentStatus());
@@ -78,9 +87,9 @@ const CheckoutPage = () => {
   const [isPaymentSuccessModalOpen, setPaymentSuccessModalOpen] = useState(false);
 
   useEffect(() => {
-    if (paymentState === 'successful') {
-      setPaymentSuccessModalOpen(true);
-    }
+   
+    orderSucces &&  setPaymentSuccessModalOpen(true);
+    
   }, [paymentState]);
 
   
@@ -93,7 +102,7 @@ const CheckoutPage = () => {
         <OrderSummary />
       </div>
       {/* Conditional rendering based on paymentState.status */}
-      {isCallback && paymentState === 'successful' && (
+      {isCallback && orderSucces && (
                 <PaymentSuccessModal 
         isOpen={isPaymentSuccessModalOpen} 
         onClose={() => setPaymentSuccessModalOpen(false)}
