@@ -48,7 +48,9 @@ const payToken = async (req, res) => {
 //@desc payment route
 //access private
 const payAsGuest = async (req, res) => {
-  const { paymentMethod, amount, email } = req.body;
+  
+  const { paymentMethod, amount, } = req.body;
+  const email='giftiesrawbites@gmail.com'
   const sessionID = uuidv4(); 
 
   try {

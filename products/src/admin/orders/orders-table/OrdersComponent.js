@@ -8,7 +8,7 @@ import { fetchOrders } from "../../../actions/orderActions";
 function OrdersComponent() {
   const dispatch = useDispatch();
   const { orders, loading } = useSelector(state => state.order);
-  console.log(orders);
+  console.log(orders,"orders");
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {

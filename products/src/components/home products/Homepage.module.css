@@ -24,13 +24,14 @@
   .homepageContainer {
     display: flex;
     flex-direction: row; /* Align children side by side */
-    min-height: 100vh; /* Minimum height to take up the full viewport height */
+    
   }
   
   .categoriesSidebar {
-    flex: 1; /* Allow the sidebar to take up space based on its content width */
-    max-width: 200px; /* Maximum width for the sidebar */
-    min-width: 200px; /* Ensure the sidebar doesn't get too narrow */
+    flex: 1; 
+    max-width: 250px; 
+    min-width: 250px; 
+    
   }
   
   .homeProducts {

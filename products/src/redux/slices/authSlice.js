@@ -1,13 +1,12 @@
-// authSlice.js
 import { createSlice } from '@reduxjs/toolkit';
-
 
 const authInitialState = {
   token: localStorage.getItem('token'),
-  isAuthenticated: localStorage.getItem('token') ? true : false,
+  isAuthenticated: !!localStorage.getItem('token'),
   loading: false,
   error: null,
   user: null,
+  role: null, // Initialize role
 };
 
 const authSlice = createSlice({
@@ -17,6 +16,9 @@ const authSlice = createSlice({
     setToken: (state, action) => {
       state.token = action.payload;
       state.isAuthenticated = true;
+    },
+    setRole: (state, action) => {
+      state.role = action.payload; // Set user role in the state
     },
     setLoading: (state, action) => {
       state.loading = action.payload;
@@ -30,28 +32,28 @@ const authSlice = createSlice({
     resetAuth: (state) => {
       state.loading = false;
       state.error = null;
+      state.user = null;
+      state.role = null; // Reset role
     },
-    resetAuthState: (state) => {
-      return { ...authInitialState };
+    resetAuthState: () => {
+      return authInitialState;
     },
-    // New action for logout
     logout: (state) => {
       localStorage.removeItem('token');
-      state.token = null;
-      state.isAuthenticated = false;
-      state.user = null;
+      return { ...authInitialState, token: null, isAuthenticated: false }; // Reset the state
     },
   },
 });
 
 export const {
   setToken,
+  setRole, // Export the new action
   setLoading,
   setError,
   setUser,
   resetAuth,
   resetAuthState,
-  logout, // Include the new logout action
+  logout,
 } = authSlice.actions;
 
 export default authSlice.reducer;

@@ -9,7 +9,10 @@ import Spinner from "../../UI/Spinner";
 
 function Products() {
   const dispatch = useDispatch();
-  const { products, loading } = useSelector((state) => state.product);
+  const { products: nestedProducts, loading } = useSelector((state) => state.product);
+  const products = nestedProducts.products || [];
+
+  console.log(products);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [editProduct, setEditProduct] = useState(null);
@@ -21,7 +24,7 @@ function Products() {
   const handleProductAddSuccess = () => {
     setIsModalOpen(false);
     setEditProduct(null); 
-    dispatch(fetchProducts());
+     dispatch(fetchProducts());
   };
 
   const toggleModal = () => {

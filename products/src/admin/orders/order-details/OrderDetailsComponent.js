@@ -21,6 +21,10 @@ const OrderDetailsComponent = () => {
     }
   };
 
+  if (!currentOrder) {
+    return <div>No orders to display</div>;
+  }
+
   return (
     <OrderDetails
       handleStatusChange={handleStatusChange}

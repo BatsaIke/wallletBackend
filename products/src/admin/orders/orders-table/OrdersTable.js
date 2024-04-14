@@ -28,7 +28,7 @@ function OrdersTable({ orders }) {
           <tr key={order._id}>
             <td>{order._id}</td>
             <td>{order.customerName}</td> {/* Assuming you have customer name */}
-            <td>${order.totalAmount.toFixed(2)}</td>
+            <td>₵{order.totalAmount.toFixed(2)}</td>
             <td>{order.status}</td>
             <td>{new Date(order.createdAt).toLocaleDateString()}</td>
             <td>

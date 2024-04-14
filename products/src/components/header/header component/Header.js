@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -7,6 +7,7 @@ import {
   faSearch,
   faUser,
   faSignOutAlt,
+  faWallet,
 } from "@fortawesome/free-solid-svg-icons";
 import HeaderMenu from "../header menu/HeaderMenu";
 import styles from "./Header.module.css";
@@ -15,12 +16,13 @@ import { logout } from "../../../redux/slices/authSlice";
 
 const Header = () => {
   const cartQuantity = useSelector((state) => state.cart.totalQuantity);
+  const [searchTerm, setSearchTerm] = useState("");
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const tokenValue = useSelector(
     (state) => state.auth.user?.data?.balance?.tokenValue
   );
   const navigate = useNavigate();
-  const dispatch =useDispatch()
+  const dispatch = useDispatch();
 
   const isMobile = window.innerWidth <= 768;
 
@@ -30,6 +32,11 @@ const Header = () => {
 
   const handleLogout = () => {
     dispatch(logout());
+  };
+
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value);
+    // dispatch(setSearchTerm(event.target.value));
   };
 
   return (
@@ -42,7 +49,8 @@ const Header = () => {
           {isMobile ? (
             <FontAwesomeIcon icon={faSearch} />
           ) : (
-            <input type="text" placeholder="Search..." />
+            <input type="text" placeholder="Search..." value={searchTerm}
+            onChange={handleSearchChange} />
           )}
         </div>
         <div className={styles.cart} onClick={handleNavigateToCart}>
@@ -58,9 +66,11 @@ const Header = () => {
             <span>Balance: TKS {tokenValue}</span>
           ) : // Show user icon if not authenticated, or "My Account" text for non-mobile
           isMobile ? (
-            <FontAwesomeIcon icon={faUser} />
+            <FontAwesomeIcon icon={faWallet} />
           ) : (
-            <NavLink to="/login" className={styles.myAccount}>Login</NavLink>
+            <NavLink to="/login" className={styles.myAccount}>
+              Login
+            </NavLink>
           )}
         </div>
 

@@ -1,6 +1,9 @@
 /* Orders.module.css */
 .ordersContainer {
     padding: 20px;
+    margin: 0 auto;
+    max-width: 1200px;
+    margin-left: 150px;
   }
   
   .ordersHeader {

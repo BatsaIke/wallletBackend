@@ -44,7 +44,7 @@ exports.updateOrderStatus = async (req, res) => {
 
   if (!orderId || !status) {
     return res.status(400).json({ message: 'Order ID and status are required.' });
-  }
+  } 
 
   try {
     // Find the order and update its status

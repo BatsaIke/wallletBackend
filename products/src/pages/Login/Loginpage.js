@@ -12,10 +12,9 @@ const LoginPage = () => {
   const dispatch = useDispatch();
   const nagigate = useNavigate();
 
-  const { isAuthenticated, error } = useSelector((state) => ({
-    error: state.auth.error,
-  }));
-  let loginError = error?.response?.data?.errors?.[0]?.msg ?? '';
+  const { user,} = useSelector((state) => state.auth);
+  console.log(user)
+  
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -59,7 +58,6 @@ const LoginPage = () => {
         <button type="submit" className={styles.loginButton}>
           Sign In
         </button>
-        {error && <p className={styles.loginError}>{loginError}</p>}
         <Link to="/forgot-password" className={styles.forgotPasswordLink}>
           Forgotten password?
         </Link>

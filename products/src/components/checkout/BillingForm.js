@@ -1,49 +1,35 @@
-// BillingForm.js
 import React from "react";
 import styles from "./BillingDetails.module.css";
+import { useForm } from "react-hook-form";
 
-const BillingForm = ({ formData, handleChange, handleSubmit, email }) => {
+const BillingForm = ({ formData, handleChange, onSubmit }) => {
+  const { register, handleSubmit: validate, formState: { errors } } = useForm();
+
   return (
     <div className={styles.billingContainer}>
       <h2 className={styles.orderHeader}>Billing Details</h2>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="deliveryContact">Delivery Contact nunber</label>
+      <form onSubmit={validate(onSubmit)}>
+        <label htmlFor="deliveryContact">Delivery Contact number</label>
         <input
           type="text"
           id="deliveryContact"
-          name="deliveryContact"
-          value={formData.deliveryContact}
-          onChange={handleChange}
-          required
+          {...register("deliveryContact", { required: "Delivery contact is required" })}
         />
-        <label htmlFor="Email">Email</label>
-        <input
-          type="text"
-          id="email"
-          name="email"
-          required
-          value={email}
-          onChange={handleChange}
-        />
-        <label
-          htmlFor="deliveryLocation"
-        >
-          Delivery Location
-        </label>
+        {errors.deliveryContact && <p className={styles.error}>{errors.deliveryContact.message}</p>}
+
+        <label htmlFor="deliveryLocation">Delivery Location</label>
         <textarea
           id="deliveryLocation"
-          name="deliveryLocation"
-          value={formData.deliveryLocation}
-          onChange={handleChange}
+          {...register("deliveryLocation", { required: "Delivery location is required" })}
         />
+        {errors.deliveryLocation && <p className={styles.error}>{errors.deliveryLocation.message}</p>}
 
         <label htmlFor="additionalInfo">Additional Information</label>
         <textarea
           id="additionalInfo"
-          name="additionalInfo"
-          value={formData.additionalInfo}
-          onChange={handleChange}
+          {...register("additionalInfo")} // Optional field, no validation rules
         />
+
         <div className={styles.checkboxContainer}>
           <input
             type="checkbox"
@@ -54,6 +40,7 @@ const BillingForm = ({ formData, handleChange, handleSubmit, email }) => {
           />
           <label htmlFor="saveInfo">Save this information for next time</label>
         </div>
+
         <button type="submit" className={styles.payNowButton}>
           Pay Now
         </button>

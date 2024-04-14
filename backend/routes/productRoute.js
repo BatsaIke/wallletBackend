@@ -7,11 +7,12 @@ const {
   updateProduct,
   deleteProduct,
 } = require("../controller/productsController");
+const auth = require("../middleware/auth");
 const router = express.Router();
 
 // Add validation checks for creating and updating products
 router.post(
-  "/", 
+  "/", auth,
   [
     check("name", "Product name is required").not().isEmpty(),
     check("category", "Category is required").not().isEmpty(),
@@ -24,14 +25,14 @@ router.post(
 
 // Assuming no validation is needed for fetching products
 router.get("/", getProducts);
-router.get("/:id", getProductById);
+router.get("/:id",auth, getProductById);
 
 // Assuming validation for updating products might be similar to creating them, adjust as needed
 router.put(
-  "/:id",
+  "/:id",auth,
   updateProduct
 );
 
-router.delete("/product/:id", deleteProduct);
+router.delete("/product/:id",auth, deleteProduct);
 
 module.exports = router;

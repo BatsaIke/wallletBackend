@@ -6,6 +6,8 @@ const productInitialState = {
   error: null,
   products: [], 
   currentProduct: null, 
+  searchTerm: '', 
+
 };
 
 const productSlice = createSlice({
@@ -39,6 +41,9 @@ const productSlice = createSlice({
         state.products[index] = action.payload;
       }
     },
+    setSearchTerm: (state, action) => {
+      state.searchTerm = action.payload;
+    },
     // Action to delete a product from the products array (optional, could be used for removing a product)
     deleteProduct: (state, action) => {
       state.products = state.products.filter(product => product.id !== action.payload);
@@ -58,6 +63,8 @@ export const {
   updateProduct,
   deleteProduct,
   resetProductState,
+  setSearchTerm,
+  
 } = productSlice.actions;
 
 // Export reducer

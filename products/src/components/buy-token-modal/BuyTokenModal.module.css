@@ -7,7 +7,13 @@
   .inputGroup {
     margin-bottom: 20px;
   }
-  
+  .error {
+    color: #ff0000; /* Bright red color for visibility */
+    margin-top: 4px; /* Space above the error message */
+    font-size: 0.85rem; /* Slightly smaller font size for error text */
+    padding: 2px; /* Padding for better text alignment */
+    font-weight: bold; /* Makes the text stand out */
+  }
  .inputGroup,label {
     display: block;
     margin-bottom: 10px;

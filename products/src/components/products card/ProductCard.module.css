@@ -1,79 +1,107 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  max-width: calc(25% - 20px);
+  min-width: calc(25% - 20px);
+  margin: 10px;
+  border: none;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
 
-/* .card {
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    overflow: hidden;
-    margin: 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: calc(100% / 4 - 20px); 
-  } */
-  .card {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    max-width: calc(25% - 20px); 
-    min-width: calc(25% - 20px);
-    margin: 10px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    overflow: hidden;
-    height: auto; 
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); 
-    transition: box-shadow 0.3s ease-in-out; 
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.image-container {
+  height: 200px; /* Fixed height for image container */
+  overflow: hidden; /* Hide overflow */
+}
+
+.image {
+  width: 100%; /* Ensure image fills container */
+  height: 200px; /* Fixed height for all images */
+  object-fit: cover; /* Cover container while preserving aspect ratio */
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 15px;
+}
+
+h3 {
+  margin: 0.5em 0;
+  font-size: 1.1rem;
+  color: #333333;
+}
+
+p {
+  margin: 0.25em 0;
+  font-size: 0.9rem;
+  color: #666666;
+}
+
+.addToCartButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  background-color: #0f5324;
+  color: white;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.addToCartButton:hover {
+  background-color: #103013;
+}
+.animating {
+  animation: pop 1s forwards;
+}
+
+@keyframes pop {
+  0% {
+      transform: scale(1);
   }
-  
-  
-  .image {
-    max-width:  100%;
-    max-height: 280px;
-    min-height: 280px;
-    object-fit: fill;
-        background-position: center;
-  background-repeat: no-repeat;
+  50% {
+      transform: scale(1.2);
   }
-  
-  .details {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between; /* Helps distribute space, pushing the button down */
-    padding: 15px;
-    text-align: center;
+  100% {
+      transform: scale(1);
   }
-  
-  
-  h3 {
-    margin: 0.5em 0; /* Reduce margin around the product name for compactness */
+}
+
+@keyframes moveCart {
+  0% {
+      opacity: 0;
+      transform: translate(0, 0);
   }
-  
-  p {
-    margin: 0.25em 0; /* Smaller margin for a more compact look */
+  100% {
+      opacity: 1;
+      transform: translate(-100%, -100%);
   }
-  
-  .addToCartButton {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 8px; /* Space between icon and text */
-    background-color: #0f5324; 
-    color: white;
-    padding: 8px 11px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin-top: auto;
-    width: 80%; /* Make button wider to fill more of card */
-    margin: auto auto 0; 
-    font-size: 12px;
-  }
-  
-  .addToCartButton:hover {
-    background-color: #103013; /* Darker shade on hover */
-  }
-  
+}
+
+.cart-animation {
+  position: absolute;
+  top: 0;
+  left: 0;
+  animation: moveCart 1s forwards;
+}
  /* Assuming these styles are part of or added to ProductCard.module.css */
 
 @media (max-width: 768px) {

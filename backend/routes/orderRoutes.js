@@ -4,6 +4,7 @@ const { createOrder, getOrders, getOrderById, updateOrder, deleteOrder, updateOr
 const router = express.Router();
 const softAuth = require('../middleware/softAuth');
 const auth = require('../middleware/auth');
+const checkRole = require('../utils/checkRole');
 
 // Add validation checks for creating and updating orders
 router.post(
@@ -17,22 +18,10 @@ router.post(
   createOrder
 );
 
-
-router.put(
-  '/update-status',
-  updateOrderStatus
-);
-// Assuming no validation is needed for fetching orders
-router.get('/',softAuth, getOrders);
-router.get('/:id', getOrderById); 
-
-// Assuming validation for updating orders might be similar to creating them, adjust as needed
-router.put('/:id',auth, [
-    // Similar validation as creating an order or specific to update requirements
-  ], 
-  updateOrder
-);
-
-router.delete('/:id',auth, deleteOrder);
+router.put('/:id/status',auth, checkRole(['admin']), updateOrderStatus);
+router.get('/', auth, checkRole(['admin', 'moderator']), getOrders);
+router.get('/:id', auth, checkRole(['admin', 'moderator']), getOrderById);
+router.put('/:id',auth, checkRole(['admin']), updateOrder);
+router.delete('/:id',auth, checkRole(['admin']), deleteOrder);
 
 module.exports = router;

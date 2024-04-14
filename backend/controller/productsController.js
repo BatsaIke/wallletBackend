@@ -36,8 +36,47 @@ exports.createProduct = async (req, res) => {
 
 exports.getProducts = async (req, res) => {
   try {
-    const products = await Product.find().sort({ createdAt: -1 });
-    res.json(products);
+    const page = parseInt(req.query.page, 10) || 1; // default to first page
+    const limit = parseInt(req.query.limit, 10) || 32; // default to 32 items per page
+    const skip = (page - 1) * limit;
+
+    // Filters
+    let query = Product.find();
+
+    // Search by name
+    if (req.query.name) {
+      query = query.where('name', { $regex: req.query.name, $options: 'i' });
+    }
+
+    // Filter by category
+    if (req.query.category) {
+      query = query.where('category', req.query.category);
+    }
+
+    // Filtering by price range
+    if (req.query.minPrice || req.query.maxPrice) {
+      query = query.where('price').gte(req.query.minPrice || 0).lte(req.query.maxPrice || Number.MAX_VALUE);
+    }
+
+    // Sorting
+    if (req.query.sortBy) {
+      const sortParam = req.query.sortOrder === 'desc' ? `-${req.query.sortBy}` : req.query.sortBy;
+      query = query.sort(sortParam);
+    } else {
+      query = query.sort('-createdAt'); // Default sorting
+    }
+
+    // Execute query with pagination
+    const products = await query.skip(skip).limit(limit).exec();
+    const totalItems = await Product.countDocuments(query); // Count the total items
+    const totalPages = Math.ceil(totalItems / limit); // Calculate total pages
+
+    res.json({
+      products,
+      page,
+      totalPages,
+      totalItems
+    });
   } catch (error) {
     console.error(error);
     res.status(500).send('Server error');

@@ -21,6 +21,8 @@ import AddProductForm from './admin/AddProduct/AddProducts';
 import Products from './admin/products-table/ProductsComponent';
 import OrderDetailsComponent from './admin/orders/order-details/OrderDetailsComponent';
 import OrdersComponent from './admin/orders/orders-table/OrdersComponent';
+import PrivateRoute from './components/PrivateRoute';
+import { fetchProducts } from './actions/productActions';
 
 
 
@@ -32,7 +34,7 @@ function App() {
     const token = localStorage.getItem('token');
     if (token) {
       setAuthToken(token); // Set auth token header auth
-      dispatch(getLoginUser()); // Attempt to fetch user
+      dispatch(getLoginUser());
     }
   }, [dispatch]);
   return (
@@ -59,10 +61,20 @@ function App() {
         <Route path="/admin/" element={<Sidebar/>} /> */}
 
 <Route path="/admin/*" element={<AdminLayout />}>
+            
+            <Route element={<PrivateRoute  />}>
             <Route path="addproducts" element={<AddProductForm />} />
             <Route path="products" element={<Products />} />
             <Route path="orders" element={<OrdersComponent />} />
             <Route path="orderdetails/:orderId" element={<OrderDetailsComponent />} />
+            </Route>
+
+
+            <Route element={<PrivateRoute allowedRoles={['mederator']} />}>
+            <Route path="orders" element={<OrdersComponent />} />
+            <Route path="orderdetails/:orderId" element={<OrderDetailsComponent />} />
+            </Route>
+
           </Route>
 
         </Routes>
