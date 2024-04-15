@@ -125,10 +125,11 @@ const verifyPament = async (req, res) => {
     if (!paymentDetails) {
       return res.status(404).send("Payment details not found");
     }
+    console.log(paymentDetails,"inside the payment destais verify") 
+
 
     if (paymentDetails.status === "success") {
       // Assuming you handle some business logic here, like confirming an order
-      console.log(paymentDetails.status,"inside the payment destais verify") 
       return res.status(200).json({
         message: "Payment verified successfully",
         details: paymentDetails
