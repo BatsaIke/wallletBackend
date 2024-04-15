@@ -40,15 +40,16 @@ exports.createOrder = async (req, res) => {
 
 
 exports.updateOrderStatus = async (req, res) => {
-  const { orderId, status } = req.body;
+  const { status } = req.body; // Get status from the body
+  const { id } = req.params; // Get orderId from URL parameters
 
-  if (!orderId || !status) {
+  if (!id || !status) {
     return res.status(400).json({ message: 'Order ID and status are required.' });
-  } 
+  }
 
   try {
     // Find the order and update its status
-    const order = await Order.findById(orderId);
+    const order = await Order.findById(id);
     if (!order) {
       return res.status(404).json({ message: 'Order not found' });
     }
@@ -61,6 +62,7 @@ exports.updateOrderStatus = async (req, res) => {
     res.status(500).send('Server error');
   }
 };
+
 
 exports.getOrders = async (req, res) => {
   try {

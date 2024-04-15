@@ -28,11 +28,9 @@ export const createOrder = (orderData) => async (dispatch) => {
 export const updateOrderStatus = (orderId, newStatus) => async (dispatch) => {
   dispatch(setLoading(true));
   try {
-    const response = await api.put(`/orders/update-status`, { orderId, status: newStatus });
+    const response = await api.put(`/orders/${orderId}/status`, { status: newStatus });
     if (response.status === 200) {
-      // Dispatch the Redux Toolkit reducer action to update the order status in the state
       dispatch(updateOrderStatusReducer({ orderId, status: newStatus }));
-      
       return { success: true };
     } else {
       dispatch(setError("Failed to update order status."));
@@ -45,6 +43,7 @@ export const updateOrderStatus = (orderId, newStatus) => async (dispatch) => {
     dispatch(setLoading(false));
   }
 };
+
 
 // Fetch all orders
 export const fetchOrders = () => async (dispatch) => {
