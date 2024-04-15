@@ -56,8 +56,9 @@ const CheckoutPage = () => {
   const paymentState = useSelector((state) => state.payment.paymentStatus);
   console.log(paymentState)
 
-  const reference = urlSearchParams.get("reference");
   const urlSearchParams = new URLSearchParams(window.location.search);
+  const reference = urlSearchParams.get("reference");
+
  const [isPaymentSuccessModalOpen, setPaymentSuccessModalOpen] = useState(false);
 
   
