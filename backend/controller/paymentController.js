@@ -111,46 +111,65 @@ const paymentStatus = async (req, res) => {
 //@route GET api/v1/payment/verify
 //@desc payment route
 //access private
+
 const verifyPament = async (req, res) => {
+  const { reference } = req.query;  
+
+  if (!reference) {
+    return res.status(400).send("Payment reference is required");
+  }
+
   try {
-    //find the current user
-    const user = await findUserById(req.user.id);
-
-    if (!user) {
-      return res.status(404).send("User not found");
-    }
-
-    //get the very last payment
-    const mostRecentPayment = getMostRecentPayment(user.payments);
-
-    if (!mostRecentPayment) {
-      return res.status(400).send("No payment found for the user");
-    }
-
-    //get the payment reference
-    const reference = mostRecentPayment.reference;
     const paymentDetails = await verifyPayment(reference);
 
+    if (!paymentDetails) {
+      return res.status(404).send("Payment details not found");
+    }
+
     if (paymentDetails.status === "success") {
-      const updatedUser = await updatePaymentStatus(
-        user._id,
-        mostRecentPayment._id,
-        mostRecentPayment.amount
-      );
-
-      // Wait for the balance update to complete before sending the response
-      const totalAccountBalance = calculateAccountBalance(updatedUser.payments);
-      const tokenBalance = tokenValue(totalAccountBalance);
-
-      res.send(updatedUser);
+      // Assuming you handle some business logic here, like confirming an order
+      console.log(paymentDetails.status,"inside the payment destais verify") 
+      return res.status(200).json({
+        message: "Payment verified successfully",
+        details: paymentDetails
+      });
     } else {
-      res.status(400).send("Payment verification failed");
+      return res.status(402).send("Payment verification failed: " + paymentDetails.message);
     }
   } catch (error) {
-    console.error(error);
-    res.status(500).send("Internal Server Error");
+    console.error('Payment verification error:', error);
+    return res.status(500).send("Internal Server Error");
   }
 };
+
+// const verifyPament = async (req, res) => {
+//   const { reference } = req.query;  // Expecting 'reference' to be passed as a URL query parameter
+
+//   if (!reference) {
+//     return res.status(400).send("Payment reference is required");
+//   }
+
+//   try {
+//     const paymentDetails = await verifyPayment(reference);
+
+//     if (!paymentDetails) {
+//       return res.status(404).send("Payment details not found");
+//     }
+
+//     if (paymentDetails.status === "success") {
+//       // Assuming you handle some business logic here, like confirming an order
+//       return res.status(200).json({
+//         message: "Payment verified successfully",
+//         details: paymentDetails
+//       });
+//     } else {
+//       return res.status(402).send("Payment verification failed: " + paymentDetails.message);
+//     }
+//   } catch (error) {
+//     console.error('Payment verification error:', error);
+//     return res.status(500).send("Internal Server Error");
+//   }
+// };
 
 // buyProduct - handles product purchase by subtracting amount from user's balance
 //@route POST api/v1/payment/buy-product

@@ -20,7 +20,7 @@ router.route("/status/:sessionID").post(paymentStatus);
 
 
 //verify payment
-router.route("/verify").get(auth, verifyPament);
+router.route("/verify").get(verifyPament);
 
 // New route for buying a product
 router

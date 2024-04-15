@@ -70,25 +70,14 @@ async function fetchData() {
     console.error("Error:", error.message);
   }
 }
-
-async function updateProductPrice(
-  itemCode,
-  newPrice,
-  newQuantity,
-  allProducts
-) {
+async function updateProductPrice(itemCode, newPrice, newQuantity, allProducts) {
   try {
     for (const product of allProducts) {
       if (product.variants && product.variants.length > 0) {
         for (const variant of product.variants) {
           const sku = variant.sku;
-          // Ignore SKUs with specific formats
-          if (/^\d{4,5}(\s*\+\s*|\s*\/\s*|\s*\\\s*)\d{4,5}(\s*\+\s*\d{4,5})*$/.test(sku) || /^\d{4,5}\/\d{4,5}\s*\+\s*\d{4,5}\/\d{4,5}$/.test(sku)) {
-            console.log(`Ignoring SKU ${sku}`);
-            continue;
-          }
 
-          // Find the product with matching item code
+          // Check if the SKU matches the specific item code
           if (sku === itemCode) {
             // Compare prices
             if (variant.price !== newPrice) {
@@ -118,6 +107,15 @@ async function updateProductPrice(
             } else {
               console.log(`Price for SKU ${sku} is already up to date. No update needed.`);
             }
+
+            // Exit the loop since SKU is found and processed
+            return;
+          } else {
+            // Ignore SKUs with specific formats
+            if (/^\d{4,5}(\s*\+\s*|\s*\/\s*|\s*\\\s*)\d{4,5}(\s*\+\s*\d{4,5})*$/.test(sku) || /^\d{4,5}\/\d{4,5}\s*\+\s*\d{4,5}\/\d{4,5}$/.test(sku)) {
+              console.log(`Ignoring SKU ${sku}`);
+              continue;
+            }
           }
         }
       }
@@ -127,6 +125,7 @@ async function updateProductPrice(
     console.error("Error:", err.message);
   }
 }
+
 
 
 

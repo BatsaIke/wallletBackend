@@ -67,6 +67,36 @@ export const makePayment = (paymentData) => async (dispatch) => {
 };
 
 
+export const verifyPayment = (reference) => async (dispatch) => {
+  dispatch(setLoading(true));
+  
+  try {
+    // Perform a GET request to your server endpoint that verifies the payment
+    const response = await api.get(`/api/payments/verify?reference=${reference}`);
+    console.log(response)
+
+    // Handle response based on your application's needs
+    if (response.status === 200 && response.data.status === "success") {
+      dispatch(setPaymentStatus({
+        status: 'verified',
+        details: response.data.details
+      }));
+      return { success: true, data: response.data };
+    } else {
+      dispatch(setPaymentStatus({
+        status: 'failed',
+        message: response.data.message
+      }));
+      return { success: false, message: response.data.message };
+    }
+  } catch (error) {
+    console.error('Error verifying payment:', error);
+    dispatch(setError('Error verifying payment'));
+    return { success: false, message: error.message };
+  } finally {
+    dispatch(setLoading(false));
+  }
+};
 
 
 

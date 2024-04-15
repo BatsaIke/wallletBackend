@@ -45,51 +45,49 @@ import { useDispatch, useSelector } from "react-redux";
 import styles from "./CheckoutPage.module.css";
 import BillingDetails from "./BillingDetails";
 import OrderSummary from "./OrderSummary";
-import { checkPaymentStatus } from "../../actions/paymentActions";
+import { checkPaymentStatus, verifyPayment } from "../../actions/paymentActions";
 import PaymentSuccessModal from "./PaymentSuccessModal";
 import { createOrder } from "../../actions/orderActions";
 
 const CheckoutPage = () => {
   const dispatch = useDispatch();
-  const [orderSucces, setOrderSucces]=useState(false)
   
 
   const paymentState = useSelector((state) => state.payment.paymentStatus);
   console.log(paymentState)
+
+  const reference = urlSearchParams.get("reference");
   const urlSearchParams = new URLSearchParams(window.location.search);
-  const trxref = urlSearchParams.get("trxref");
-  const isCallback = Boolean(trxref);
+ const [isPaymentSuccessModalOpen, setPaymentSuccessModalOpen] = useState(false);
 
   
 
-  useEffect(() => {
-    if (isCallback&&paymentState==="successful") {
-      // Retrieve the orderData from local storage
-      const storedOrderData = JSON.parse(localStorage.getItem('orderData'));
-      if (storedOrderData) {
-        try {
-      let res=   dispatch(createOrder(storedOrderData))
-      if (res.success===true){
-        setOrderSucces(true)
-      }
-
-        } catch (error) {
-          
+ useEffect(() => {
+  const verifyAndCreateOrder = async () => {
+    if (reference) {
+      const verifyResult = await dispatch(verifyPayment(reference));
+      if (verifyResult.success) {
+        // Retrieve the orderData from local storage
+        const storedOrderData = JSON.parse(localStorage.getItem('orderData'));
+        if (storedOrderData) {
+          const orderResult = await dispatch(createOrder(storedOrderData));
+          if (orderResult.success) {
+            setPaymentSuccessModalOpen(true); 
+          }
         }
-        
       }
-  
-      dispatch(checkPaymentStatus());
     }
-  }, [dispatch, isCallback]);
+  };
+
+  verifyAndCreateOrder();
+}, [dispatch, reference]);
   
 
-  const [isPaymentSuccessModalOpen, setPaymentSuccessModalOpen] = useState(false);
 
   useEffect(() => {
-   
-    orderSucces &&  setPaymentSuccessModalOpen(true);
-    
+    if (paymentState === 'successful') {
+      setPaymentSuccessModalOpen(true);
+    }
   }, [paymentState]);
 
   
@@ -101,13 +99,14 @@ const CheckoutPage = () => {
       <div className={styles.orderSummarySection}>
         <OrderSummary />
       </div>
-      {/* Conditional rendering based on paymentState.status */}
-      {isCallback && orderSucces && (
-                <PaymentSuccessModal 
-        isOpen={isPaymentSuccessModalOpen} 
-        onClose={() => setPaymentSuccessModalOpen(false)}
-        className={styles.paymentModal} 
-      />
+
+      {/* Conditional rendering based on payment success status */}
+      {isPaymentSuccessModalOpen && (
+        <PaymentSuccessModal
+          isOpen={isPaymentSuccessModalOpen}
+          onClose={() => setPaymentSuccessModalOpen(false)}
+          className={styles.paymentModal}
+        />
       )}
     </div>
   );
