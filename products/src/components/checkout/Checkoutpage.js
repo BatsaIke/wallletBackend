@@ -67,8 +67,8 @@ const CheckoutPage = () => {
   const verifyAndCreateOrder = async () => {
     if (reference) {
       const verifyResult = await dispatch(verifyPayment(reference));
+      console.log(verifyResult.data.details.status,"helloooo")
       if (verifyResult.data.details.status==="success") {
-        console.log(verifyResult.data.details.status,"helloooo")
         // Retrieve the orderData from local storage
         const storedOrderData = JSON.parse(localStorage.getItem('orderData'));
         if (storedOrderData) {
