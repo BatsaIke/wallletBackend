@@ -72,7 +72,7 @@ export const verifyPayment = (reference) => async (dispatch) => {
   
   try {
     // Perform a GET request to your server endpoint that verifies the payment
-    const response = await api.get(`/api/payments`);
+    const response = await api.get(`/api/payments/verify`);
     console.log(response)
 
     // Handle response based on your application's needs
