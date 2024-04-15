@@ -72,8 +72,7 @@ export const verifyPayment = (reference) => async (dispatch) => {
   
   try {
     // Perform a GET request to your server endpoint that verifies the payment
-    const url = `/verify?reference=${encodeURIComponent(reference)}`;
-    const response = await api.get(url);
+    const response = await api.get(`/verify?reference=${reference}`);
     console.log(response)
 
     // Handle response based on your application's needs
