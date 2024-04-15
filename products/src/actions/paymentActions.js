@@ -76,7 +76,7 @@ export const verifyPayment = (reference) => async (dispatch) => {
     console.log(response)
 
     // Handle response based on your application's needs
-    if (response.status === 200 && response.data.status === "success") {
+    if (response.status === 200 && response.data.details.status === "success") {
       dispatch(setPaymentStatus({
         status: 'verified',
         details: response.data.details
