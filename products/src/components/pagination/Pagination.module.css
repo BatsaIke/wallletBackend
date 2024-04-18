@@ -1,0 +1,56 @@
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    /* Remove or comment out flex-wrap if it's not necessary */
+    /* flex-wrap: wrap; */
+}
+
+.pageButton {
+    padding: 8px 25px;
+    margin: 0 5px; /* Adjusted for consistent spacing */
+    background-color: #08470c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: max-content;
+}
+
+.pageButton:hover {
+    background-color: #51925f;
+}
+
+.pageButton:disabled {
+    background-color: #ccc;
+    cursor: default;
+}
+
+.pageInfo {
+    margin: 0 10px;
+    white-space: nowrap; /* Prevents breaking of the page info text */
+}
+
+@media (max-width: 767px) {
+    .pageButton {
+        padding: 6px 12px; /* Smaller padding for smaller screens */
+    }
+
+    .pageInfo {
+        font-size: 0.9rem; /* Smaller text on small devices */
+    }
+
+    .pagination {
+        /* Ensure the justify-content does not cause wrapping */
+        justify-content: space-between;
+    }
+}
+
+@media (max-width: 480px) {
+    .pageButton {
+        padding: 4px 8px; /* Even smaller padding for very small screens */
+        font-size: 0.8rem; /* Smaller font size for better fit */
+    }
+}

@@ -1,0 +1,80 @@
+.signupContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 50vh; /* Full screen height */
+    padding: 20px;
+}
+
+.signupForm {
+    width: 100%;
+    max-width: 400px; /* Maximum width of the form */
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.inputGroup {
+    margin-bottom: 20px;
+}
+
+.label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.inputGroup input, .inputGroup select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.signupButton {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.signupButton:hover {
+    background-color: #0056b3;
+}
+
+.errorText {
+    color: #dc3545; /* Error color */
+    font-size: 0.875em;
+}
+
+/* Adjustments for medium screens */
+@media (max-width: 780px) {
+    .signupForm {
+        max-width: 350px; /* Slightly smaller form on medium screens */
+        padding: 15px;
+    }
+}
+
+/* Adjustments for smaller screens */
+@media (max-width: 600px) {
+    .signupForm {
+        max-width: 320px; /* Smaller form on small screens */
+        padding: 15px;
+    }
+}
+
+/* Adjustments for very small screens */
+@media (max-width: 480px) {
+    .signupForm {
+        max-width: 100%; /* Full width on very small screens */
+        padding: 10px; /* Less padding for more space efficiency */
+    }
+
+    .signupButton {
+        padding: 8px; /* Smaller button padding */
+    }
+}

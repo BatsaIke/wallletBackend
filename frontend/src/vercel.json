@@ -1,0 +1,27 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "package.json",
+        "use": "@vercel/static-build",
+        "config": { "distDir": "build" }
+      }
+    ],
+    "routes": [
+      {
+        "src": "^/api/(.*)",
+        "dest": "/api/$1"
+      },
+      {
+        "src": "/(.*)",
+        "headers": { "cache-control": "s-maxage=1,stale-while-revalidate" },
+        "dest": "/index.html"
+      }
+    ],
+    "build": {
+      "env": {
+        "REACT_APP_VERSION": "1.0.0"
+      }
+    }
+  }
+  

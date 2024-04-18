@@ -1,0 +1,87 @@
+/* 
+.productsGrid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+  
+  .container {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 0 20px; 
+  }
+  .shopageContainer{
+    display: flex;
+    flex-direction: row; 
+    min-height: 100vh;
+  }
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px; 
+}
+
+.pageNumber {
+    padding: 10px;
+    margin: 0 5px;
+    border: none;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    width: 100px;
+}
+
+.pageNumber:hover {
+    background-color: #0056b3;
+}
+.pageDiv{
+  display: flex;
+  flex-direction: column;
+}
+
+
+@media (max-width: 768px) {
+    .productsGrid {
+        grid-template-columns: repeat(2, 1fr); 
+    }
+} */
+
+/* ShopPage.module.css */
+.shopageContainer {
+  display: flex;
+  flex-direction: row; /* Align children side by side */
+  width: 100%; /* Ensure full width */
+}
+
+.categoriesSidebar {
+  flex: 0 0 200px; /* Fixed width for sidebar */
+  max-width: 200px; /* Maximum width for the sidebar */
+  min-width: 200px; /* Ensure the sidebar doesn't get too narrow */
+}
+
+.pageDiv {
+  flex-grow: 1; /* Allow the main content area to take up the remaining space */
+}
+
+.productsGrid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  padding: 20px;
+}
+
+@media (max-width: 768px) {
+  .shopageContainer {
+    flex-direction: column; /* Stack sidebar and content vertically */
+  }
+
+  .categoriesSidebar {
+    width: 100%; /* Full width for sidebar */
+    order: -1; /* Bring sidebar above the content on mobile */
+  }
+
+  .productsGrid {
+    justify-content: center;
+  }
+}

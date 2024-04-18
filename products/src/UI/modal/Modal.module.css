@@ -1,0 +1,65 @@
+/* Modal.module.css */
+.modal {
+  position: relative;
+  max-width: 90%; /* Adjust based on your preference */
+  max-height: 80vh; /* Adjust based on your preference */
+  overflow-y: auto; /* Enables vertical scrolling if content overflows */
+  /* Center the modal more effectively */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000; /* Ensure it's above other content */
+  /* Style as needed */
+  background: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.overlay {
+  /* Cover the entire viewport */
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+  z-index: 999; /* Just below the modal */
+}
+.header {
+  padding: 10px 20px; /* Adjust padding as needed */
+  font-size: 1.0rem; /* Header font size */
+  font-weight: bold; /* Make the header text bold */
+  margin-bottom: 20px; /* Space between header and content */
+  background-color: #033304;
+  color: #fff;
+  margin-right: 20px;
+  text-align: center;
+}
+
+  
+  .closeButton {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: none;
+    background: none;
+    font-size: 1.5em;
+    cursor: pointer;
+  }
+  
+  
+  /* Add these styles to your Modal.module.css */
+  .content {
+    overflow-y: auto; /* Enable scrolling */
+    /* Set a max-height or use flex layout to ensure content area is scrollable */
+  }
+  
+  .footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    /* rest of your styles */
+  }

@@ -1,0 +1,137 @@
+/* Header.module.css */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 20px;
+    background: linear-gradient(-45deg, #0cc5b7 0%, #2bd891 100%);
+    color: white;
+    width: 100%;
+    position: fixed;
+    top: 0; 
+    left: 0; 
+    z-index: 1000; 
+    
+  }
+ 
+.logo, .searchBar, .cart, .account {
+    flex-grow: 1;
+}
+.logoImage{
+    width: 200px;
+    height: 130px;
+}
+
+.searchBar input, .searchBar svg {
+    width: 100%;
+    padding: 10px;
+    display: block; /* Ensure input and search icon are properly aligned */
+}
+
+.cart {
+    position: relative; /* Add this to position the quantity badge absolutely relative to the cart */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+     
+
+  }
+
+.cart svg {
+    margin-right: 5px;
+}
+
+.cartQuantity {
+    position: absolute;
+    background-color: #103a00;
+    color: white;
+    border-radius: 50%;
+    padding: 2px 6px;
+    font-size: 0.75rem;
+    top: 0;
+    right: -12;
+    transform: translate(50%, -50%); 
+    border: 2px solid white;
+  }
+  
+  .logoutButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px; 
+    padding: 8px 12px;
+    background-color: #4b4e51; 
+    color: white; 
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em; /* Adjust the font size as needed */
+    transition: background-color 0.3s; /* Smooth background color transition on hover */
+  }
+  
+  .logoutButton:hover {
+    background-color: #071627; /* Darker shade on hover */
+  }
+  
+  .logoutButton:focus {
+    outline: none; /* Remove outline on focus for a clean look */
+  }
+  .logoutText {
+    /* Ensure the text is visible by default */
+    display: block;
+  }
+  
+  .myAccount{
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+  }
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .header {
+        flex-direction: row;
+        text-align: center;
+        padding: 40px 20px;
+    }
+    .searchBar svg, .cart svg, .account svg {
+        font-size: 26px; /* Larger icons on mobile */
+    }
+
+    .logoutText {
+        display: none; /* Hide the text */
+      }
+
+    .logo, .searchBar, .cart, .account {
+        margin: 5px 0;
+        width: 100%; /* Ensure full width for flex alignment */
+    }
+
+    .logo {
+        order: -1; /* Move search bar to the top */
+    }
+
+    .searchBar input {
+        display: none;
+    }
+
+    .searchBar svg {
+        display: block;
+    }
+    .logoImage{
+        width: 80px;
+        height: 60px;
+    }
+    .logoutButton {
+        padding: 8px 8px; /* Slightly reduce padding for medium-sized screens */
+        gap: 5px; /* Reduce gap between icon and text */
+        font-size: 0.6rem; /* Adjust font size if necessary */
+      }
+}
+
+@media (max-width: 480px) {
+    .logoutButton {
+     background-color: transparent;
+     margin-left: 10px;
+    }
+  }

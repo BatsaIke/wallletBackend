@@ -1,0 +1,276 @@
+css
+Copy code
+/* Global Styles */
+:root {
+  --primary-color: #17a2b8;
+  --dark-color: #343a40;
+  --light-color: #f4f4f4;
+  --danger-color: #dc3545;
+  --success-color: #28a745;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f0f0f0;
+  margin: 0;
+}
+p{
+  color:rgba(0, 0, 0, 0.934);
+}
+
+.container {
+  display: flex;
+  align-items: stretch;
+  height: 100vh;
+}
+
+.signup-container {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  width: 500px;
+  margin: auto; /* Add this line to center the container */
+
+
+  /* Adjust padding for larger screens */
+  @media (min-width: 768px) {
+    padding: 50px;
+  }
+  /* Add this media query for screens with a maximum width of 767px (typical for mobile devices) */
+@media (max-width: 767px) {
+  .signup-container {
+    width: 100%; /* Make the container take full width */
+    padding: 20px; /* Adjust padding for smaller screens */
+  }
+
+  .input-field {
+    margin-bottom: 10px; /* Reduce margin for input fields */
+  }
+
+  .button {
+    margin-right: 0; /* Remove right margin on the button */
+  }
+
+  /* Add more responsive styles as needed */
+}
+
+}
+
+
+.login-container {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  padding-top: 40px;
+  width: 500px;
+  margin: auto; /* Add this line to center the container */
+
+  /* Adjust padding for larger screens */
+  @media (min-width: 768px) {
+    padding: 50px;
+  }
+}
+
+.input-field {
+  width: 100%;
+  margin-bottom: 15px;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.button {
+  display: inline-block;
+  background: linear-gradient(to right, #2c3e50, #1a1a1a); /* Dark theme gradient background */
+  color: #fff;
+  padding: 0.4rem 1.3rem;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  margin-right: 0.5rem;
+  transition: opacity 0.2s ease-in;
+  outline: none;
+  width: 100%;
+}
+
+.button:hover {
+  background: linear-gradient(to right, #1a1a1a, #2c3e50); /* Gradient on hover */
+}
+
+
+.main-content {
+  
+  margin-top: 84px;
+  padding: 20px;
+  background: linear-gradient(to right, #e1e1e1, #848484);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  flex: 1; /* Take remaining space */
+  padding: 20px; /* Add padding as needed */
+  margin-left: 280px; /* Adjust margin to accommodate the sidebar width */
+  
+}
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to bottom, #1a1a1a, #2c3e50, #1a1a1a);
+  color: #fff;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 200; /* Higher z-index for the header */
+  .menuIcon {
+    display: none;
+  
+  }
+}
+
+
+/* Adjust styles for smaller screens, e.g., phones */
+@media (max-width: 767px) {
+  .main-content {
+    padding: 50px; /* Adjust padding for larger screens */
+    margin-left: 0;
+  }
+  .header {
+    justify-content: space-between;
+    padding: 20px;
+    height: 50px;
+    .menuIcon {
+      display: flex;
+    
+    }
+  }
+  
+
+  .logo {
+    margin-bottom: 10px; /* Add margin to separate logo from other elements */
+  }
+  
+  .user-info,
+  
+  .logout-btn {
+    display: none; /* Hide user information, token button, and logout button on smaller screens */
+  }
+ 
+   
+
+  .user-details {
+    margin-right: 20px; /* Adjust margin on smaller screens */
+    display: flex; /* Show user details */
+  }
+
+  .balance {
+    display: none;
+  }
+
+  .wallet-icon {
+    display: block; /* Show wallet icon on smaller screens */
+    margin-right: 5px; /* Adjust margin for spacing */
+  }
+
+  .wallet-balance-header {
+    display: block; /* Show wallet balance on smaller screens */
+  }
+
+  .username {
+    display: none; /* Adjust margin on smaller screens */
+  }
+
+  .user-picture {
+    display: block; /* Show user picture */
+    display: none;
+  }
+
+  .signup-container {
+    width: 100%; /* Make the container take full width */
+    padding: 20px; /* Adjust padding for smaller screens */
+  }
+
+  .input-field {
+    margin-bottom: 10px; /* Reduce margin for input fields */
+  }
+
+  .button {
+    margin-right: 0; /* Remove right margin on the button */
+  }
+}
+/* Header styles */
+
+
+
+
+
+
+.logo img {
+  width: 50px; /* Set your logo size */
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.balance {
+  margin-right: 20px;
+}
+
+.user-details {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+}
+
+.username {
+  margin-right: 10px;
+}
+
+.user-picture {
+  width: 30px; /* Set your user picture size */
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.logout-btn {
+  background-color: #555; /* Button background color */
+  color: #fff; /* Button text color */
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+
+
+/* token button */
+.token-button {
+  font-weight: bold;
+  font-family:system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif, sans-serif; /* Add your desired font */
+  background-color: #ffffff; /* White background */
+  color: #000000; /* Black text color */
+  padding: 10px 20px; /* Adjust padding as needed */
+  border: 2px solid #000000; /* Black border */
+  border-radius: 5px; /* Add a slight border radius */
+  cursor: pointer; /* Add pointer cursor for interaction */
+  /* Add more styles as needed */
+
+    /* Hover Effect */
+    &:hover {
+      background-color: #000000; /* Black background on hover */
+      color: #ffffff; /* White text color on hover */
+    }
+  /* Responsive Styles */
+  @media (max-width: 600px) {
+    font-size: 14px; /* Adjust font size for smaller screens */
+    /* Add more responsive styles as needed */
+  }
+  
+}
+

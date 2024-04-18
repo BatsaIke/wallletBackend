@@ -1,0 +1,153 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  max-width: calc(25% - 20px);
+  min-width: calc(25% - 20px);
+  margin: 10px;
+  border: none;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #ffffff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.image-container {
+  height: 200px; /* Fixed height for image container */
+  overflow: hidden; /* Hide overflow */
+}
+
+.image {
+  width: 100%; /* Ensure image fills container */
+  height: 200px; /* Fixed height for all images */
+  object-fit: cover; /* Cover container while preserving aspect ratio */
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 15px;
+}
+
+h3 {
+  margin: 0.5em 0;
+  font-size: 1.1rem;
+  color: #333333;
+}
+
+p {
+  margin: 0.25em 0;
+  font-size: 0.9rem;
+  color: #666666;
+}
+
+.addToCartButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  background-color: #0f5324;
+  color: white;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.addToCartButton:hover {
+  background-color: #103013;
+}
+.animating {
+  animation: pop 1s forwards;
+}
+
+@keyframes pop {
+  0% {
+      transform: scale(1);
+  }
+  50% {
+      transform: scale(1.2);
+  }
+  100% {
+      transform: scale(1);
+  }
+}
+
+@keyframes moveCart {
+  0% {
+      opacity: 0;
+      transform: translate(0, 0);
+  }
+  100% {
+      opacity: 1;
+      transform: translate(-100%, -100%);
+  }
+}
+
+.cart-animation {
+  position: absolute;
+  top: 0;
+  left: 0;
+  animation: moveCart 1s forwards;
+}
+ /* Assuming these styles are part of or added to ProductCard.module.css */
+
+@media (max-width: 768px) {
+    .card {
+     max-width: calc(50% - 20px); /* 2 products per line on tablets and large phones */
+      margin: 10px; /* Adjust margin for better spacing */
+    }
+
+  
+    .image {
+      min-height: 200px; /* Keeping the image prominent even on small screens */
+    }
+  
+    .details {
+      padding: 10px; /* Slightly reduce padding */
+    }
+  
+    .addToCartButton {
+      padding: 8px 12px; /* Adjust button padding for smaller screens */
+      font-size: 0.9rem;
+      font-size: 12px;/* Adjust font size for better readability */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .card {
+      width: calc(50% - 10px);
+      
+    }
+  
+    .image {
+      min-height: 200px; /* Keeping the image prominent even on small screens */
+    }
+  
+    .details h3 {
+      font-size: 1rem; /* Slightly reduce the font size of product name */
+    }
+  
+    .details p {
+      font-size: 0.8rem; /* Reduce font size for other details to save space */
+    }
+  
+    .addToCartButton {
+      width: 100%; /* Make the button full width to emphasize call to action */
+      margin-top: 8px; /* Adjust spacing above the button */
+      font-size: 12px;
+    }
+  }
+  

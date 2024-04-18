@@ -1,0 +1,55 @@
+/* OrderSummary.module.css */
+.orderSummaryContainer {
+    padding: 20px;
+    border-radius: 8px;
+    background-color: #f4f4f4; /* Light grey background for distinction */
+    margin: 20px 0; /* Ensure some space around the component */
+  }
+  
+  .summaryItem, .total {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 1rem; /* Adjust base font size if needed */
+  }
+  
+  .total {
+    font-weight: bold; /* Make the total more prominent */
+    border-top: 1px solid #ccc; /* Separate total from other items */
+    padding-top: 10px; /* Space above the total */
+  }
+  .orderHeader{
+    font-size: 24px;
+    text-align: center;
+    padding: 20px;
+    color: #333; 
+    background-color: #f5f5f5;
+    border-bottom: 1px solid #ddd; 
+    margin-bottom: 20px; 
+  }
+
+  /* Responsive adjustments for smaller screens */
+  @media (max-width: 768px) {
+    .orderSummaryContainer {
+      padding: 15px;
+      font-size: 0.9rem; /* Slightly smaller text on smaller screens */
+    }
+  
+    .summaryItem, .total {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+  
+    .summaryItem span:last-child, .total span:last-child {
+      margin-top: 5px; /* Add space between labels and values on smaller screens */
+    }
+  }
+  
+  /* Additional responsive adjustments for very small screens */
+  @media (max-width: 480px) {
+    .orderSummaryContainer {
+      font-size: 0.8rem; /* Even smaller text for very small screens */
+    }
+  }
+  

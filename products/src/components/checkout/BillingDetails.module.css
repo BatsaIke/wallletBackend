@@ -1,0 +1,132 @@
+.inputGroup {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  margin-bottom: 5px;
+}
+
+input[type="text"],
+textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Use flexbox to align checkbox and its label horizontally */
+.checkboxContainer {
+  display: flex;
+  align-items: center; /* Align items vertically */
+  margin: 20px 0;
+}
+
+/* Adjust label margin when in checkboxContainer to remove bottom margin */
+.checkboxContainer label {
+  margin: 0 0 0 10px; /* Add some space between the checkbox and the label */
+}
+
+.payNowButton {
+  background-color: #007bff;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 100%;
+}
+
+/* BillingDetails.module.css */
+.error {
+  color: #ff0000; /* Bright red color for visibility */
+  margin-top: 4px; /* Space above the error message */
+  font-size: 0.85rem; /* Slightly smaller font size for error text */
+  padding: 2px; /* Padding for better text alignment */
+  font-weight: bold; /* Makes the text stand out */
+}
+
+.billModal {
+  width: 40%;
+}
+.orderHeader {
+  font-size: 24px;
+  text-align: center;
+  padding: 20px;
+  color: #333;
+  background-color: #f5f5f5;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 20px;
+}
+
+.payNowButton:hover {
+  background-color: #0056b3;
+}
+
+.guestOrLogin {
+  text-align: center;
+  padding: 20px;
+}
+
+.choicePrompt {
+  margin-bottom: 20px;
+  font-size: 1rem;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.loginButton,
+.guestButton {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.loginButton {
+  background-color: #007bff;
+  color: white;
+}
+
+.loginButton:hover {
+  background-color: #0056b3;
+}
+
+.guestButton {
+  background-color: #28a745;
+  color: white;
+}
+
+.guestButton:hover {
+  background-color: #218838;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .inputGroup {
+    flex-direction: column;
+  }
+  .billModal {
+    width: 80%;
+  }
+}
+
+@media (max-width: 480px) {
+  .inputGroup {
+    flex-direction: column;
+  }
+  .billModal {
+    width: 80%;
+    padding: 10px;
+  }
+}
+
+/* Further responsive styling as needed */

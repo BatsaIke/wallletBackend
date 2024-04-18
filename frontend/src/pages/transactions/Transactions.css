@@ -1,0 +1,77 @@
+/* TransactionHistory.css */
+
+.transaction-history-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin: 20px auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #f2f2f2;
+}
+
+.pagination {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.pagination button, .pagination span {
+  padding: 8px 16px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  outline: none;
+}
+
+.pagination button {
+  background: linear-gradient(to right, #2c3e50, #1a1a1a); /* Dark theme gradient background */
+  color: white;
+}
+
+.pagination span {
+  border: 1px solid #ddd;
+}
+
+.pagination button:hover, .pagination span:hover {
+  background: linear-gradient(to right, #2c3e50, #1a1a1a); /* Dark theme gradient background */
+  color: #fff;
+}
+
+.pagination span.active {
+  background: linear-gradient(to right, #2c3e50, #1a1a1a); /* Dark theme gradient background */
+  color: #fff;
+}
+
+/* Responsive Styles */
+
+@media (max-width: 600px) {
+  .transaction-history-container {
+    max-width: 100%; /* Adjust the width for smaller screens */
+  }
+
+  table {
+    font-size: 14px; /* Adjust font size for smaller screens */
+  }
+
+  .pagination button, .pagination span {
+    padding: 8px; /* Adjust padding for smaller screens */
+  }
+}

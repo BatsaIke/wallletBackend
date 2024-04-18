@@ -1,0 +1,79 @@
+/* Homepage.module.css */
+.homepage {
+    padding: 20px;
+  }
+  
+  .productsGrid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Adjust to center for better alignment with a single item */
+  }
+  
+  .seeMore {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    width: 200px;
+    background-color: #033905;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .homepageContainer {
+    display: flex;
+    flex-direction: row; /* Align children side by side */
+    
+  }
+  
+  .categoriesSidebar {
+    flex: 1; 
+    max-width: 250px; 
+    min-width: 250px; 
+    
+  }
+  
+  .homeProducts {
+    flex: 3; /* Allow the main content area to take up more space */
+    padding: 20px; /* Add some padding around the content */
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 992px) {
+    .homepage {
+      margin-left: 0; /* Remove the margin for smaller screens */
+    }
+  
+    .homepageContainer {
+      flex-direction: column; /* Stack sidebar and content on smaller screens */
+    }
+  
+    .categoriesSidebar, .homeProducts {
+      max-width: 100%; /* Allow both to take the full width */
+      min-width: 0; /* Reset minimum width */
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .productsGrid {
+      justify-content: center; /* Center products on very small screens */
+    }
+    .homepageContainer {
+        display: block; /* Stack components on smaller screens */
+      }
+    
+    .card {
+      width: calc(100% / 2 - 20px); /* Adjust cards to show two per row on small screens */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .card {
+      width: calc(100% - 20px); /* Adjust cards to take full width, minus some padding */
+    }
+    .homepageContainer {
+        display: block; /* Stack components on smaller screens */
+      }
+  }
+  
