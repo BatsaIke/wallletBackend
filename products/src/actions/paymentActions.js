@@ -54,7 +54,7 @@ export const makePayment = (paymentData) => async (dispatch) => {
     if (response.status === 200) {
       const { authorization_url: authorizationUrl } = response.data.response.data;
       const sessionID = response.data.sessionID
-      localStorage.setItem('payment', sessionID)
+      localStorage.setItem('sessionID', sessionID)
        window.open(authorizationUrl, '_self');
     }
   } catch (error) {

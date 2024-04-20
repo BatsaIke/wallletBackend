@@ -19,6 +19,23 @@ const BillingForm = ({ formData, handleChange, onSubmit }) => {
         />
         {errors.deliveryContact && <p className={styles.error}>{errors.deliveryContact.message}</p>}
 
+        <label htmlFor="email">Email</label>
+      <input
+        type="text"
+        id="email"
+        {...register("email", {
+          required: "Email is required for payment",
+          pattern: {
+            value: /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+            message: "Invalid email address"
+          }
+        })}
+        onChange={handleChange}
+        value={formData.email}
+
+      />
+      {errors.email && <p className={styles.error}>{errors.email.message}</p>}
+
         <label htmlFor="deliveryLocation">Delivery Location</label>
         <textarea
           id="deliveryLocation"

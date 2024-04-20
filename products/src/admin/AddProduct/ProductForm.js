@@ -75,7 +75,7 @@ const ProductForm = ({onSubmit, product }) => {
 
             <div className={styles.inputGroup}>
                 <label htmlFor="price">Price:</label>
-                <input type='' id="price" {...register("price", { required: "Price is required" })} />
+                <input type="number" id="price" {...register("price", { required: "Price is required" })} />
                 {errors.price && <span className={styles.error}>{errors.price.message}</span>}
             </div>
 

@@ -1,21 +1,25 @@
-// BillingDetails.js
-import React, { useState, useEffect } from "react";
-import {  useSelector } from "react-redux";
-import styles from "./BillingDetails.module.css"; // CSS module for styling
+import React, { useState, useEffect, useMemo } from "react";
+import { useSelector } from "react-redux";
+import styles from "./BillingDetails.module.css";
 import Modal from "../../UI/modal/Modal";
 import LoginPage from "../../pages/Login/Loginpage";
 import { BuyTokenModal } from "../buy-token-modal/BuyTokenModal";
 import BillingForm from "./BillingForm";
 
 const BillingDetails = () => {
-  // const dispatch = useDispatch();
   const cartItems = useSelector((state) => state.cart.items);
   const subtotal = useSelector((state) => state.cart.totalPrice);
 
-  const { isAuthenticated } = useSelector((state) => ({
-    isAuthenticated: state.auth.isAuthenticated,
-    error: state.auth.error,
-  }));
+  // Memoizing the selector
+  const authSelector = useMemo(
+    () => (state) => ({
+      isAuthenticated: state.auth.isAuthenticated,
+      error: state.auth.error,
+    }),
+    []
+  );
+
+  const { isAuthenticated } = useSelector(authSelector);
 
   const [formData, setFormData] = useState({
     deliveryContact: "",
@@ -28,11 +32,7 @@ const BillingDetails = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   const [showBuyToken, setShowBuyToken] = useState(false);
-  // Destructure formData for easy access
-  const {  email } =
-    formData;
 
-  // Function to handle form input changes
   // Function to handle form input changes
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -54,7 +54,7 @@ const BillingDetails = () => {
       setModalOpen(false);
     }
   }, [isAuthenticated]);
-
+  const { email } = formData;
   const handleSubmit = async (event) => {
     const orderItems = cartItems.map((item) => ({
       product: item._id,
@@ -70,7 +70,7 @@ const BillingDetails = () => {
       additionalInfo: formData.additionalInfo,
       quantity: cartItems.length,
     };
-    // Store the orderData in local storage
+console.log(formData,"ALLform data");
     localStorage.setItem("orderData", JSON.stringify(orderData));
     if (!isAuthenticated) {
       setModalOpen(true);
@@ -127,7 +127,6 @@ const BillingDetails = () => {
         )}
       </Modal>
 
-      {/* New Modal for BuyTokenModal when showBuyToken is true */}
       <Modal
         isOpen={showBuyToken}
         onClose={() => setShowBuyToken(false)}

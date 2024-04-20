@@ -49,10 +49,8 @@ const payToken = async (req, res) => {
 //access private
 const payAsGuest = async (req, res) => {
   
-  const { paymentMethod, amount, } = req.body;
-  const email='giftiesrawbites@gmail.com'
+  const { paymentMethod, amount,email } = req.body;
   const sessionID = uuidv4(); 
-
   try {
     let paymentResult;
     if (paymentMethod === "momo") {
