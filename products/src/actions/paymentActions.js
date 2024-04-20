@@ -1,6 +1,5 @@
 import api from "../api";
-import { setLoading } from "../redux/slices/authSlice";
-import { setError, setPaymentStatus } from "../redux/slices/paymentSlice";
+import { setError, setLoading, setPaymentStatus } from "../redux/slices/paymentSlice";
 import apiErrorHandler from "../utils/apiHandleError";
 
 

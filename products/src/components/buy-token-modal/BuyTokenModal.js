@@ -3,11 +3,15 @@ import { useDispatch, useSelector } from "react-redux";
 import styles from "./BuyTokenModal.module.css"; // Ensure this path is correct
 import { useForm } from "react-hook-form";
 import { makePayment } from "../../actions/paymentActions";
+import Spinner from "../../UI/Spinner";
 
 export const BuyTokenModal = ({ email }) => {
   const dispatch = useDispatch();
   const { register, handleSubmit, formState: { errors } } = useForm();
   const totalAmount = useSelector((state) => state.cart.totalPrice);
+
+  const loading = useSelector((state) => state.payment.loading);
+
 
   const doubledAmount = totalAmount ? (parseFloat(totalAmount) * 1.0).toFixed(1) : null;
 
@@ -25,6 +29,13 @@ export const BuyTokenModal = ({ email }) => {
 
     dispatch(makePayment(paymentData));
   };
+
+  console.log(loading,"LOaind")
+
+  if (loading) {
+    return <Spinner/>;
+  }
+  
 
   return (
     <div className={styles.modalContainer}>
