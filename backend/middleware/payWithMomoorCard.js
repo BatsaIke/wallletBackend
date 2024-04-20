@@ -41,7 +41,7 @@ const payWithMomo = async (email, amount) => {
           }
 
           // If no user is found, return the response with user set to null
-          return { response, user: null };
+          return { response, user: null ,reference: response.data.reference,};
       }
 
       // If the transaction was not successful, return only the response
@@ -85,7 +85,7 @@ const payWithCard = async (email, amount) => {
           { new: true }
         ).select("-password");
 
-        return { response, user: updatedUser };
+        return { response, user: updatedUser,reference: response.data.reference, };
       }
 
       // If no user is found with that email, just return the Paystack response

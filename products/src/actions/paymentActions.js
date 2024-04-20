@@ -51,11 +51,14 @@ export const makePayment = (paymentData) => async (dispatch) => {
   dispatch(setLoading(true));
   try {
     const response = await api.post('/payment/guest-payment', paymentData);
+    console.log(response);
     if (response.status === 200) {
       const { authorization_url: authorizationUrl } = response.data.response.data;
-      const sessionID = response.data.sessionID
+      const {sessionID, reference} = response.data
+      
       localStorage.setItem('sessionID', sessionID)
-       window.open(authorizationUrl, '_self');
+      localStorage.setItem('reference', reference)
+        window.open(authorizationUrl, '_self');
     }
   } catch (error) {
     console.error('Error making payment:', error);

@@ -1,60 +1,30 @@
-
-
-
 // CheckoutPage.js
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import useOrderManager from "./OrderManager";  // Import the custom hook
 import styles from "./CheckoutPage.module.css";
 import BillingDetails from "./BillingDetails";
 import OrderSummary from "./OrderSummary";
-import {  verifyPayment } from "../../actions/paymentActions";
 import PaymentSuccessModal from "./PaymentSuccessModal";
-import { createOrder } from "../../actions/orderActions";
 
 const CheckoutPage = () => {
-  const dispatch = useDispatch();
-  
-
-  const paymentState = useSelector((state) => state.payment.paymentStatus);
-  console.log(paymentState)
-
-  const urlSearchParams = new URLSearchParams(window.location.search);
-  const reference = urlSearchParams.get("reference");
-
- const [isPaymentSuccessModalOpen, setPaymentSuccessModalOpen] = useState(false);
-
-  
-
- useEffect(() => {
-  const verifyAndCreateOrder = async () => {
-    if (reference) {
-      const verifyResult = await dispatch(verifyPayment(reference));
-      console.log(verifyResult)
-      if (verifyResult.success === true) {
-        // Retrieve the orderData from local storage
-        const storedOrderData = JSON.parse(localStorage.getItem('orderData'));
-        if (storedOrderData) {
-          const orderResult = await dispatch(createOrder(storedOrderData));
-          if (orderResult.success) {
-            setPaymentSuccessModalOpen(true); 
-          }
-        }
-      }
-    }
-  };
-
-  verifyAndCreateOrder();
-}, [dispatch, reference]);
-  
-
+  const { verifyAndCreateOrder } = useOrderManager();
+  const [isPaymentSuccessModalOpen, setPaymentSuccessModalOpen] = useState(false);
 
   useEffect(() => {
-    if (paymentState === 'successful') {
-      setPaymentSuccessModalOpen(true);
-    }
-  }, [paymentState]);
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const callBackreference = urlSearchParams.get("reference");
+    const storedOrderData = JSON.parse(localStorage.getItem('orderData'));
+    const reference = localStorage.getItem('reference');
 
-  
+    if (reference || storedOrderData) {
+      verifyAndCreateOrder(callBackreference,reference, storedOrderData).then(success => {
+        if (success) {
+          setPaymentSuccessModalOpen(true);
+        }
+      });
+    }
+  }, []);
+
   return (
     <div className={styles.checkoutPageContainer}>
       <div className={styles.billingSection}>
@@ -64,7 +34,6 @@ const CheckoutPage = () => {
         <OrderSummary />
       </div>
 
-      {/* Conditional rendering based on payment success status */}
       {isPaymentSuccessModalOpen && (
         <PaymentSuccessModal
           isOpen={isPaymentSuccessModalOpen}

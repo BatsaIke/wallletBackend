@@ -61,6 +61,8 @@ const BillingDetails = () => {
       quantity: item.quantity,
     }));
 
+   
+
     const orderData = {
       ...formData,
       items: orderItems,
@@ -70,7 +72,8 @@ const BillingDetails = () => {
       additionalInfo: formData.additionalInfo,
       quantity: cartItems.length,
     };
-console.log(formData,"ALLform data");
+    
+console.log(orderData,"ALLform data");
     localStorage.setItem("orderData", JSON.stringify(orderData));
     if (!isAuthenticated) {
       setModalOpen(true);
