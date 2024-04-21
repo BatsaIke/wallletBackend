@@ -1,6 +1,6 @@
 // CheckoutPage.js
 import React, { useEffect, useState } from "react";
-import useOrderManager from "./OrderManager";  // Import the custom hook
+import useOrderManager from "./OrderManager";
 import styles from "./CheckoutPage.module.css";
 import BillingDetails from "./BillingDetails";
 import OrderSummary from "./OrderSummary";
@@ -12,17 +12,15 @@ const CheckoutPage = () => {
 
   useEffect(() => {
     const urlSearchParams = new URLSearchParams(window.location.search);
-    const callBackreference = urlSearchParams.get("reference");
+    const callbackReference = urlSearchParams.get("reference");
+    const storedReference = localStorage.getItem('reference');
     const storedOrderData = JSON.parse(localStorage.getItem('orderData'));
-    const reference = localStorage.getItem('reference');
 
-    if (reference || storedOrderData) {
-      verifyAndCreateOrder(callBackreference,reference, storedOrderData).then(success => {
-        if (success) {
-          setPaymentSuccessModalOpen(true);
-        }
-      });
-    }
+    verifyAndCreateOrder(callbackReference, storedReference, storedOrderData).then(success => {
+      if (success) {
+        setPaymentSuccessModalOpen(true);
+      }
+    });
   }, []);
 
   return (
