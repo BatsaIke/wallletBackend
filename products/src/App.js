@@ -22,6 +22,7 @@ import Products from './admin/products-table/ProductsComponent';
 import OrderDetailsComponent from './admin/orders/order-details/OrderDetailsComponent';
 import OrdersComponent from './admin/orders/orders-table/OrdersComponent';
 import PrivateRoute from './components/PrivateRoute';
+import { createOrder } from './actions/orderActions';
 
 
 
@@ -35,7 +36,27 @@ function App() {
       setAuthToken(token); // Set auth token header auth
       dispatch(getLoginUser());
     }
+
+    // Check for stored order data and reference
+    const storedOrderData = JSON.parse(localStorage.getItem('orderData'));
+    const storedReference = localStorage.getItem('reference');
+
+    if (storedOrderData && storedReference) {
+      const createOrderFromStorage = async () => {
+        const orderResult = await dispatch(createOrder(storedOrderData));
+        if (orderResult.success) {
+          localStorage.removeItem('orderData');
+          localStorage.removeItem('reference');
+          console.log("Order created successfully from stored data.");
+        } else {
+          console.error("Failed to create order from stored data.");
+        }
+      };
+      createOrderFromStorage();
+    }
   }, [dispatch]);
+
+
   return (
     <>
    
