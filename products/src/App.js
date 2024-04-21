@@ -23,6 +23,7 @@ import OrderDetailsComponent from './admin/orders/order-details/OrderDetailsComp
 import OrdersComponent from './admin/orders/orders-table/OrdersComponent';
 import PrivateRoute from './components/PrivateRoute';
 import { createOrder } from './actions/orderActions';
+import { verifyPayment } from './actions/paymentActions';
 
 
 
@@ -43,6 +44,8 @@ function App() {
 
     if (storedOrderData && storedReference) {
       const createOrderFromStorage = async () => {
+        const verifyResult = await dispatch(verifyPayment(storedReference));
+        if(verifyResult.success){
         const orderResult = await dispatch(createOrder(storedOrderData));
         if (orderResult.success) {
           localStorage.removeItem('orderData');
@@ -51,7 +54,7 @@ function App() {
         } else {
           console.error("Failed to create order from stored data.");
         }
-      };
+      }};
       createOrderFromStorage();
     }
   }, [dispatch]);
