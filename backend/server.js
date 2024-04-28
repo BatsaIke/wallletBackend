@@ -8,6 +8,9 @@ const userAuth = require("./routes/authRoute.js");
 const payStack = require("./routes/paymentRoute.js");
 const orderRoute = require("./routes/orderRoutes.js");
 const productRoute = require("./routes/productRoute.js");
+const contactRoute = require("./routes/contactRoute.js");
+const affiliateRoute = require("./routes/affiliateRoutes.js");
+
 const cors = require("cors");
 const {handlePaystackWebhook} = require("./middleware/payStackWebhook.js");
 
@@ -39,6 +42,10 @@ app.use("/api/v1/profile", userProfile);
 app.post("/api/v1/webhook/paystack", handlePaystackWebhook);
 app.use('/api/v1/orders', orderRoute);
 app.use('/api/v1/products', productRoute);
+app.use('/api/v1/contact', contactRoute);
+app.use('/api/v1/affiliate', affiliateRoute);
+
+
 
 const PORT = process.env.PORT || 5100;
 

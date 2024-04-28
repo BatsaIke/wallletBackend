@@ -1,17 +1,30 @@
 import api from "../api";
-import { setLoading } from "../redux/slices/authSlice";
-import { addContact, setContacts } from "../redux/slices/cantactSlice";
+import { setContact, setContacts, setLoading } from "../redux/slices/contactSlice";
 import apiErrorHandler from "../utils/apiHandleError";
 
-
-// Action to get all contacts
-export const getAllContacts = (groupId = null) => async (dispatch) => {
+export const getContacts = (sortBy, sortOrder) => async (dispatch) => {
   dispatch(setLoading(true));
   try {
+    let url = "/contact/get";
+    if (sortBy && sortOrder) {
+      url += `?sortBy=${sortBy}&sortOrder=${sortOrder}`;
+    }
+    const res = await api.get(url);
+    dispatch(setContacts(res.data));
+  } catch (error) {
+    apiErrorHandler(dispatch, error);
+  } finally {
+    dispatch(setLoading(false));
+  }
+};
 
-    const url = groupId ? `/contacts?groupId=${groupId}` : "/contacts";
-    const response = await api.get(url);
-    dispatch(setContacts(response.data)); // Update the state with the fetched contacts
+export const createContact = (contactData) => async (dispatch) => {
+  dispatch(setLoading(true));
+  try {
+    await api.post("/contact/create", contactData);
+    // Fetch updated list of contacts after creating a new one
+  
+    // dispatch(setContacts(res.data)); // Update contacts list in the store
     return { success: true };
   } catch (error) {
     apiErrorHandler(dispatch, error);
@@ -22,22 +35,16 @@ export const getAllContacts = (groupId = null) => async (dispatch) => {
 };
 
 
-
-// Action to create a new contact
-export const createContact = (contactData, groupId = null) => async (dispatch) => {
+export const getContactById = (id) => async (dispatch) => {
   dispatch(setLoading(true));
   try {
-    // If there's a groupId, include it in the contactData
-    if (groupId) {
-      contactData.groupId = groupId;
-    }
-
-    const response = await api.post("/contacts", contactData);
-    dispatch(addContact(response.data)); // Add the newly created contact to the state
-    return { success: true, data: response.data };
+    const res = await api.get(`/contact/get/${id}`);
+    console.log(res.data,"contact")
+    dispatch(setContact(res.data)); 
+    return res.data;
   } catch (error) {
     apiErrorHandler(dispatch, error);
-    return { success: false };
+    return null;
   } finally {
     dispatch(setLoading(false));
   }

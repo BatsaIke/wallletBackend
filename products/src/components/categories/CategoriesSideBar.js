@@ -19,13 +19,13 @@ onPriceFilterChange = () => {},
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth > 768) {
-        setIsActive(true); // Always open on large screens
+        setIsActive(true); 
       } else {
-        setIsActive(false); // Allow toggle on small screens
+        setIsActive(false); 
       }
     };
 
-    handleResize(); // Call on mount
+    handleResize(); 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
@@ -64,13 +64,13 @@ onPriceFilterChange = () => {},
             className={styles.categoryItem}
             onClick={() => handleCategorySelect("Flowers")}
           >
-            <FaSeedling /> Flowers
+            <FaSeedling /> Highs
           </li>
           <li
             className={styles.categoryItem}
             onClick={() => handleCategorySelect("Edibles")}
           >
-            <FaCandyCane /> Edibles
+            <FaCandyCane /> Bites
           </li>
           <li
             className={styles.categoryItem}

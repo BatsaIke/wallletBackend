@@ -7,6 +7,7 @@ import {
   FaSignOutAlt,
   FaBook,
   FaAccusoft,
+  FaAddressBook,
 } from "react-icons/fa";
 import styles from "./Menulist.module.css";
 
@@ -49,6 +50,13 @@ function MenuList() {
         <NavLink to="/admin/products" className={styles.menuLink}>
           <FaAccusoft className={styles.menuIcon} />
           products
+        </NavLink>
+      </div>
+
+      <div className={styles.menuItem}>
+        <NavLink to="/admin/contacts" className={styles.menuLink}>
+          <FaAddressBook className={styles.menuIcon} />
+         contacts
         </NavLink>
       </div>
 

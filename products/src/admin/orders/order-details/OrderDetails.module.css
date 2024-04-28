@@ -5,6 +5,9 @@
   background: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .header {
@@ -13,6 +16,7 @@
   margin-bottom: 20px;
   border-bottom: 1px solid #eee;
   padding-bottom: 10px;
+  text-align: center;
 }
 
 .orderInfo, .productInfo {
@@ -20,15 +24,17 @@
   padding: 10px;
   background: #f4f4f4;
   border-radius: 5px;
+  width: 100%;
 }
 
 .statusSelect {
-  display: inline-block; /* Align status select next to the label */
+  display: inline-block;
   margin-top: 10px;
   margin-left: 10px;
   padding: 10px;
   border-radius: 5px;
   border: 1px solid #ccc;
+  width: 100%;
 }
 
 .productItem {
@@ -37,18 +43,21 @@
   background: #f9f9f9;
   border-radius: 5px;
   border: 1px solid #ddd;
+  width: 100%;
 }
 
 .productHeader {
   font-size: 18px;
   margin-bottom: 5px;
   color: #444;
+  text-align: center;
 }
 
 .statusControl {
   display: flex;
-  align-items: center; /* Vertical alignment */
-  gap: 80px; /* Space between elements */
+  align-items: center;
+  gap: 80px;
+  flex-wrap: wrap;
 }
 
 .statusButton {
@@ -58,58 +67,73 @@
   border-radius: 4px;
   cursor: pointer;
   font-size: 14px;
+  width: calc(50% - 40px);
 }
 
 .fulfillButton {
-  background-color: #4CAF50; /* Green for fulfillment */
+  background-color: #4CAF50;
 }
 
 .fulfillButton:hover {
-  background-color: #45a049; /* Darker green on hover */
+  background-color: #45a049;
 }
 
 .fulfillButton:disabled {
-  background-color: #ccc; /* Grey out when disabled */
+  background-color: #ccc;
   cursor: not-allowed;
 }
 
 .cancelButton {
-  background-color: #f44336; /* Red for cancellation */
+  background-color: #f44336;
 }
 
 .cancelButton:hover {
-  background-color: #d32f2f; /* Darker red on hover */
+  background-color: #d32f2f;
 }
 
 .cancelButton:disabled {
-  background-color: #ccc; /* Grey out when disabled */
+  background-color: #ccc;
   cursor: not-allowed;
 }
-
 
 /* Responsive design */
 @media (max-width: 768px) {
   .container {
-      margin: 10px;
-      padding: 15px;
+    margin: 10px;
+    padding: 15px;
   }
-
   .header {
-      font-size: 20px;
+    font-size: 20px;
   }
-
   .productHeader {
-      font-size: 16px;
+    font-size: 16px;
+  }
+  .statusButton {
+    width: calc(50% - 20px);
   }
 }
 
 @media (max-width: 480px) {
   .statusSelect {
-      display: block; /* Stack the select dropdown under the status label on smaller screens */
-      margin-top: 5px;
+    display: block;
+    margin-top: 5px;
   }
-
   .productItem {
-      font-size: 14px;
+    font-size: 14px;
+  }
+  .statusButton {
+    width: 100%;
+  }
+}
+
+@media (max-width: 320px) {
+  .container {
+    padding: 10px;
+  }
+  .header {
+    font-size: 18px;
+  }
+  .productHeader {
+    font-size: 14px;
   }
 }

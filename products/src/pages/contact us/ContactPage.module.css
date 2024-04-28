@@ -23,6 +23,12 @@
     border-radius: 5px;
     cursor: pointer;
 }
+.error {
+    color: #ff0000; 
+    margin-top: 4px; 
+    padding: 2px; 
+    font-weight: bold;
+  }
 
 .contactForm button:hover {
     background-color: #0056b3;
