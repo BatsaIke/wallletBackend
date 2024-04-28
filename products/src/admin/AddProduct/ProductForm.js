@@ -65,8 +65,8 @@ const ProductForm = ({onSubmit, product }) => {
                 <label htmlFor="category">Category:</label>
                 <select id="category" {...register("category", { required: "Category is required" })}>
                     <option value="">Select a Category</option>
-                    <option value="Flowers">Flowers</option>
-                    <option value="Edibles">Edibles</option>
+                    <option value="Flowers">Highs</option>
+                    <option value="Edibles">Bites</option>
                     <option value="Drinks">Drinks</option>
                     <option value="Accessories">Accessories</option>
                 </select>
