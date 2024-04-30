@@ -14,7 +14,7 @@ const ProductCard = ({ product }) => {
         setTimeout(() => {
             setIsAnimating(false);
         }, 1000);
-    }
+    } 
 
     let displayQuantity;
     if (product.quantity > 1) {
