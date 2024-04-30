@@ -1,7 +1,7 @@
 // controllers/affiliateController.js
 
 const { validationResult } = require("express-validator");
-const Affiliate = require("../model/AffiliateModel");
+const Affiliate = require("../model/AffiliateModel"); 
 
 // Create a new affiliate
 const createAffiliate = async (req, res) => {
