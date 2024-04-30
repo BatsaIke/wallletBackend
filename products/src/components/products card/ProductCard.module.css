@@ -102,6 +102,9 @@ p {
   left: 0;
   animation: moveCart 1s forwards;
 }
+.outOfStock {
+  color: #FF0000; /* Change color for out of stock items */
+}
  /* Assuming these styles are part of or added to ProductCard.module.css */
 
 @media (max-width: 768px) {

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { FaCartPlus } from 'react-icons/fa'; // Import the add to cart icon
-import styles from './ProductCard.module.css'; // Assume you have this CSS module for styling
+import { FaCartPlus } from 'react-icons/fa';
+import styles from './ProductCard.module.css';
 import { useDispatch } from 'react-redux';
-import { addItemToCart } from '../../redux/slices/cartSlice'; // Adjust the import path as necessary
+import { addItemToCart } from '../../redux/slices/cartSlice';
 
 const ProductCard = ({ product }) => {
     const dispatch = useDispatch();
@@ -13,8 +13,9 @@ const ProductCard = ({ product }) => {
         dispatch(addItemToCart(product));
         setTimeout(() => {
             setIsAnimating(false);
-        }, 1000); // Adjust the duration to match your animation
+        }, 1000);
     }
+
     let displayQuantity;
     if (product.quantity > 1) {
         displayQuantity = 'Available';
@@ -26,16 +27,18 @@ const ProductCard = ({ product }) => {
 
     return (
         <div className={`${styles.card} ${isAnimating ? styles.animating : ''}`}>
-            <img src={product.image?.url} alt={product.name} className={styles.image} />
+            <div className={styles.imageContainer}>
+                <img src={product.image?.url} alt={product.name} className={styles.image} />
+            </div>
             <div className={styles.details} id={product._id}>
-                <h3>{product.name}</h3> {/* Display product name */}
+                <h3>{product.name}</h3>
                 <p>Category: {product.category}</p>
                 <p>Price: TKS {product.price.toFixed(2)}</p>
-                <p>Quantity: {displayQuantity}</p>
+                <p className={product.quantity <= 0 ? styles.outOfStock : ''}>Quantity: {displayQuantity}</p>
                 <button
                     className={styles.addToCartButton}
                     onClick={handleAddToCart}
-                    disabled={product.quantity <= 0} // Disable button if product is out of stock
+                    disabled={product.quantity <= 0}
                 >
                     <FaCartPlus /> Add to Cart
                 </button>
