@@ -3,7 +3,7 @@ import React from "react";
 import styles from "./ProductsTable.module.css"; // Ensure the path is correct
 
 function ProductsTable({ products, onEdit, onDelete }) {
-  console.log(products,"IN HERE")
+
   return (
     <table className={styles.productsTable}>
       <thead>

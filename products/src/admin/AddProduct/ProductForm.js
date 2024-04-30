@@ -39,7 +39,7 @@ const ProductForm = ({onSubmit, product }) => {
         reader.onerror = error => reject(error);
     });
 
-    console.log(product,"the product")
+
     useEffect(() => {
         if (product) {
             setValue("name", product.name);
@@ -65,8 +65,8 @@ const ProductForm = ({onSubmit, product }) => {
                 <label htmlFor="category">Category:</label>
                 <select id="category" {...register("category", { required: "Category is required" })}>
                     <option value="">Select a Category</option>
-                    <option value="Flowers">Highs</option>
-                    <option value="Edibles">Bites</option>
+                    <option value="Highs">Highs</option>
+                    <option value="Bites">Bites</option>
                     <option value="Drinks">Drinks</option>
                     <option value="Accessories">Accessories</option>
                 </select>

@@ -148,3 +148,124 @@ const fetchEbizData = async (offset = 0, limit = 50) => {
   // Call the main function
   main();
   
+
+
+  /*const EbizItem = require('../model/EbizProductsModel')
+const Shopify = require("shopify-api-node");
+const getAllProducts = require('./getShopifyEndPoint');
+const fetchAllEbizProducts = require('./getE-biz-api');
+
+const locationID = 81287643434;
+
+const shopify = new Shopify({
+  shopName: "kimo-group",
+  apiKey: "0383bec96d98400dbe214129ec2da5cc",
+  password: "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",
+  apiSecretKey: "bf31bb015257734710bcc79f77fc0f73",
+}); 
+
+
+const updateShopifyProducts = async () => {
+  try {
+    // Fetch all Shopify products and variants
+    const shopifyProducts = await getAllProducts();
+
+    // Fetch all Ebiz items from the database
+    const allEbizItems = await fetchAllEbizProducts(); 
+
+    // Define SKU pattern to ignore
+    const skuPatternToIgnore = /^\d{4,5}(\s*\+\s*|\s*\/\s*|\s*\\\s*)\d{4,5}(\s*\+\s*\d{4,5})*$|^\d{4,5}\/\d{4,5}\s*\+\s*\d{4,5}\/\d{4,5}$/;
+
+    for (const correspondingEbizItem of allEbizItems) {
+      const itemCode = correspondingEbizItem.vc_item_code;
+      const newPrice = parseInt(correspondingEbizItem.nu_selling_price);
+      const newQuantity = parseInt(correspondingEbizItem.available_qty);
+
+      // Check if the SKU should be ignored
+      if (skuPatternToIgnore.test(itemCode)) {
+        console.log(`Ignoring SKU ${itemCode}`);
+        continue;
+      }
+
+      // Check if the product has already been updated
+      if (await hasBeenUpdated(itemCode, newPrice, newQuantity, shopifyProducts)) {
+        console.log(`Product with SKU ${itemCode} has already been updated.`);
+        continue;
+      }
+
+      await updateProductPrice(itemCode, newPrice, newQuantity, shopifyProducts);
+    }
+
+    console.log("Products update done");
+  } catch (error) {
+    console.error("Error:", error.message);
+  }
+};
+
+async function hasBeenUpdated(itemCode, newPrice, newQuantity, allProducts) {
+  for (const product of allProducts) {
+    if (product.variants && product.variants.length > 0) {
+      for (const variant of product.variants) {
+        const sku = variant.sku;
+        // Check if the SKU matches the specific item code and if price and quantity match
+        if (sku === itemCode && variant.price === newPrice && variant.inventory_quantity === newQuantity) {
+          return true; // Product has already been updated
+        }
+      }
+    }
+  }
+  return false; // Product has not been updated
+}
+
+async function updateProductPrice(itemCode, newPrice, newQuantity, allProducts) {
+  try {
+    for (const product of allProducts) {
+      if (product.variants && product.variants.length > 0) {
+        for (const variant of product.variants) {
+          const sku = variant.sku;
+
+          // Check if the SKU matches the specific item code
+          if (sku === itemCode) {
+            // Compare prices and inventory levels
+            if (variant.price !== newPrice || variant.inventory_quantity !== newQuantity) {
+              if (variant.price !== newPrice) {
+                // Update the price
+                variant.price = newPrice;
+                console.log(`Updating price for SKU ${sku}`);
+              }
+              
+              if (variant.inventory_quantity !== newQuantity) {
+                // Update inventory level on Shopify
+                await shopify.inventoryLevel.set({
+                  inventory_item_id: variant.inventory_item_id,
+                  available: newQuantity,
+                  location_id: locationID,
+                });
+                console.log(`Inventory level updated for SKU ${sku} to ${newQuantity}`);
+              }
+
+              // Save the updated product to Shopify
+              await shopify.product.update(product.id, {
+                variants: [variant],
+              });
+
+              console.log(`Updated product ${product.title}, variant ${variant.title} (SKU: ${itemCode}) to price: ${newPrice} and quantity: ${newQuantity}`);
+            } else {
+              console.log(`No update needed for SKU ${sku} - price and inventory already match.`);
+            }
+
+            // Exit the loop since SKU is found and processed
+            return;
+          }
+        }
+      }
+    }
+  
+  } catch (err) {
+    console.error("Error:", err.message);
+  }
+}
+
+
+module.exports = updateShopifyProducts;
+*/

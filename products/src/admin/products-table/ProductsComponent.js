@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import styles from "./Products.module.css"; // Adjust CSS module import path
 import { useSelector, useDispatch } from "react-redux";
 import AddProductForm from "../AddProduct/AddProducts";
-import { fetchProducts } from "../../actions/productActions";
+import { deleteAProduct, fetchProducts } from "../../actions/productActions";
 import ProductsTable from "./ProductsTable";
 import Modal from "../../UI/modal/Modal";
 import Spinner from "../../UI/Spinner";
@@ -12,7 +12,7 @@ function Products() {
   const { products: nestedProducts, loading } = useSelector((state) => state.product);
   const products = nestedProducts.products || [];
 
-  console.log(products);
+ 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [editProduct, setEditProduct] = useState(null);
@@ -37,6 +37,10 @@ function Products() {
   const handleEdit = (product) => {
     setEditProduct(product); 
     setIsModalOpen(true); 
+  };
+
+  const handleDelete =async (product) => {
+    await dispatch(deleteAProduct( product))
   };
 
   if (loading) {
@@ -75,7 +79,7 @@ function Products() {
         <AddProductForm product={editProduct} onAddSuccess={handleProductAddSuccess} />
       </Modal>
       {products.length > 0 ? (
-           <ProductsTable products={products} onEdit={handleEdit} />
+           <ProductsTable products={products} onEdit={handleEdit} onDelete={handleDelete}/>
       ) : (
         <p>No products Yet!</p>
       )}

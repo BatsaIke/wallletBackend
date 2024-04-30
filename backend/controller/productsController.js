@@ -150,7 +150,7 @@ exports.deleteProduct = async (req, res) => {
       await cloudinary.uploader.destroy(product.image.public_id);
     }
 
-    await product.remove();
+    await Product.deleteOne({ _id: req.params.id }); // Use deleteOne() instead of remove()
 
     res.json({ msg: 'Product removed' });
   } catch (error) {

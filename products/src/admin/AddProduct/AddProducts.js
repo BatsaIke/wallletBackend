@@ -15,6 +15,7 @@ function AddProductForm({product, onAddSuccess }) {
         try {
             let response;
             if (product) {
+               
                 // If we're editing an existing product, call the updateProduct action
                 response = await dispatch(updateAProduct(product._id, formData));
             } else {
