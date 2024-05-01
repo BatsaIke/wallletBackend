@@ -1,0 +1,112 @@
+/* ProductDetails.module.css */
+.detailsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px;
+    gap: 20px;
+    background-color: #f9f9f9; /* Light background to highlight product */
+  }
+  
+  .fullImage {
+    max-width: 100%;
+    width: 300px; /* Responsive width on larger screens */
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Subtle shadow for depth */
+  }
+  
+  .info {
+    flex: 1;
+    max-width: 600px; /* Maximum width to maintain readability */
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  h2 {
+    font-size: 2rem; /* Responsive font size */
+    color: #333;
+  }
+  
+  p {
+    font-size: 1.2rem; /* Optimal reading size on larger devices */
+    line-height: 1.6;
+    color: #666;
+    margin: 5px 0;
+  }
+  
+  .addToCartButton {
+    padding: 10px 20px;
+    background-color: #5cb85c;
+    color: white;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+  }
+  
+  .addToCartButton:hover {
+    background-color: #4cae4c;
+  }
+  
+  .addToCartButton:disabled {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+  }
+  
+  /* Responsive adjustments for smaller screens */
+  @media (max-width: 768px) {
+    .detailsContainer {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .fullImage {
+      width: 80%; /* Adjust width for smaller screens */
+    }
+  
+    .info {
+      width: 90%; /* Adjust width for better readability on small screens */
+      padding: 10px;
+    }
+  
+    h2 {
+      font-size: 1.8rem; /* Slightly smaller font size for smaller screens */
+    }
+  
+    p {
+      font-size: 1rem; /* Smaller font size for compact display */
+    }
+  
+    .addToCartButton {
+      font-size: 1rem; /* Smaller button text */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .fullImage {
+      width: 95%; /* Almost full width on very small screens */
+    }
+  
+    .info {
+      width: 95%; /* Use almost the entire screen width */
+    }
+  
+    h2 {
+      font-size: 1.5rem; /* Reduce the font size further for very small screens */
+    }
+  
+    p {
+      font-size: 0.9rem; /* Further reduce the font size for optimal readability */
+    }
+  
+    .addToCartButton {
+      padding: 8px 16px; /* Slightly reduce padding for smaller screens */
+    }
+  }
+  

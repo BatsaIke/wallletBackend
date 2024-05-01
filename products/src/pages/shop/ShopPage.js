@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Suspense } from 'react';
 import CategoriesSidebar from '../../components/categories/CategoriesSideBar';
 import Spinner from '../../UI/Spinner';
-import ProductCard from '../../components/products card/ProductsCard';
 import styles from './ShopPage.module.css';
 import Pagination from '../../components/pagination/Pagination';
 import { useSearchParams } from "react-router-dom";
 import { useProducts } from '../../components/hooks/useProducts';
+
+// Dynamically import the ProductCard component using React.lazy
+const ProductCard = React.lazy(() => import('../../components/products card/ProductsCard'));
 
 const ShopPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -44,23 +46,8 @@ const ShopPage = () => {
     setSearchParams({ page: '1', category, search: searchTerm, priceRange: newRange, sort });
   };
 
-  // Function to handle scroll event
-  const handleScroll = () => {
-    if (window.scrollY + window.innerHeight >= document.body.offsetHeight) {
-      setIsVisible(true);
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [setIsVisible]);
-
   if (loading && currentPage === 1) return <Spinner />;
   if (error) return <div>Error: {error}</div>;
-
 
   return (
     <div className={styles.shopageContainer}>
@@ -71,9 +58,13 @@ const ShopPage = () => {
         />
       <div className={styles.pageDiv}>
       <div className={styles.productsGrid}>
+        {/* Wrap the lazy-loaded ProductCard component with Suspense */}
+        <Suspense fallback={<Spinner />}>
           {productsData && productsData.products && productsData.products.map(product => ( 
             <ProductCard key={product._id} product={product} />
           ))}
+          {(!loading && productsData && productsData.products && productsData.products.length === 0) && <div>No products found</div>}
+        </Suspense>
         </div>
         <Pagination 
           currentPage={currentPage} 

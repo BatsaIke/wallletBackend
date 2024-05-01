@@ -25,6 +25,7 @@ import { createOrder } from "./actions/orderActions";
 import { verifyPayment } from "./actions/paymentActions";
 import ContactAdmin from "./admin/contacts/ContactPage";
 import ContactDetails from "./admin/contacts/ContactDetails";
+import ProductDetails from "./components/productdetails/ProductDetails";
 
 function App() {
   const dispatch = useDispatch();
@@ -72,6 +73,8 @@ function App() {
           <Route path="/shop" element={<ShopPage />} />
           <Route path="/affiliate" element={<AffiliatePage />} />
           <Route path="/contact" element={<ContactPage />} />
+          <Route path="productDetails/:id" element={<ProductDetails />} />
+
 
           <Route path="/admin/*" element={<AdminLayout />}>
             <Route element={<PrivateRoute />}>
@@ -80,6 +83,7 @@ function App() {
               <Route path="orders" element={<OrdersComponent />} />
               <Route path="contacts" element={<ContactAdmin />} />
               <Route path="contactDetails/:id" element={<ContactDetails />} />
+
 
               <Route
                 path="orderdetails/:orderId"
