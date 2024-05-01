@@ -37,7 +37,7 @@ exports.createProduct = async (req, res) => {
 exports.getProducts = async (req, res) => {
   try {
     const page = parseInt(req.query.page, 10) || 1; // default to first page
-    const limit = parseInt(req.query.limit, 10) || 32; // default to 32 items per page
+    const limit = parseInt(req.query.limit, 10) || 20; // default to 32 items per page
     const skip = (page - 1) * limit;
 
     // Filters

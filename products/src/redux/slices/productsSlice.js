@@ -24,8 +24,7 @@ const productSlice = createSlice({
     },
     // Action to set the products array (e.g., after fetching products from the database)
     setProducts: (state, action) => {
-      console.log("Setting products:", action.payload);
-      state.products = action.payload;
+      state.products = action.payload.products; 
     },
     // Action to set the current product (e.g., after creating, fetching, or selecting a single product)
     setCurrentProduct: (state, action) => {

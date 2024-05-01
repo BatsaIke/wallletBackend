@@ -5,7 +5,7 @@
 //   shopName: "kimo-group",
 //   apiKey: "0383bec96d98400dbe214129ec2da5cc",
 //   password: "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",
-//   apiSecretKey:"bf31bb015257734710bcc79f77fc0f73"
+//   apiSecretKey:"bf31bb015257734710bcc79f77fc0f73" 
 // });
 // async function listLocations() {
 //   try {

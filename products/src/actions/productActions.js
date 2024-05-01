@@ -33,30 +33,20 @@ export const createProduct = (productData) => async (dispatch) => {
     }
 };
 
-export const fetchProductsTest = () => async (dispatch) => {
-  console.log("attempting to fetch products")
-  try {
-    const response = await api.get("/products");
-    dispatch(setProducts(response.data));
-  } catch (error) {
-    dispatch(setError("Failed to load products"));
-  } finally {
-    dispatch(setLoading(false));
-  }
-};
+
 
 // Fetch all products
 // productActions.js
 
 // Fetch all products with optional filtering, pagination, and sorting
-export const fetchProducts = ({ page = 1, limit = 32, name = '', category = '', sortBy = 'createdAt', sortOrder = 'desc' } = {}) => async (dispatch) => {
+export const fetchProducts = ({ page = 1, limit = 20, name = '', category = '', sortBy = 'createdAt', sortOrder = 'desc' } = {}) => async (dispatch) => {
   dispatch(setLoading(true));
   try {
     const response = await api.get(`/products`, {
       params: { page, limit, name, category, sortBy, sortOrder }
     });
     if (response.status === 200) {
-      dispatch(setProducts(response.data)); // Assume this action now correctly handles the updated response structure
+      dispatch(setProducts({ products: response.data })); // Wrap the fetched products in an object
       return { success: true };
     } else {
       dispatch(setError("Failed to fetch products."));

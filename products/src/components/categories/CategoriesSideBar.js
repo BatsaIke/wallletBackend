@@ -32,8 +32,8 @@ onPriceFilterChange = () => {},
 
   const handleCategorySelect = (category) => {
     setIsActive(false);
-    onCategorySelect(category);
-  };
+    onCategorySelect(category); 
+};
 
   const handleSortChange = (e) => {
     onSortChange(e.target.value);
@@ -62,13 +62,13 @@ onPriceFilterChange = () => {},
           </li>
           <li
             className={styles.categoryItem}
-            onClick={() => handleCategorySelect("Flowers")}
+            onClick={() => handleCategorySelect("Highs")}
           >
             <FaSeedling /> Highs
           </li>
           <li
             className={styles.categoryItem}
-            onClick={() => handleCategorySelect("Edibles")}
+            onClick={() => handleCategorySelect("Bites")}
           >
             <FaCandyCane /> Bites
           </li>
