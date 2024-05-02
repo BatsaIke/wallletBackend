@@ -8,22 +8,22 @@ import Spinner from "../../UI/Spinner";
 export const BuyTokenModal = ({ email }) => {
   const dispatch = useDispatch();
   const { register, handleSubmit, formState: { errors } } = useForm();
-  const totalAmount = useSelector((state) => state.cart.totalPrice);
+  const totalIncludingShipping = useSelector((state) => state.cart.totalIncludingShipping);
 
   const loading = useSelector((state) => state.payment.loading);
 
 
-  const doubledAmount = totalAmount ? (parseFloat(totalAmount) * 1.0).toFixed(1) : null;
+  const doubledAmount = totalIncludingShipping ? (parseFloat(totalIncludingShipping) * 1.0).toFixed(1) : null;
 
   const onFormSubmit = (data) => {
-    if (!totalAmount) {
+    if (!totalIncludingShipping) {
       alert("Invalid total amount!");
       return;
     }
 
     const paymentData = {
       paymentMethod: data.paymentMethod,
-      amount: totalAmount,
+      amount: totalIncludingShipping,
       email,
     };
 
@@ -58,7 +58,7 @@ export const BuyTokenModal = ({ email }) => {
 
         {doubledAmount && (
           <p className={styles.tokenEquivalent}>
-            <strong>{doubledAmount} Tks</strong> = ₵{totalAmount}
+            <strong>{doubledAmount} Tks</strong> = ₵{totalIncludingShipping}
           </p>
         )}
 
