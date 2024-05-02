@@ -94,6 +94,7 @@ textarea {
 .loginButton {
   background-color: #007bff;
   color: white;
+  display: none;
 }
 
 .loginButton:hover {

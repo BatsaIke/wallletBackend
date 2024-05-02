@@ -10,7 +10,7 @@ const BillingDetails = () => {
   const cartItems = useSelector((state) => state.cart.items);
   const {totalIncludingShipping} = useSelector((state) => state.cart);
 
- 
+  const isLoggedIn = false;
 
   // Memoizing the selector
   const authSelector = useMemo(
@@ -122,7 +122,7 @@ const BillingDetails = () => {
               <button
                 onClick={() => setShowLogin(true)}
                 className={styles.loginButton}
-                disabled={true}
+                disabled={isLoggedIn}
               >
                 Log In
               </button>
