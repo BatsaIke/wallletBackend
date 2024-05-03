@@ -15,6 +15,7 @@ const orderRoute = require("./routes/orderRoutes.js");
 const productRoute = require("./routes/productRoute.js");
 const contactRoute = require("./routes/contactRoute.js");
 const affiliateRoute = require("./routes/affiliateRoutes.js");
+const buildPath=path.join(__dirname, "../products/build/index.html");
 
 dotenv.config();
 
@@ -25,8 +26,17 @@ const app = express();
 const PORT = process.env.PORT || 5100;
 
 // Middleware
-app.use(express.static(path.join(__dirname, "../products/build/index.html")));
-app.use(bodyParser.json({ limit: '50mb' }));
+ app.use(express.static(buildPath))
+app.use('/*', function(req, res) {
+  res.sendFile(
+    path.join(__dirname, "../products/build/index.html"),
+    function(err) {
+      if (err) {
+        res.status(500).send(err);
+      }
+    }
+  );
+});app.use(bodyParser.json({ limit: '50mb' }));
 app.use(express.json());
 app.use(cors()); // Enable CORS for all origins
 
