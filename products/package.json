@@ -25,7 +25,7 @@
   },
   "scripts": {
     "start-products": "react-scripts start",
-    "build": "react-scripts build && (../backend && npm istall)",
+    "build": "react-scripts build && (../backend && npm install)",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
