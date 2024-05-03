@@ -46,7 +46,7 @@ app.use('/api/v1/affiliate', affiliateRoute);
 // Root endpoint
 app.get("/api/v1", (req, res) => res.send("API is running"));
 app.get('*', function(req, res) {
-  res.sendFile(path.join(__dirname, "../frontend/build/index.html"));
+  res.sendFile(path.join(__dirname, "../products/build/index.html"));
 });
 
 // Error handling middleware
