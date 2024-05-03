@@ -27,6 +27,7 @@ const PORT = process.env.PORT || 5100;
 
 // Middleware
 app.use(express.static(path.join(__dirname, "../products/build")));
+console.log(path.join(__dirname, "../products/build"),"Helooo")
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(express.json());
 app.use(cors()); // Enable CORS for all origins
