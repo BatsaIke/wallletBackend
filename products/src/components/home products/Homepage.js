@@ -1,4 +1,4 @@
-import React, { useEffect, useState, lazy, Suspense } from "react";
+import React, { useState, lazy, Suspense } from "react";
 import CategoriesSidebar from "../categories/CategoriesSideBar";
 import styles from "./Homepage.module.css";
 import { useSearchParams } from "react-router-dom";
@@ -33,18 +33,7 @@ const Homepage = () => {
     sort,
   });
 
-  // useEffect(() => {
-  //   const handleScroll = () => {
-  //     if (window.scrollY + window.innerHeight >= document.body.offsetHeight) {
-  //       setIsVisible(true);
-  //     }
-  //   };
-  
-  //   window.addEventListener('scroll', handleScroll);
-  //   return () => {
-  //     window.removeEventListener('scroll', handleScroll);
-  //   };
-  // }, []);
+
 
   const handleCategorySelect = (category) => {
     setSearchParams({ page: "1", category, search: searchTerm, priceRange, sort });
