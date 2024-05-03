@@ -26,7 +26,7 @@ const app = express();
 const PORT = process.env.PORT || 5100;
 
 // Middleware
-app.use(express.static(path.join(__dirname, "../products/build")));
+app.use(express.static(path.join(__dirname, "../frontend/build")));
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(express.json());
 app.use(cors()); // Enable CORS for all origins
@@ -46,7 +46,7 @@ app.use('/api/v1/affiliate', affiliateRoute);
 // Root endpoint
 app.get("/api/v1", (req, res) => res.send("API is running"));
 app.get('*', function(req, res) {
-  res.sendFile(path.join(__dirname, "../products/build/index.html"));
+  res.sendFile(path.join(__dirname, "../frontend/build/index.html"));
 });
 
 // Error handling middleware
