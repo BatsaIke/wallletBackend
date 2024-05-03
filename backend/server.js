@@ -10,6 +10,9 @@ const orderRoute = require("./routes/orderRoutes.js");
 const productRoute = require("./routes/productRoute.js");
 const contactRoute = require("./routes/contactRoute.js");
 const affiliateRoute = require("./routes/affiliateRoutes.js");
+const path = require('path');
+const buildPath=path.join(__dirname, "../products/build");
+
 
 const cors = require("cors");
 const {handlePaystackWebhook} = require("./middleware/payStackWebhook.js");
@@ -20,11 +23,26 @@ dotenv.config();
 // Connect to the database
 connectDB();
 
+app.use(express.static(buildPath))
+
+app.use('/*', function(req, res) {
+  res.sendFile(
+    path.join(__dirname, "../products/build/index.html"),
+    function(err) {
+      if (err) {
+        res.status(500).send(err);
+      }
+    }
+  );
+});
+
 // Init middleware
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(express.json({ extended: false }));
 app.use(cors()); // Enable CORS for all origins
 app.use(bodyParser.json());
+
+
 
 //cathing errors
 app.use((err, req, res, next) => {
