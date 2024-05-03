@@ -16,6 +16,7 @@ const productRoute = require("./routes/productRoute.js");
 const contactRoute = require("./routes/contactRoute.js");
 const affiliateRoute = require("./routes/affiliateRoutes.js");
 
+
 dotenv.config();
 
 // Connect to the database
@@ -44,6 +45,9 @@ app.use('/api/v1/affiliate', affiliateRoute);
 
 // Root endpoint
 app.get("/api/v1", (req, res) => res.send("API is running"));
+app.get('/*', function(req, res) {
+  res.sendFile(path.join(__dirname, "../products/build/index.html"));
+});
 
 // Error handling middleware
 app.use((err, req, res, next) => {
