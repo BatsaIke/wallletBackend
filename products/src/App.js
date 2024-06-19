@@ -6,7 +6,7 @@ import CartPage from "./components/cart/CartPage";
 import LoginPage from "./pages/Login/Loginpage";
 import Alert from "./UI/alert/Alert";
 import { useDispatch } from "react-redux";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import setAuthToken from "./utils/setAuthToken";
 import { getLoginUser } from "./actions/authAction";
 import CheckoutPage from "./components/checkout/Checkoutpage";
@@ -26,9 +26,11 @@ import { verifyPayment } from "./actions/paymentActions";
 import ContactAdmin from "./admin/contacts/ContactPage";
 import ContactDetails from "./admin/contacts/ContactDetails";
 import ProductDetails from "./components/productdetails/ProductDetails";
+import WelcomeModal from "./UI/modal/WelcomeModal.js";
 
 function App() {
   const dispatch = useDispatch();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -57,45 +59,66 @@ function App() {
       };
       createOrderFromStorage();
     }
+
+    // Show modal only once in 24 hours
+    const modalShown = localStorage.getItem("modalShown");
+    const modalShownTimestamp = localStorage.getItem("modalShownTimestamp");
+    const currentTime = new Date().getTime();
+
+    if (
+      !modalShown ||
+      (modalShownTimestamp &&
+        currentTime - modalShownTimestamp > 24 * 60 * 60 * 1000)
+    ) {
+      setIsModalOpen(true);
+    }
   }, [dispatch]);
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    localStorage.setItem("modalShown", "true");
+    localStorage.setItem(
+      "modalShownTimestamp",
+      new Date().getTime().toString()
+    );
+  };
 
   return (
     <>
       <Header />
       <Alert />
-      <div className="container">
+      <WelcomeModal isOpen={isModalOpen} onClose={handleCloseModal} />
+      <div className='container'>
         <Routes>
-          <Route path="/" element={<Homepage />} />
-          <Route path="/cart" element={<CartPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignupPage />} />
-          <Route path="/checkout" element={<CheckoutPage />} />
-          <Route path="/shop" element={<ShopPage />} />
-          <Route path="/affiliate" element={<AffiliatePage />} />
-          <Route path="/contact" element={<ContactPage />} />
-          <Route path="productDetails/:id" element={<ProductDetails />} />
+          <Route path='/' element={<Homepage />} />
+          <Route path='/cart' element={<CartPage />} />
+          <Route path='/login' element={<LoginPage />} />
+          <Route path='/signup' element={<SignupPage />} />
+          <Route path='/checkout' element={<CheckoutPage />} />
+          <Route path='/shop' element={<ShopPage />} />
+          <Route path='/affiliate' element={<AffiliatePage />} />
+          <Route path='/contact' element={<ContactPage />} />
+          <Route path='productDetails/:id' element={<ProductDetails />} />
 
-
-          <Route path="/admin/*" element={<AdminLayout />}>
+          <Route path='/admin/*' element={<AdminLayout />}>
             <Route element={<PrivateRoute />}>
-              <Route path="addproducts" element={<AddProductForm />} />
-              <Route path="products" element={<Products />} />
-              <Route path="orders" element={<OrdersComponent />} />
-              <Route path="contacts" element={<ContactAdmin />} />
-              <Route path="contactDetails/:id" element={<ContactDetails />} />
-
+              <Route path='addproducts' element={<AddProductForm />} />
+              <Route path='products' element={<Products />} />
+              <Route path='orders' element={<OrdersComponent />} />
+              <Route path='contacts' element={<ContactAdmin />} />
+              <Route path='contactDetails/:id' element={<ContactDetails />} />
 
               <Route
-                path="orderdetails/:orderId"
+                path='orderdetails/:orderId'
                 element={<OrderDetailsComponent />}
               />
             </Route>
 
             <Route element={<PrivateRoute allowedRoles={["mederator"]} />}>
-              <Route path="orders" element={<OrdersComponent />} />
+              <Route path='orders' element={<OrdersComponent />} />
 
               <Route
-                path="orderdetails/:orderId"
+                path='orderdetails/:orderId'
                 element={<OrderDetailsComponent />}
               />
             </Route>

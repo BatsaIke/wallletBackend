@@ -5,6 +5,7 @@ import { fetchProducts } from '../../actions/productActions';
 export const useProducts = (queryParams) => {
   const dispatch = useDispatch();
   const { products, loading, error } = useSelector((state) => state.product);
+  
 
   useEffect(() => {
     console.log("Fetching data directly from API");

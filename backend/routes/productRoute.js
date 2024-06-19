@@ -12,7 +12,8 @@ const router = express.Router();
 
 // Add validation checks for creating and updating products
 router.post(
-  "/", auth,
+  "/",
+  auth,
   [
     check("name", "Product name is required").not().isEmpty(),
     check("category", "Category is required").not().isEmpty(),
@@ -25,14 +26,11 @@ router.post(
 
 // Assuming no validation is needed for fetching products
 router.get("/", getProducts);
-router.get("/:id",auth, getProductById);
+router.get("/:id", auth, getProductById);
 
 // Assuming validation for updating products might be similar to creating them, adjust as needed
-router.put(
-  "/:id",auth,
-  updateProduct
-);
+router.put("/:id", auth, updateProduct);
 
-router.delete("/:id",auth, deleteProduct);
+router.delete("/:id", auth, deleteProduct);
 
 module.exports = router;

@@ -3,7 +3,8 @@ import styles from './Homepage.module.css';
 import ProductCard from '../products card/ProductsCard';
 import { useNavigate } from 'react-router-dom';
 
-const HomeProducts = ({ products = [] }) => {  // Default to an empty array if products is undefined
+const HomeProducts = ({ products = [] }) => {  
+  console.log(products, "products in use producrs");
   const navigate = useNavigate();
 
   const handleNavigate = () => {
