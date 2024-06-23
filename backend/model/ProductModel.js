@@ -22,9 +22,13 @@ const productSchema = new mongoose.Schema(
         required: true,
       },
     },
-    price: {
+    originalPrice: {
       type: Number,
       required: true,
+      min: 0,
+    },
+    discountPrice: {
+      type: Number,
       min: 0,
     },
     quantity: {
@@ -41,11 +45,6 @@ const productSchema = new mongoose.Schema(
     description: {
       type: String,
       trim: true,
-    },
-    rating: {
-      type: Number,
-      min: 0,
-      max: 5,
     },
     imageAmbiances: [
       {

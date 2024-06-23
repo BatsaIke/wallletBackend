@@ -6,23 +6,33 @@ const {
   getProductById,
   updateProduct,
   deleteProduct,
+  createRating,
 } = require("../controller/productsController");
 const auth = require("../middleware/auth");
 const router = express.Router();
 
 // Add validation checks for creating and updating products
-router.post(
-  "/",
-  auth,
-  [
-    check("name", "Product name is required").not().isEmpty(),
-    check("category", "Category is required").not().isEmpty(),
-    check("image", "Image URL is required").not().isEmpty(),
-    check("price", "Price is required and must be a number").isNumeric(),
-    check("quantity", "Quantity is required and must be a number").isNumeric(),
-  ],
-  createProduct
-);
+router
+  .post(
+    "/",
+    auth,
+    [
+      check("name", "Product name is required").not().isEmpty(),
+      check("category", "Category is required").not().isEmpty(),
+      check("image", "Image URL is required").not().isEmpty(),
+      check("price", "Price is required and must be a number").isNumeric(),
+      check(
+        "quantity",
+        "Quantity is required and must be a number"
+      ).isNumeric(),
+    ],
+    createProduct
+  )
+  .post(
+    "/ratings",
+    [auth, check("rating", "Rating number is required").isEmpty()], 
+    createRating
+  );
 
 // Assuming no validation is needed for fetching products
 router.get("/", getProducts);

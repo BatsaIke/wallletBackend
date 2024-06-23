@@ -1,4 +1,6 @@
 const Product = require("../model/ProductModel");
+const Rating = require("../model/RatingModel.js");
+
 
 // Import the necessary utilities
 const cloudinary = require("../utils/claudinary");
@@ -7,11 +9,11 @@ exports.createProduct = async (req, res) => {
   const {
     name,
     category,
-    price,
+    originalPrice,
+    discountPrice,
     quantity,
     sku,
     description,
-    rating,
     image,
     imageAmbiances,
   } = req.body;
@@ -41,11 +43,11 @@ exports.createProduct = async (req, res) => {
     const newProduct = await Product.create({
       name,
       category,
-      price,
+      originalPrice,
+      discountPrice,
       quantity,
       sku,
       description,
-      rating,
       image: {
         public_id: uploadResponse.public_id,
         url: uploadResponse.secure_url,
@@ -64,45 +66,69 @@ exports.createProduct = async (req, res) => {
 };
 
 
+ exports.createRating = async (req, res) => {
+   try {
+     const rating = new Rating(req.body);
+     await rating.save();
+     res.status(201).send(rating);
+   } catch (error) {
+     res.status(400).send(error);
+   }
+ };
+
 exports.getProducts = async (req, res) => {
   try {
     const page = parseInt(req.query.page, 10) || 1;
     const limit = parseInt(req.query.limit, 10) || 20;
     const skip = (page - 1) * limit;
 
-    let query = Product.find();
+    let match = {};
 
     if (req.query.name) {
-      query = query.where("name", { $regex: req.query.name, $options: "i" });
+      match.name = { $regex: req.query.name, $options: "i" };
     }
 
     if (req.query.category) {
-      query = query.where("category", req.query.category);
+      match.category = req.query.category;
     }
 
     if (req.query.minPrice || req.query.maxPrice) {
-      query = query
-        .where("price")
-        .gte(req.query.minPrice || 0)
-        .lte(req.query.maxPrice || Number.MAX_VALUE);
+      match.originalPrice = {
+        $gte: req.query.minPrice || 0,
+        $lte: req.query.maxPrice || Number.MAX_VALUE,
+      };
     }
 
+    let sort = { createdAt: -1 };
     if (req.query.sortBy) {
-      const sortParam =
-        req.query.sortOrder === "desc"
-          ? `-${req.query.sortBy}`
-          : req.query.sortBy;
-      query = query.sort(sortParam);
-    } else {
-      query = query.sort("-createdAt");
+      sort = {
+        [req.query.sortBy]: req.query.sortOrder === "desc" ? -1 : 1,
+      };
     }
 
-    const products = await query.skip(skip).limit(limit).exec();
-    const totalItems = await Product.countDocuments(query);
-    const totalPages = Math.ceil(totalItems / limit);
+    const products = await Product.aggregate([
+      { $match: match },
+      {
+        $lookup: {
+          from: "ratings",
+          localField: "_id",
+          foreignField: "productId",
+          as: "ratings",
+        },
+      },
+      {
+        $addFields: {
+          averageRating: { $avg: "$ratings.rating" },
+          numberOfRatings: { $size: "$ratings" },
+        },
+      },
+      { $sort: sort },
+      { $skip: skip },
+      { $limit: limit },
+    ]);
 
-    // Log the products to check the fields
-    console.log(products);
+    const totalItems = await Product.countDocuments(match);
+    const totalPages = Math.ceil(totalItems / limit);
 
     res.json({
       products,
@@ -117,23 +143,43 @@ exports.getProducts = async (req, res) => {
 };
 
 
+
 exports.getProductById = async (req, res) => {
   try {
-    const product = await Product.findById(req.params.id);
+    const productId = req.params.id;
 
-    if (!product) {
+    const product = await Product.aggregate([
+      { $match: { _id: mongoose.Types.ObjectId(productId) } },
+      {
+        $lookup: {
+          from: "ratings",
+          localField: "_id",
+          foreignField: "productId",
+          as: "ratings",
+        },
+      },
+      {
+        $addFields: {
+          averageRating: { $avg: "$ratings.rating" },
+          numberOfRatings: { $size: "$ratings" },
+        },
+      },
+    ]);
+
+    if (!product || product.length === 0) {
       return res.status(404).json({ msg: "Product not found" });
     }
 
     // Log the product to check the fields
-    console.log(product);
+    console.log(product[0]);
 
-    res.json(product);
+    res.json(product[0]);
   } catch (error) {
     console.error(error);
-    res.status(500).send("Server error"); 
+    res.status(500).send("Server error");
   }
 };
+
 
 exports.updateProduct = async (req, res) => {
   const { name, category, price, quantity, sku, image } = req.body;
@@ -187,7 +233,7 @@ exports.deleteProduct = async (req, res) => {
       return res.status(404).json({ msg: "Product not found" });
     }
 
-    // If the product has an image, delete it from Cloudinary
+    // If the product has an image, delete it from Cloudinary 
     if (product.image && product.image.public_id) {
       console.log(
         `Deleting image from Cloudinary with ID: ${product.image.public_id}`
