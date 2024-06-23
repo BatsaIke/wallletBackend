@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addItemToCart } from "../../redux/slices/cartSlice";
@@ -10,6 +10,8 @@ const ProductDetails = () => {
   console.log(product, "product details");
   const dispatch = useDispatch();
 
+  const [mainImage, setMainImage] = useState(product.image.url);
+
   const handleAddToCart = () => {
     dispatch(addItemToCart(product));
   };
@@ -20,50 +22,67 @@ const ProductDetails = () => {
 
   return (
     <div className={styles.detailsContainer}>
-      <img
-        src={product.image.url}
-        alt={product.name}
-        className={styles.fullImage}
-      />
-      <div className={styles.info}>
-        <h2>{product.name}</h2>
-        {product.description && <p>{product.description}</p>}
-        <p>Category: {product.category}</p>
-        <p>Price: TKS: {product.price.toFixed(2)}</p>
-        {product.rating && (
-          <p>
-            Rating:{" "}
-            {Array.from({ length: 5 }, (v, i) => (
-              <span
-                key={i}
-                className={
-                  i < product.rating ? styles.starFilled : styles.star
-                }>
-                &#9733;
-              </span>
+      <div className={styles.productImages}>
+        <div className={styles.imageThumbnails}>
+          <img
+            src={product.image.url}
+            alt={product.name}
+            className={`${styles.thumbnail} ${
+              mainImage === product.image.url ? styles.activeThumbnail : ""
+            }`}
+            onClick={() => setMainImage(product.image.url)}
+          />
+          {product.imageAmbiances &&
+            product.imageAmbiances.length > 0 &&
+            product.imageAmbiances.map((image, index) => (
+              <img
+                key={index}
+                src={image.url}
+                alt={`Ambiance ${index + 1}`}
+                className={`${styles.thumbnail} ${
+                  mainImage === image.url ? styles.activeThumbnail : ""
+                }`}
+                onClick={() => setMainImage(image.url)}
+              />
             ))}
-          </p>
-        )}
-        {product.imageAmbiances && product.imageAmbiances.length > 0 && (
-          <div className={styles.ambiances}>
-            <h3>Ambiance Images</h3>
-            <div className={styles.ambianceImages}>
-              {product.imageAmbiances.map((ambiance, index) => (
-                <img
-                  key={index}
-                  src={ambiance.url}
-                  alt={`Ambiance ${index + 1}`}
-                  className={styles.ambianceImage}
-                />
-              ))}
-            </div>
+        </div>
+        <img src={mainImage} alt={product.name} className={styles.fullImage} />
+      </div>
+      <div className={styles.info}>
+        <h1>{product.name}</h1>
+        <div className={styles.productPrice}>
+          <span>Tks: {product.price.toFixed(2)}</span>
+          {product.discount && (
+            <span className={styles.discount}>-{product.discount}%</span>
+          )}
+        </div>
+        <div className={styles.productDetails}>
+          <div className={styles.productRating}>
+            {Array.from({ length: 5 }, (_, index) => (
+              <span
+                key={index}
+                className={`fa fa-star ${
+                  index < product.rating ? styles.selected : ""
+                }`}></span>
+            ))}
+            <span>
+              ({product.numberOfRatings} customer review
+              {product.numberOfRatings !== 1 ? "s" : ""})
+            </span>
           </div>
-        )}
+          <div className={styles.productCategory}>
+            <strong>Categories:</strong> {product.category}
+          </div>
+          <div className={styles.productSKU}>
+            <strong>SKU:</strong> {product.sku}
+          </div>
+        </div>
+        {product.description && <p>{product.description}</p>}
         <button
           className={styles.addToCartButton}
           onClick={handleAddToCart}
           disabled={product.quantity <= 0}>
-          Add to Cart
+          <i className='fas fa-shopping-cart'></i> Add to Cart
         </button>
       </div>
     </div>

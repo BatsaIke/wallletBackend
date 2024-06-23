@@ -27,6 +27,7 @@ import ContactAdmin from "./admin/contacts/ContactPage";
 import ContactDetails from "./admin/contacts/ContactDetails";
 import ProductDetails from "./components/productdetails/ProductDetails";
 import WelcomeModal from "./UI/modal/WelcomeModal.js";
+import Productss from "./pages/Productss.js";
 
 function App() {
   const dispatch = useDispatch();
@@ -99,6 +100,7 @@ function App() {
           <Route path='/affiliate' element={<AffiliatePage />} />
           <Route path='/contact' element={<ContactPage />} />
           <Route path='productDetails/:id' element={<ProductDetails />} />
+          <Route path='productss' element={<Productss />} />
 
           <Route path='/admin/*' element={<AdminLayout />}>
             <Route element={<PrivateRoute />}>

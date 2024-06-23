@@ -6,7 +6,7 @@
   .productsGrid {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center; /* Adjust to center for better alignment with a single item */
+    justify-content: center; 
   }
   
   .seeMore {
