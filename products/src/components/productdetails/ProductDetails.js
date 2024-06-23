@@ -20,6 +20,9 @@ const ProductDetails = () => {
     return <div>Product not found!</div>;
   }
 
+  const price = product.discountPrice || product.originalPrice || product.price;
+  const originalPrice = product.originalPrice || product.price;
+
   return (
     <div className={styles.detailsContainer}>
       <div className={styles.productImages}>
@@ -51,9 +54,11 @@ const ProductDetails = () => {
       <div className={styles.info}>
         <h1>{product.name}</h1>
         <div className={styles.productPrice}>
-          <span>Tks: {product.price.toFixed(2)}</span>
-          {product.discount && (
-            <span className={styles.discount}>-{product.discount}%</span>
+          <span>Tks: {price.toFixed(2)} ---</span>
+          {product.discountPrice && (
+            <span className={styles.oldPrice}>
+               Tks {originalPrice.toFixed(2)}
+            </span>
           )}
         </div>
         <div className={styles.productDetails}>
@@ -62,7 +67,7 @@ const ProductDetails = () => {
               <span
                 key={index}
                 className={`fa fa-star ${
-                  index < product.rating ? styles.selected : ""
+                  index < (product.averageRating || 0) ? styles.selected : ""
                 }`}></span>
             ))}
             <span>
@@ -84,6 +89,9 @@ const ProductDetails = () => {
           disabled={product.quantity <= 0}>
           <i className='fas fa-shopping-cart'></i> Add to Cart
         </button>
+        {product.quantity === 0 && (
+          <div className={styles.outOfStock}>Out of Stock</div>
+        )}
       </div>
     </div>
   );

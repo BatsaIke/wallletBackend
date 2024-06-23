@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaCartPlus, FaEye } from "react-icons/fa";
+import { FaCartPlus } from "react-icons/fa";
 import styles from "./ProductCard.module.css";
 import { useDispatch } from "react-redux";
 import { addItemToCart } from "../../redux/slices/cartSlice";
@@ -43,12 +43,6 @@ const ProductCard = ({ product }) => {
             alt={product.name}
             className={styles.productImage}
           />
-          <div className={styles.imageOverlay}>
-            <div className={styles.overlayIcons}>
-              <FaEye onClick={navigateToProductDetails} />
-              <FaCartPlus onClick={handleAddToCart} />
-            </div>
-          </div>
         </div>
       </div>
       <div className={styles.productInfo} id={product._id}>

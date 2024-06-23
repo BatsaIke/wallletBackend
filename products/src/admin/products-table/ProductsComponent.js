@@ -9,10 +9,11 @@ import Spinner from "../../UI/Spinner";
 
 function Products() {
   const dispatch = useDispatch();
-  const { products: nestedProducts, loading } = useSelector((state) => state.product);
+  const { products: nestedProducts, loading } = useSelector(
+    (state) => state.product
+  );
   const products = nestedProducts.products || [];
 
- 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [editProduct, setEditProduct] = useState(null);
@@ -23,8 +24,8 @@ function Products() {
 
   const handleProductAddSuccess = () => {
     setIsModalOpen(false);
-    setEditProduct(null); 
-     dispatch(fetchProducts());
+    setEditProduct(null);
+    dispatch(fetchProducts());
   };
 
   const toggleModal = () => {
@@ -35,12 +36,12 @@ function Products() {
   };
 
   const handleEdit = (product) => {
-    setEditProduct(product); 
-    setIsModalOpen(true); 
+    setEditProduct(product);
+    setIsModalOpen(true);
   };
 
-  const handleDelete =async (product) => {
-    await dispatch(deleteAProduct( product))
+  const handleDelete = async (product) => {
+    await dispatch(deleteAProduct(product));
   };
 
   if (loading) {
@@ -59,8 +60,8 @@ function Products() {
       <h2 className={styles.productsHeader}>Products</h2>
       <div className={styles.topBar}>
         <input
-          type="text"
-          placeholder="Search products..."
+          type='text'
+          placeholder='Search products...'
           value={searchTerm}
           onChange={handleSearchChange}
           className={styles.searchInput}
@@ -74,12 +75,18 @@ function Products() {
         isOpen={isModalOpen}
         onClose={toggleModal}
         header={editProduct ? "Edit Product" : "Add New Product"}
-        className={styles.productsModal}
-      >
-        <AddProductForm product={editProduct} onAddSuccess={handleProductAddSuccess} />
+        className={styles.productsModal}>
+        <AddProductForm
+          product={editProduct}
+          onAddSuccess={handleProductAddSuccess}
+        />
       </Modal>
       {products.length > 0 ? (
-           <ProductsTable products={products} onEdit={handleEdit} onDelete={handleDelete}/>
+        <ProductsTable
+          products={products}
+          onEdit={handleEdit}
+          onDelete={handleDelete}
+        />
       ) : (
         <p>No products Yet!</p>
       )}
