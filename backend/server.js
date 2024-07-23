@@ -29,11 +29,15 @@ const PORT = process.env.PORT || 5100;
 // app.use(express.static("../products/build"));
 app.use(express.static(path.join(__dirname, "products/build")));
 
+const corsOptions = {
+    origin: 'http://localhost:3000', 
+    credentials: true,
+  };
+  app.use(cors(corsOptions));
 
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use("/", express.static(path.join(__dirname, "../products/build"))); 
 app.use(express.json());
-app.use(cors());
 
 // Define routes
 app.use("/api/v1/user", usersDetails);
@@ -49,9 +53,9 @@ app.use('/api/v1/affiliate', affiliateRoute);
 
 // Root endpoint
 app.get("/api/v1", (req, res) => res.send("API is running"));
-app.get('*', function(req, res) {
-  res.sendFile(path.join(__dirname, "../products/build", "index.html"));
-});
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../products/build", "index.html"));
+  });
 
 // Error handling middleware
 app.use((err, req, res, next) => {
