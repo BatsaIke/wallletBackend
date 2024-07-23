@@ -30,9 +30,12 @@ const PORT = process.env.PORT || 5100;
 app.use(express.static(path.join(__dirname, "products/build")));
 
 const corsOptions = {
-    origin: ['http://localhost:3000', 'https://wallletbackend-6.onrender.com'],
+    origin: ['http://localhost:3000', 'https://wallletbackend-6.onrender.com', 'https://highsandbites.com'],
     credentials: true,
   };
+  
+  app.use(cors(corsOptions));
+  
   
   app.use(cors(corsOptions));
   
