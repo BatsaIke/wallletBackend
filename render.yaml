@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: gimpaprojects-backend
+    env: node
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: REACT_APP_API_BASE_URL
+        value: https://wallletbackend-6.onrender.com/api/v1
+
+staticSites:
+  - name: gimpaprojects-frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: frontend/build
+    envVars:
+      - key: REACT_APP_API_BASE_URL
+        value: https://wallletbackend-6.onrender.com/api/v1
